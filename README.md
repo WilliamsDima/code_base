@@ -11,7 +11,7 @@
 [![tailwindcss](https://img.shields.io/static/v1?label=tailwindcss&message=3.2.2&color=38BDF8&style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![sass](https://img.shields.io/static/v1?label=sass&message=7.0.3&color=BF4080&style=for-the-badge&logo=sass&logoColor=white)](https://sass-lang.com/)
 [![axios](https://img.shields.io/static/v1?label=axios&message=1.1.3&color=671DDF&style=for-the-badge&logo=axios&logoColor=white)](https://axios-http.com/ru/docs/intro/)
-
+[![firebase](https://img.shields.io/static/v1?label=firebase&message=9.13.0&color=FECB30&style=for-the-badge&logo=firebase&logoColor=white)](https://axios-http.com/ru/docs/intro/)
 
 ---
 
