@@ -1,13 +1,13 @@
 import React from "react"
-import { useAppSelector } from "../../hooks/hooks"
+import Header from "../../components/organisms/Header"
+import HomeTemplate from "../../components/templates/Home"
 
 const Home = () => {
 
-  const { template } = useAppSelector(state => state.main)
-
   return (
-    <div className="flex flex-row justify-center items-center">
-        <p>{template}</p>
+    <div className="">
+        <Header />
+        <HomeTemplate />
     </div>
   )
 }

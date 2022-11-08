@@ -5,6 +5,7 @@ import Navigations from './navigations/routes'
 import { BrowserRouter } from 'react-router-dom'
 
 function App() {
+
   return (
     <Provider store={store}>
       <BrowserRouter>

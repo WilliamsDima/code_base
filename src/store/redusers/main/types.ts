@@ -1,3 +1,5 @@
+import { User as FirebaseUser } from "firebase/auth";
+
 export interface IStore {
-    template: string
+    user: FirebaseUser | null
 }
