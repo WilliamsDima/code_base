@@ -8,7 +8,6 @@
 [![react](https://img.shields.io/static/v1?label=react&message=18.2.0&color=61DBFB&style=for-the-badge&logo=react&logoColor=white)](https://ru.reactjs.org/)
 [![redux](https://img.shields.io/static/v1?label=redux&message=4.2.0&color=764ABD&style=for-the-badge&logo=redux&logoColor=white)](https://redux-toolkit.js.org/)
 [![reduxtoolkit](https://img.shields.io/static/v1?label=redux%20toolkit&message=1.9.0&color=764ABD&style=for-the-badge&logo=redux&logoColor=white)](https://redux-toolkit.js.org/)
-[![tailwindcss](https://img.shields.io/static/v1?label=tailwindcss&message=3.2.2&color=38BDF8&style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![sass](https://img.shields.io/static/v1?label=sass&message=7.0.3&color=BF4080&style=for-the-badge&logo=sass&logoColor=white)](https://sass-lang.com/)
 [![axios](https://img.shields.io/static/v1?label=axios&message=1.1.3&color=671DDF&style=for-the-badge&logo=axios&logoColor=white)](https://axios-http.com/ru/docs/intro/)
 [![firebase](https://img.shields.io/static/v1?label=firebase&message=9.13.0&color=FECB30&style=for-the-badge&logo=firebase&logoColor=white)](https://axios-http.com/ru/docs/intro/)
