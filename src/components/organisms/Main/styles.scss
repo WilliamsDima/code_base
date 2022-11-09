@@ -15,7 +15,7 @@
         text-transform: uppercase;
         font-weight: 700;
         font-size: $h1;
-        color: red;
+        color: $mainColor;
     }
 
     .auth {
@@ -23,5 +23,19 @@
         align-items: center;
         justify-content: flex-end;
         height: 100%;
+
+        button {
+
+            padding: 10px;
+            background-color: $mainColor;
+            border-radius: 5px;
+
+            span {
+                text-transform: uppercase;
+                font-weight: 700;
+                font-size: 15px;
+                color: $colorPriamry;
+            }
+        }
     }
 }

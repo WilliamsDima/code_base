@@ -1,0 +1,43 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/globalStyles.scss';
+
+.user {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+
+    .popin_user {
+        position: absolute;
+        bottom: -15px;
+        right: -0.5rem;
+        background-color: $colorPriamry;
+        border-radius: 5px;
+        z-index: -1;
+        opacity: 0;
+
+        transition: all .2s linear;
+
+        &.show {
+            opacity: 1;
+            z-index: 1;
+            bottom: -7rem;
+        }
+    }
+
+    .name {
+        font-weight: 700;
+        font-size: 15px;
+        color: $colorBlack;
+        margin-right: 1rem;
+    }
+
+    .avatar {
+
+        img {
+            height: 50px;
+            border-radius: 50%;
+        }
+        
+    }
+}

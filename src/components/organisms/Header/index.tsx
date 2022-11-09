@@ -4,6 +4,7 @@ import { useAppDispatch } from "../../../hooks/hooks"
 import { setUser } from "../../../store/redusers/main/main"
 import { useAuth } from "../../../api/firebase"
 import UserInfo from "../../molecules/UserInfo"
+import { Button } from "@mui/material"
 
 
 const Header = () => {
@@ -30,13 +31,18 @@ const Header = () => {
   return (
     <header className="header">
 
+        <div className="logo">
+          <p>code base</p>
+        </div>
+
         <div className="auth">
 
-          <UserInfo />
+          {user ? <UserInfo logout={logout}/> : <Button onClick={authHandler} 
+          variant="contained" 
+          size="large">
+            Войти
+        </Button>}
 
-          <button onClick={authHandler}>
-            {user ? <span>выйти</span> : <span>Войти</span>}
-          </button>
         </div>
 
     </header>
