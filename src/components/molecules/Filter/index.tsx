@@ -8,17 +8,10 @@ const Filter = () => {
 
   const [isModalOpen, setModalOpen] = useState(false)
 
-  const openMenuHandler = ({ target }: {target: HTMLElement}) => {
-    if (!target.closest('.modal-form_content')) {
-      setModalOpen(!isModalOpen)
-    }
-}
-
-
   return (
     <div className="filter-content">
 
-      <ModalForm show={isModalOpen} setShow={openMenuHandler}/>
+      <ModalForm show={isModalOpen} setShow={setModalOpen}/>
 
 
       <div className="filter-content_item">

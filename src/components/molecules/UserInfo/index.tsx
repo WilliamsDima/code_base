@@ -1,6 +1,6 @@
 import React, { FC } from "react"
-import { useAppSelector, useOutside } from "../../../hooks/hooks"
-import { Button } from "@mui/material"
+import { useAppSelector } from "../../../hooks/hooks"
+import { Button, Menu, MenuItem, Avatar, Typography } from "@mui/material"
 import './styles.scss'
 
 interface IUserInfo {
@@ -9,29 +9,50 @@ interface IUserInfo {
 
 const UserInfo: FC<IUserInfo> = ({logout}) => {
 
-  const {isShow, setIsShow, ref} = useOutside(false);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const logoutHandler = () => {
-    setIsShow(false)
     logout()
   }
 
   const { user } = useAppSelector(store => store.main)
 
   return (
-    <div className="user" ref={ref} onClick={() => setIsShow(true)}>
-        <p className="name">{user?.displayName}</p>
+    <div className="user" >
+        <Typography variant="h4" component="p" sx={{mr: 2}}>
+          {user?.displayName}
+        </Typography>
 
-        <div className="avatar">
-          <img src={user?.photoURL?.toString()} />
+        <div className="avatar" onClick={handleClick}>
+          <Avatar
+            src={user?.photoURL?.toString()}
+          />
         </div>
 
-        <div className={`popin_user ${isShow && 'show'}`}>
-          <Button onClick={logoutHandler} 
-            variant="contained" 
-            size="large">
-              выйти
-          </Button>
+        <div>
+          <Menu
+            id="user-menu"
+            sx={{mt: 2}}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <MenuItem onClick={logoutHandler}>
+              <Typography variant="button" component="p">
+                Выйти
+              </Typography>
+            </MenuItem>
+          </Menu>
         </div>
 
     </div>

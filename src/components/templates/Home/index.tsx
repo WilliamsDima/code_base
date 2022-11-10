@@ -3,15 +3,16 @@ import './styles.scss'
 import { useAppSelector } from "../../../hooks/hooks"
 import Empty from "../../atoms/Empty"
 import Main from "../../organisms/Main"
+import { Container } from "@mui/material"
 
 const HomeTemplate = () => {
 
   const { user } = useAppSelector(store => store.main)
 
   return (
-    <div className="content">
-        {user ? <Main /> :  <Empty />}
-    </div>
+    <Container maxWidth="lg" sx={{mt: 5}}>
+      {user ? <Main /> :  <Empty />}
+    </Container>
   )
 }
 

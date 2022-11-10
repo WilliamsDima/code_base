@@ -1,10 +1,10 @@
 import React, { useEffect } from "react"
+import {AppBar, Box, Toolbar, Typography, Button, IconButton } from '@mui/material/';
 import './styles.scss'
 import { useAppDispatch } from "../../../hooks/hooks"
 import { setUser } from "../../../store/redusers/main/main"
 import { useAuth } from "../../../api/firebase"
 import UserInfo from "../../molecules/UserInfo"
-import { Button } from "@mui/material"
 
 
 const Header = () => {
@@ -29,23 +29,28 @@ const Header = () => {
 
 
   return (
-    <header className="header">
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+          </IconButton>
+          <Typography variant="h3" fontWeight={500} component="p" sx={{ flexGrow: 1 }}>
+            CODE BASE
+          </Typography>
 
-        <div className="logo">
-          <p>code base</p>
-        </div>
+          {user ? <UserInfo logout={logout}/> : <Button 
+          onClick={authHandler}
+          color="inherit">Войти</Button>}
 
-        <div className="auth">
-
-          {user ? <UserInfo logout={logout}/> : <Button onClick={authHandler} 
-          variant="contained" 
-          size="large">
-            Войти
-        </Button>}
-
-        </div>
-
-    </header>
+        </Toolbar>
+      </AppBar>
+    </Box>
   )
 }
 
