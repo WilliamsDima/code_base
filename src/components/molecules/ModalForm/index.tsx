@@ -1,18 +1,24 @@
 import React, { FC } from "react"
 import './styles.scss'
-import {Modal, Box, Typography} from '@mui/material';
+import {Modal, Box, Typography, TextField, Button} from '@mui/material';
 
 const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  borderRadius: 1,
-  p: 4,
-};
+  box: {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '60%',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    borderRadius: 1,
+    p: 4,
+  },
+  input:{
+    fontSize: 20
+  },
+}
+
 
 interface IModalForm {
   show: boolean
@@ -31,13 +37,52 @@ const ModalForm: FC<IModalForm> = React.forwardRef(({ show, setShow }) => {
       aria-labelledby="keep-mounted-modal-title"
       aria-describedby="keep-mounted-modal-description"
     >
-      <Box sx={style}>
-        <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
-          Text in a modal
-        </Typography>
-        <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-        </Typography>
+      <Box sx={style.box}>
+        <TextField 
+        InputProps={{
+          style: style.input,
+        }}
+        sx={{width: '100%'}}
+        label="Заголовок" 
+        variant="filled" 
+        size="small"/>
+
+        <TextField 
+        InputProps={{
+          style: style.input,
+        }}
+        sx={{width: '100%', mt: 3}}
+        label="Ключевые слова" 
+        variant="filled" 
+        size="small"/>
+
+        <TextField 
+        InputProps={{
+          style: style.input,
+        }}
+        sx={{width: '100%', mt: 3}}
+        multiline
+        label="Описание" 
+        variant="filled" 
+        size="medium"/>
+
+        <TextField 
+        InputProps={{
+          style: style.input,
+        }}
+        sx={{width: '100%', mt: 3}}
+        multiline
+        label="Код" 
+        variant="filled" 
+        size="medium"/>
+
+        <Button onClick={() => setShow(false)} 
+        sx={{ mt: 3}}
+        variant="contained" 
+        size="large">
+          Создать
+        </Button>
+
       </Box>
     </Modal>
   </div>
