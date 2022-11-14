@@ -1,2 +1,18 @@
 @import '../../../assets/styles/colors.scss';
 @import '../../../assets/styles/globalStyles.scss';
+
+.language-javascript-of-snippet {
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
+
+    code {
+        background-color: #000;
+        color: #fff;
+    }
+}
+
+.btns {
+    display: flex;
+    justify-content: space-between;
+}
