@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from "react"
 import './styles.scss'
 import { green } from '@mui/material/colors'
-import {Modal, Box, Typography, TextField, Button, Input, Icon, IconButton, InputAdornment} from '@mui/material'
+import {Modal, Box, Typography, TextField, Button, Input, Icon, IconButton, InputAdornment, Chip} from '@mui/material'
 import Highlight from 'react-highlight'
 import "../../../../node_modules/highlight.js/styles/tomorrow.css"
 import PopinAttantions from "../../atoms/PopinAttantions"
@@ -26,13 +26,18 @@ const style = {
     flexGrow: 1, 
     mb: 1,
     opacity: 0.5,
-  }
+  },
 }
 
 
-interface IModalForm {
+type IModalForm = {
   show: boolean
   setShow: ((target: any) => any)
+}
+
+type ITag = {
+  id: number
+  value: string
 }
 
 const ModalForm: FC<IModalForm> = React.forwardRef(({ show, setShow }) => {
@@ -45,6 +50,31 @@ const ModalForm: FC<IModalForm> = React.forwardRef(({ show, setShow }) => {
   const maxDescription = 500
   const [description, setDescription] = useState('')
 
+  const maxTags = 5
+  const maxTagsText = 20
+  const [tags, setTags] = useState<ITag[]>([])
+  const [tagText, setTagText] = useState('')
+
+  const [code, setCode] = useState('')
+
+  const [drag, setDrag] = useState(false)
+  const [file, setFile] = useState<any>([])
+
+  const dragHandler = (e: any, value: boolean) => {
+    e.preventDefault()
+    setDrag(value)
+  }
+
+  const onDropHandler = (e: any) => {
+    // console.log(e.target.value);
+    // const url = URL.createObjectURL(e.target.files[0])
+    
+    const files = [...e?.target?.files]
+
+    setFile(files)
+    setDrag(false)
+  }
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, func: any) => {
     func(event.target.value)
   }
@@ -56,6 +86,9 @@ const ModalForm: FC<IModalForm> = React.forwardRef(({ show, setShow }) => {
       // все закрывается и отчищается
 
       setTitle('')
+      setDescription('')
+      setTagText('')
+      setTags([])
       // ...
     } else {
       // закрывается предупреждение
@@ -66,6 +99,25 @@ const ModalForm: FC<IModalForm> = React.forwardRef(({ show, setShow }) => {
   const addHandler = () => {
     setShow(false)
   }
+
+  const keyPress = (e: any) => {
+    if (e.keyCode == 13) {
+
+      if (tagText.trim() && tagText.trim().length <= maxTagsText) {
+        const tag = {
+          id: +new Date(),
+          value: tagText
+        }
+        setTags([...tags, tag])
+        setTagText('')
+      }
+    }
+ }
+
+ const deleteTag = (id: number) => {
+  const tagsFilter = tags.filter((t) => t.id !== id)
+  setTags(tagsFilter)
+ }
 
   return (
 
@@ -104,20 +156,43 @@ const ModalForm: FC<IModalForm> = React.forwardRef(({ show, setShow }) => {
         size="small"/>
 
         <Typography fontWeight={500} component="p" sx={style.note}>
-            * Ключевые слова по которым можно будет найти
+            * Ключевые слова по которым можно будет найти - Enter для добавления
         </Typography>
 
         <TextField 
         color="success"
         fullWidth
+        value={tagText}
+        onChange={(event) => handleChange(event, setTagText)}
+        error={tagText.length > maxTagsText}
+        onKeyDown={keyPress}
         InputProps={{
           style: style.input,
-          endAdornment: <InputAdornment position="end">0/100</InputAdornment>,
+          endAdornment: <InputAdornment position="end">{tagText.length}/{maxTagsText}</InputAdornment>,
         }}
         sx={{mb: 3}}
         label="Ключевые слова" 
         variant="filled" 
         size="small"/>
+
+        {!!tags.length && <div className={ tags.length > maxTags ? "tags_list error" : "tags_list"}>
+          {tags.map((item: ITag) => {
+            return <Chip 
+            key={item.id} 
+            label={item.value} 
+            sx={{mr: 1, mb: 1, fontSize: 14}}
+            variant="outlined" 
+            onDelete={() => deleteTag(item.id)} />
+          })}
+          <Typography 
+          sx={{mt: -1}}
+          fontWeight={500} 
+          variant="h5" 
+          component="p">
+            {tags.length}/{maxTags}
+          </Typography>
+        </div>}
+
 
         <Typography fontWeight={500} component="p" sx={style.note}>
             * Развернутое описание
@@ -146,6 +221,8 @@ const ModalForm: FC<IModalForm> = React.forwardRef(({ show, setShow }) => {
         <TextField 
         color="success"
         fullWidth
+        value={code}
+        onChange={(event) => handleChange(event, setCode)}
         InputProps={{
           style: style.input,
         }}
@@ -166,11 +243,39 @@ language="javascript" >
 
         <div className="btns">
 
-          <div>
+          <div style={{width: '90%'}}>
             <Typography fontWeight={500} component="p" sx={style.note}>
-                * Скриншот (необязательно)
+                * Скриншот (необязательно) .png, .jpg, .jpeg
             </Typography>
-            <Input type="file" />
+
+            {drag ? 
+            
+            <div 
+            onDragStart={(e) => dragHandler(e, true)}
+            onDragOver={(e) => dragHandler(e, false)}
+            onDragLeave={(e) => dragHandler(e, true)}
+            className="grag">
+              <input 
+              accept=".png, .jpg, .jpeg"
+              type="file" 
+              multiple={true}
+              onDrop={onDropHandler}
+              onChange={onDropHandler}/>
+              Отпустите файл для загрузки</div> 
+
+            : <div 
+            onDragStart={(e) => dragHandler(e, true)}
+            onDragOver={(e) => dragHandler(e, false)}
+            onDragLeave={(e) => dragHandler(e, true)}
+            className="grag">
+              <input 
+              accept=".png, .jpg, .jpeg"
+              multiple={true}
+              type="file" 
+              onDrop={onDropHandler}
+              onChange={onDropHandler}/>
+              перетащите файл для загрузки</div>}
+            
           </div>
 
           <IconButton onClick={addHandler} >

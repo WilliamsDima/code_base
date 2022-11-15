@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import ModalForm from "../ModalForm"
-import {Icon, IconButton} from '@mui/material'
+import {Icon, IconButton, Fab} from '@mui/material'
 import { green } from '@mui/material/colors'
+import AddIcon from '@mui/icons-material/Add';
 import './styles.scss'
 
 
@@ -16,9 +17,13 @@ const Filter = () => {
 
 
       <div className="filter-content_addBtn">
-        <IconButton onClick={() => setModalOpen(true)} >
-          <Icon fontSize="large" sx={{ color: green[500], fontSize: 80 }}>add_circle</Icon>
-        </IconButton>
+        <Fab 
+        size="large"
+        color="primary"
+        aria-label="add" 
+        onClick={() => setModalOpen(true)}>
+          <AddIcon sx={{fontSize: 30}}/>
+        </Fab>
       </div>
 
     </div>
