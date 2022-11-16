@@ -5,6 +5,7 @@ import { getStorage } from "firebase/storage"
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth"
 import { addDoc, collection, doc, getDoc, getDocs, getFirestore, query, setDoc, updateDoc, where } from "firebase/firestore/lite"
 import { User as FirebaseUser } from "firebase/auth"
+import { IItemCode } from '../services/types';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -22,13 +23,24 @@ const auth = getAuth(app)
 const storage = getStorage(app)
 const provider = new GoogleAuthProvider()
 
-const getDataUser = async (user: FirebaseUser) => {
+export const getDataUser = async (user: FirebaseUser) => {
     const id = user.providerData[0].uid
 
     const docRef = doc(db, "users", id)
     const docSnap = await getDoc(docRef)
     const data = docSnap.data()
     return data
+}
+
+export const addCode = async (user: FirebaseUser, codes: IItemCode[]) => {
+    const id = user.providerData[0].uid
+
+    await updateDoc(doc(db, "users", id), {
+        id,
+        name: user.displayName,
+        email: user.email,
+        codes,
+      })
 }
 
 export const useAuth = () => {
@@ -45,18 +57,14 @@ export const useAuth = () => {
                 id,
                 name: user.displayName,
                 email: user.email,
-                codes: [{
-                }]
+                codes: []
               })
         } else {
             await setDoc(doc(db, "users", id), {
                 id,
                 name: user.displayName,
                 email: user.email,
-                codes: [{
-                    id: 1,
-                    text: 'tretert'
-                }]
+                codes: []
               })
         }
     }

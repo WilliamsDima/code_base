@@ -3,6 +3,7 @@ import { IStore } from './types'
 
 const initialState: IStore = {
     user: null,
+    codeBase: [],
 }
 
 const counterSlice = createSlice({
@@ -11,6 +12,9 @@ const counterSlice = createSlice({
     reducers: {
         setUser: (state, { payload }) => {
             state.user = payload
+        },
+        setCodeBase: (state, { payload }) => {
+            state.codeBase = payload
         }
     },
 })
@@ -19,4 +23,4 @@ export const mainReducer = (state = initialState, action: any) => {
     return counterSlice.reducer(state, action);
 };
 
-export const { setUser } = counterSlice.actions;
+export const { setUser, setCodeBase } = counterSlice.actions;

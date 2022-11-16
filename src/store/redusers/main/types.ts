@@ -1,5 +1,7 @@
 import { User as FirebaseUser } from "firebase/auth";
+import { IItemCode } from "../../../services/types";
 
-export interface IStore {
+export type IStore = {
     user: FirebaseUser | null
+    codeBase: IItemCode[]
 }
