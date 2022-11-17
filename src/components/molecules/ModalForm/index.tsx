@@ -2,8 +2,7 @@ import React, { FC, useState } from "react"
 import './styles.scss'
 import { green } from '@mui/material/colors'
 import {Modal, Box, Fab} from '@mui/material'
-import Highlight from 'react-highlight'
-import DoneIcon from '@mui/icons-material/Done';
+import DoneIcon from '@mui/icons-material/Done'
 import "../../../../node_modules/highlight.js/styles/tomorrow.css"
 import PopinAttantions from "../../atoms/PopinAttantions"
 import ModalFormItem from "../../atoms/ModalFormItem"
@@ -36,8 +35,18 @@ const style = {
     bgcolor: 'background.paper',
     boxShadow: 24,
     borderRadius: 1,
+    maxHeight: '75vh',
     p: 4,
+    overflowY: 'scroll'
   },
+  modal: {
+    // top: 1,
+    zIndex: 100, 
+    // maxHeight: '75vh', 
+    // display: 'flex', 
+    // justifyContent: 'center', 
+    // alignItems: 'center',
+  }
 }
 
 
@@ -188,7 +197,8 @@ const ModalForm: FC<IModalForm> = React.forwardRef(({ show, setShow, submit }) =
         description,
         code,
         file: [],
-        tags
+        tags,
+        copy: 0
       }
 
       submit(data, file)
@@ -201,7 +211,7 @@ const ModalForm: FC<IModalForm> = React.forwardRef(({ show, setShow, submit }) =
 
   return (
 
-    <div>
+    <div className="modal">
 
     <PopinAttantions 
     show={showAttantion} 
@@ -210,25 +220,16 @@ const ModalForm: FC<IModalForm> = React.forwardRef(({ show, setShow, submit }) =
 
     <Modal
       keepMounted
-      sx={{zIndex: 100}}
+      sx={style.modal}
       open={show}
       onClose={() => setShowAttantion(true)}
       aria-labelledby="keep-mounted-modal-title"
       aria-describedby="keep-mounted-modal-description"
     >
-      <Box sx={style.box}>
+      <Box sx={style.box} className="modal_content">
         {itemsForm.map((item) => {
           return <ModalFormItem key={item.id} {...item}/>
         })}
-
-{/* <div className='language-javascript-of-snippet'>
-<Highlight
-language="javascript" >
-{`const test = () => {
-  return 'hello'
-}`}
-</Highlight>
-</div> */}
 
         <ImagesList file={file} maxFiles={maxFiles} deleteImg={deleteImg}/>
 

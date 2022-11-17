@@ -1,0 +1,56 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/globalStyles.scss';
+
+.language-javascript-of-snippet {
+    position: relative;
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 5px;
+    margin-top: 2rem;
+
+    code {
+        background-color: #000;
+        color: #fff;
+    }
+
+    .copy_btn {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        button {
+            padding: 0;
+            margin-right: .2rem;
+            &:hover {
+                border: none;
+                background-color: transparent;
+            }
+
+            svg {
+                font-size: 20px;
+            }
+        }
+    }
+}
+
+.tags {
+    display: flex;
+    margin-top: 1rem;
+}
+
+.imgs {
+    margin-top: 2rem;
+}
+
+.carusel_wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}

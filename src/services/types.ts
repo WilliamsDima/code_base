@@ -10,4 +10,5 @@ export type IItemCode = {
     tags: ITag[]
     code: string
     file: any[]
+    copy: number
 }

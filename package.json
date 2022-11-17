@@ -29,6 +29,8 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
+    "react-swipeable-views": "^0.14.0",
+    "react-swipeable-views-utils": "^0.14.0",
     "redux": "^4.2.0",
     "styled-components": "^5.3.6",
     "typescript": "^4.8.4",
@@ -61,6 +63,8 @@
   },
   "devDependencies": {
     "@types/react-highlight": "^0.12.5",
+    "@types/react-swipeable-views": "^0.13.1",
+    "@types/react-swipeable-views-utils": "^0.13.4",
     "@types/uuid": "^8.3.4",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.18"
