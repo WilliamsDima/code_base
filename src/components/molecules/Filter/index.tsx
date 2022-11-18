@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/hooks"
 import { setCodeBase } from "../../../store/redusers/main/main"
 import { ref, uploadBytes } from 'firebase/storage'
 import { v4 } from 'uuid'
+import FilterParams from "../FilterParams"
 
 
 const Filter = () => {
@@ -32,7 +33,9 @@ const Filter = () => {
     if (user) {
       const pathToFile = user?.providerData[0].uid
 
-      addCode(user, [...codeBase, item])
+      if (codeBase) {
+        addCode(user, [...codeBase, item])
+      }
 
       file.forEach((img: any) => {
 
@@ -52,6 +55,7 @@ const Filter = () => {
   return (
     <div className="filter-content">
 
+      <FilterParams />
       <ModalForm show={isModalOpen} setShow={setModalOpen} submit={submit}/>
 
 

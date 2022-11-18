@@ -3,5 +3,6 @@ import { IItemCode } from "../../../services/types";
 
 export type IStore = {
     user: FirebaseUser | null
-    codeBase: IItemCode[]
+    codeBase: IItemCode[] | null | undefined
+    filterList: IItemCode[] | null | undefined
 }

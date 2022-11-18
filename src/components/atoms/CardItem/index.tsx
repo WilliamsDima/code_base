@@ -20,7 +20,8 @@ type ICard = {
 
 const style = {
   card: {
-    mb: 4
+    mb: 4,
+    width: '100%'
   }
 }
 
