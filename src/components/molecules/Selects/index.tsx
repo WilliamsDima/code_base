@@ -19,15 +19,19 @@ const SelectList: FC<ISelect> = ({ label, value, onChange, list}) => {
 
   return (
     <div className="select_list">
-      <Box sx={{ minWidth: 120 }}>
+      <Box sx={{ minWidth: 90, maxWidth: 120, bgcolor: 'background.default' }}>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">{label}</InputLabel>
+          <InputLabel 
+          sx={{bgcolor: 'background.default'}}
+          id="demo-simple-select-label">
+            {label}
+          </InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={value?.value}
             label={label}
-            sx={{ backgroundColor:  '#fff', fontSize: 14 }}
+            sx={{ bgcolor: 'background.default', fontSize: 14 }}
             
           >
             {list?.map((t) => {

@@ -84,11 +84,11 @@ const FilterParams = () => {
         <div className="params">
           {!!tags?.length && <SelectList value={tag} onChange={handleChangeTag} label={'Tag'} list={tagsClear}/>}  
           <Button 
-          sx={{fontSize: 10, mr: 1, ml: 1}}
+          sx={{fontSize: 10, mr: 1, ml: 1, bgcolor: 'action.selected', color: 'text.primary'}}
           onClick={clearFilter} 
           variant="contained" 
           size="large">сбросить фильтр</Button>
-          <SelectList value={max} onChange={handleChangeMaxValue} label={'Количество копирований'} list={copeList}/>
+          <SelectList value={max} onChange={handleChangeMaxValue} label={'Копирований'} list={copeList}/>
         </div>
 
     </div>

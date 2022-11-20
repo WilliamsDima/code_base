@@ -1,27 +1,45 @@
 @import '../../../assets/styles/colors.scss';
 @import '../../../assets/styles/globalStyles.scss';
 
-// .header {
-//     display: flex;
-//     width: 100%;
-//     background-color: $colorHeader;
-//     box-shadow: $shadow;
-//     align-items: center;
-//     justify-content: space-between;
-//     padding: 15px;
+.logo {
+    color: $mainColor;
+}
 
-//     .logo p {
+.theme_app {
+    position: relative;
+    border: none;
+    z-index: 10;
+    width: 5rem;
+    height: 5rem;
+    margin-right: 5rem;
+    border-radius: 50%;
+    overflow: hidden;
 
-//         text-transform: uppercase;
-//         font-weight: 700;
-//         font-size: $h1;
-//         color: red;
-//     }
+    svg: {
+        color: 'red' !important
+    }
 
-//     .auth {
-//         display: flex;
-//         align-items: center;
-//         justify-content: flex-end;
-//         height: 100%;
-//     }
-// }
+    .moon, .sun {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 2;
+        transform: translateX(-50%) translateY(-50%);
+        transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    } 
+
+    .sun {
+        transform: translateX(-50%) translateY(-150%);
+    }
+
+    &.dark {
+
+        .moon {
+            transform: translateX(-50%) translateY(-150%);
+        }
+
+        .sun {
+            transform: translateX(-50%) translateY(-50%);
+        }
+    }
+}

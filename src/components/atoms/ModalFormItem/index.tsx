@@ -24,6 +24,7 @@ const style = {
     flexGrow: 1, 
     mb: 1,
     opacity: 0.5,
+    color: 'text.primary',
   },
 }
 

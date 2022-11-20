@@ -8,7 +8,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import SwipeableViews from 'react-swipeable-views'
 
 type IImgs = {
-  images: string[]
+  images: any[]
   handleImage: (value: string) => void
 }
 
@@ -54,7 +54,7 @@ const CaruselImg: FC<IImgs> = ({ images, handleImage }) => {
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 component="img"
-                onClick={() => handleImage(step)}
+                onClick={() => handleImage(step?.url)}
                 sx={{
                   height: 'auto',
                   display: 'block',
@@ -62,7 +62,7 @@ const CaruselImg: FC<IImgs> = ({ images, handleImage }) => {
                   overflow: 'hidden',
                   width: '100%',
                 }}
-                src={step}
+                src={step?.url}
               />
             ) : null}
           </div>

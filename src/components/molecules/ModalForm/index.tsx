@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react"
 import './styles.scss'
 import { green } from '@mui/material/colors'
-import {Modal, Box, Fab} from '@mui/material'
+import {Modal, Box, Fab, IconButton} from '@mui/material'
 import DoneIcon from '@mui/icons-material/Done'
 import "../../../../node_modules/highlight.js/styles/tomorrow.css"
 import PopinAttantions from "../../atoms/PopinAttantions"
@@ -237,15 +237,13 @@ const ModalForm: FC<IModalForm> = React.forwardRef(({ show, setShow, submit }) =
 
           <DropImg drag={drag} dragHandler={dragHandler} maxFiles={maxFiles} onDropHandler={onDropHandler}/>
 
-          <Fab 
+          <IconButton 
             size="large"
-            color="primary"
-            aria-label="add" 
-            sx={{backgroundColor: green[500]}}
+            sx={{backgroundColor: green[500], ml: 2}}
             onClick={submitHandler}>
 
             <DoneIcon sx={{ fontSize: 30}} fontSize="large"/>
-          </Fab>
+          </IconButton>
           
         </div>
       </Box>

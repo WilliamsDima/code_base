@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { initializeApp } from "firebase/app"
 import { getStorage } from "firebase/storage"
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth"
-import { addDoc, collection, doc, getDoc, getDocs, getFirestore, query, setDoc, updateDoc, where } from "firebase/firestore/lite"
+import { doc, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore/lite"
 import { User as FirebaseUser } from "firebase/auth"
 import { IItemCode } from '../services/types';
 
@@ -57,7 +57,6 @@ export const useAuth = () => {
                 id,
                 name: user.displayName,
                 email: user.email,
-                codes: []
               })
         } else {
             await setDoc(doc(db, "users", id), {

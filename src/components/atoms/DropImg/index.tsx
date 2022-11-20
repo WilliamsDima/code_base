@@ -14,6 +14,7 @@ const style = {
     flexGrow: 1, 
     mb: 1,
     opacity: 0.5,
+    color: 'text.primary',
   },
 }
 
@@ -41,7 +42,10 @@ const DropImg: FC<IDropImg> = ({ drag, dragHandler, maxFiles, onDropHandler}) =>
         maxLength={maxFiles}
         onDrop={onDropHandler}
         onChange={onDropHandler}/>
-        Отпустите файл для загрузки</div> 
+        <Typography fontWeight={500} component="p" sx={{color: 'text.primary', textAlign: 'center'}}>
+          Отпустите файл для загрузки
+        </Typography>
+        </div> 
 
       : <div 
       onDragStart={(e) => dragHandler(e, true)}
@@ -54,7 +58,10 @@ const DropImg: FC<IDropImg> = ({ drag, dragHandler, maxFiles, onDropHandler}) =>
         type="file" 
         onDrop={onDropHandler}
         onChange={onDropHandler}/>
-        перетащите файл для загрузки</div>}
+        <Typography fontWeight={500} component="p" sx={{color: 'text.primary', textAlign: 'center'}}>
+            перетащите файл для загрузки
+        </Typography>
+        </div>}
       
     </div>
   )

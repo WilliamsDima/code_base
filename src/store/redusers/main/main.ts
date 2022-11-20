@@ -4,7 +4,7 @@ import { IStore } from './types'
 
 const initialState: IStore = {
     user: null,
-    codeBase: null,
+    codeBase: [],
     filterList: null,
 }
 
@@ -14,6 +14,13 @@ const counterSlice = createSlice({
     reducers: {
         setUser: (state, { payload }) => {
             state.user = payload
+        },
+        addCodeBase: (state, { payload }) => {
+            state.codeBase?.push(payload)
+
+            if (state.user && state.codeBase) {
+                addCode(state.user, state.codeBase)
+            }
         },
         setCodeBase: (state, { payload }) => {
             state.codeBase = payload
@@ -26,7 +33,7 @@ const counterSlice = createSlice({
                 return c
             })
 
-            if (state.user && state.codeBase) {
+            if (state.user && state.codeBase?.length) {
                 addCode(state.user, state.codeBase)
             }
         },
@@ -47,4 +54,4 @@ export const mainReducer = (state = initialState, action: any) => {
     return counterSlice.reducer(state, action);
 };
 
-export const { setUser, setCodeBase, copyCode, deleteCode, setFilterData } = counterSlice.actions;
+export const { setUser, setCodeBase, copyCode, deleteCode, setFilterData, addCodeBase } = counterSlice.actions;

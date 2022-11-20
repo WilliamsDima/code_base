@@ -6,7 +6,7 @@ import './styles.scss'
 import { IItemCode } from "../../../services/types"
 import { addCode, getDataUser, useAuth } from "../../../api/firebase"
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks"
-import { setCodeBase } from "../../../store/redusers/main/main"
+import { addCodeBase, setCodeBase } from "../../../store/redusers/main/main"
 import { ref, uploadBytes } from 'firebase/storage'
 import { v4 } from 'uuid'
 import FilterParams from "../FilterParams"
@@ -28,14 +28,12 @@ const Filter = () => {
     }
   }
 
-  const submit = (item: IItemCode, file: any[]) => {
+  const submit = async (item: IItemCode, file: any[]) => {
 
     if (user) {
       const pathToFile = user?.providerData[0].uid
 
-      if (codeBase) {
-        addCode(user, [...codeBase, item])
-      }
+      dispatch(addCodeBase(item))
 
       file.forEach((img: any) => {
 
@@ -43,7 +41,6 @@ const Filter = () => {
         uploadBytes(imgeRef, img)
       });
     }
-    getDataHandler()
   }
 
   useEffect(() => {
@@ -63,9 +60,10 @@ const Filter = () => {
         <Fab 
         size="large"
         color="primary"
+        sx={{bgcolor: 'action.selected',}}
         aria-label="add" 
         onClick={() => setModalOpen(true)}>
-          <AddIcon sx={{fontSize: 30}}/>
+          <AddIcon sx={{fontSize: 30, color: '#2EE5AC'}}/>
         </Fab>
       </div>
 

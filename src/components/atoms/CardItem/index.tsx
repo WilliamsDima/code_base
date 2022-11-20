@@ -4,7 +4,7 @@ import { CardActions, CardContent, Button, Typography, Chip } from '@mui/materia
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import './styles.scss'
 import { IItemCode } from '../../../services/types'
-import { listAll, ref, getDownloadURL } from 'firebase/storage'
+import { listAll, ref, getDownloadURL, deleteObject } from 'firebase/storage'
 import { useAuth } from '../../../api/firebase'
 import Highlight from 'react-highlight'
 import CaruselImg from '../CaruselImg'
@@ -13,6 +13,7 @@ import { useAppDispatch } from '../../../hooks/hooks';
 import { copyCode, deleteCode } from '../../../store/redusers/main/main';
 import PopinAttantions from '../PopinAttantions';
 import ImgModal from '../ImgModal';
+import { async } from '@firebase/util';
 
 type ICard = {
   item: IItemCode
@@ -30,7 +31,7 @@ const CardItem: FC<ICard> = ({item}) => {
   const dispatch = useAppDispatch()
   const { storage, user } = useAuth()
 
-  const [images, setImages] = useState<string[]>([])
+  const [images, setImages] = useState<null | any[]>(null)
   const [copy, setCope] = useState<boolean>(false)
   const [deleteModal, setDeleteModal] = useState<boolean>(false)
 
@@ -44,7 +45,6 @@ const CardItem: FC<ICard> = ({item}) => {
   const handleImage = (value: string) => {
     setImage(value)
     setOpen(true)
-    console.log(image)
   };
 
   const pathToFile = user?.providerData[0].uid
@@ -53,15 +53,18 @@ const CardItem: FC<ICard> = ({item}) => {
     const imageListRef = ref(storage, `images-${pathToFile}/${item.id}/`)
     const { items } = await listAll(imageListRef)
 
-    const urls = items.map(async (item: any) => {
+    const urls = items.map( async (item: any) => {
       return await getDownloadURL(item)
     })
 
     Promise.all(urls).then((values) => {
+      console.log('values', values);
+      
       setImages(values)
     })
     return urls
   }
+
 
   const copyHandler = () => {
     navigator.clipboard.writeText(item.code).then(function() {
@@ -73,11 +76,27 @@ const CardItem: FC<ICard> = ({item}) => {
     })
   }
 
+
   const deleteHandler = (value: boolean) => {
     
     if (value) {
       setDeleteModal(false)
       dispatch(deleteCode(item.id))
+
+      if (images?.length) {
+        images?.forEach((img) => {
+          
+          const imageListRef = ref(storage, `${img?.path}`)
+          deleteObject(imageListRef).then(() => {
+            console.log('file delited!')
+          }).catch((error) => {
+            console.log('deleteHandler', error);
+            
+          })
+        })
+      }
+
+
       // ...
     } else {
       // закрывается предупреждение
@@ -86,8 +105,13 @@ const CardItem: FC<ICard> = ({item}) => {
   }
   
   useEffect(() => {
-    getImages()
-  }, [])
+
+    console.log('images', images)
+    
+    if (!images) {
+      getImages()
+    }
+  }, [images])
 
   return (
     <Card sx={style.card}>
@@ -141,7 +165,7 @@ const CardItem: FC<ICard> = ({item}) => {
         </Typography>}
 
 
-        {!!images.length && <div className='carusel_wrapper'>
+        {!!images?.length && <div className='carusel_wrapper'>
           <CaruselImg images={images} handleImage={handleImage}/></div>}
       </CardContent>
 

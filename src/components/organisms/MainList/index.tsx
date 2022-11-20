@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Box, Typography, Zoom, Fab, IconButton   } from '@mui/material/'
+import { Box, Typography, Zoom, IconButton   } from '@mui/material/'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import './styles.scss'
 import { useAppSelector } from "../../../hooks/hooks"
@@ -32,7 +32,7 @@ const MainList = () => {
   }, [])
   
   useEffect(() => {
-    
+
   }, [filterList])
 
   return (
@@ -42,7 +42,7 @@ const MainList = () => {
         }) : <div className="empty_list">
             
           <Typography 
-          sx={{mt: '50%'}}
+          sx={{mt: '20%'}}
           variant="h2" 
           color="text.secondary">
             нет записей
@@ -55,10 +55,9 @@ const MainList = () => {
           color="primary" 
           aria-label="add" 
           onClick={scrollToHandler}>
-            <ExpandLessIcon sx={{fontSize: 40}}/>
+            <ExpandLessIcon sx={{fontSize: 40, color: '#2EE5AC'}}/>
           </IconButton>
         </Zoom>
-
     </Box>
   )
 }

@@ -1,7 +1,7 @@
 import React, { FC } from "react"
 import './styles.scss'
 import { green, red } from '@mui/material/colors'
-import {Modal, Box, Typography, TextField, Button, Input, Icon, IconButton} from '@mui/material'
+import {Modal, Box, Typography, Icon, IconButton} from '@mui/material'
 
 const style = {
   box: {
@@ -19,6 +19,8 @@ const style = {
     flexGrow: 1, 
     mb: 1,
     opacity: 0.5,
+    color: 'text.primary',
+    textAlign: 'center',
   }
 }
 
@@ -42,18 +44,18 @@ const PopinAttantions: FC<IPopinAttantions> = React.forwardRef(({ show, setShow,
       aria-describedby="keep-mounted-modal-description"
     >
       <Box sx={style.box}>
-        <Typography variant="h3" fontWeight={500} component="p" sx={style.text}>
+        <Typography variant="h4" fontWeight={500} component="p" sx={style.text}>
             {text}
         </Typography>
 
         <div className="btns">
 
           <IconButton onClick={() => setShow(false)} >
-            <Icon fontSize="large" sx={{ color: red[500], fontSize: 50 }}>close</Icon>
+            <Icon fontSize="large" sx={{ color: red[500], fontSize: 30 }}>close</Icon>
           </IconButton>
 
           <IconButton onClick={() => setShow(true)} >
-            <Icon fontSize="large" sx={{ color: green[500], fontSize: 50 }}>done</Icon>
+            <Icon fontSize="large" sx={{ color: green[500], fontSize: 30 }}>done</Icon>
           </IconButton>
 
         </div>
