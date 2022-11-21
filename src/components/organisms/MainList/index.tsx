@@ -32,7 +32,7 @@ const MainList = () => {
   }, [])
   
   useEffect(() => {
-
+    console.log('filterList')
   }, [filterList])
 
   return (

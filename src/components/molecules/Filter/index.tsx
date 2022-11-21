@@ -6,7 +6,7 @@ import './styles.scss'
 import { IItemCode } from "../../../services/types"
 import { addCode, getDataUser, useAuth } from "../../../api/firebase"
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks"
-import { addCodeBase, setCodeBase } from "../../../store/redusers/main/main"
+import { setCodeBase } from "../../../store/redusers/main/main"
 import { ref, uploadBytes } from 'firebase/storage'
 import { v4 } from 'uuid'
 import FilterParams from "../FilterParams"
@@ -22,9 +22,12 @@ const Filter = () => {
   const { user, storage } = useAuth()
 
   const getDataHandler = async () => {
+
     if (user) {
       const res = await getDataUser(user)
-      dispatch(setCodeBase(res?.codes))
+
+      dispatch(setCodeBase([...res?.codes]))
+      
     }
   }
 
@@ -33,20 +36,31 @@ const Filter = () => {
     if (user) {
       const pathToFile = user?.providerData[0].uid
 
-      dispatch(addCodeBase(item))
+      if (file.length) {
+        file.forEach((img: any) => {
 
-      file.forEach((img: any) => {
-
-        const imgeRef = ref(storage, `images-${pathToFile}/${item.id}/${img.name + v4()}`)
-        uploadBytes(imgeRef, img)
-      });
+          const imgeRef = ref(storage, `images-${pathToFile}/${item.id}/${img.name + v4()}`)
+          uploadBytes(imgeRef, img).then(() => {
+            console.log('uploadBytes ready')
+          }).catch(error => {
+            console.log('uploadBytes', error)
+          }).finally(() => {
+            
+            addCode(user, [...codeBase, item])
+            getDataHandler()
+          })
+        })
+      } else {
+        addCode(user, [...codeBase, item])
+        getDataHandler()
+      }
     }
   }
 
   useEffect(() => {
     
     getDataHandler()
-
+    console.log('Filter')
   }, [])
 
   return (

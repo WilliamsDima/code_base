@@ -26,15 +26,23 @@ const FilterParams = () => {
   const [max, setMax] = React.useState<ICopy | null>(null)
   const [search, setSearch] = React.useState<string>('')
 
-  const tags = codeBase?.map((c) => {
-    return c.tags
+  const tags = codeBase?.map((c: any) => {
+    return c?.tags
   }).flat()
 
   const tableTags = {} as any
-  const tagsClear = tags?.filter(({value}) =>(!tableTags[value]  && (tableTags[value] = 1)));
+  const tagsClear = tags?.filter(({value}: any) => {
+    if (value) {
+
+      if (!tableTags[value]  && (tableTags[value] = 1)) {
+        return value
+      }
+    }
+  })
+
 
   const handleChangeTag = (value: ITag | null) => {
-    const isTag = tags?.find((t) => t.id === value?.id)
+    const isTag = tags?.find((t: any) => t.id === value?.id)
     
     isTag && setTag(isTag)
   }
@@ -46,7 +54,7 @@ const FilterParams = () => {
   let resCodeFilter = codeBase
 
   if (tag) {
-    resCodeFilter = resCodeFilter?.filter((c) => c.tags.some((t) => t.value === tag.value))
+    resCodeFilter = resCodeFilter?.filter((c: any) => c.tags.some((t: any) => t.value === tag.value))
   }
 
   if (max) {

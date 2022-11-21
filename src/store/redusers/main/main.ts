@@ -19,14 +19,17 @@ const counterSlice = createSlice({
             state.codeBase?.push(payload)
 
             if (state.user && state.codeBase) {
+                console.log('addCodeBase');
+                
                 addCode(state.user, state.codeBase)
             }
         },
         setCodeBase: (state, { payload }) => {
+            console.log('setCodeBase');
             state.codeBase = payload
         },
         copyCode: (state, { payload }) => {
-            state.codeBase = state.codeBase?.map((c) => {
+            state.codeBase = state.codeBase?.map((c: any) => {
                 if (c.id === payload) {
                     c.copy = c.copy + 1
                 }
@@ -38,7 +41,7 @@ const counterSlice = createSlice({
             }
         },
         deleteCode: (state, { payload }) => {
-            state.codeBase = state.codeBase?.filter((c) => c.id !== payload)
+            state.codeBase = state.codeBase?.filter((c: any) => c.id !== payload)
 
             if (state.user && state.codeBase) {
                 addCode(state.user, state.codeBase)

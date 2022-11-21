@@ -13,8 +13,6 @@ import { useAppDispatch } from '../../../hooks/hooks';
 import { copyCode, deleteCode } from '../../../store/redusers/main/main';
 import PopinAttantions from '../PopinAttantions';
 import ImgModal from '../ImgModal';
-import { async } from '@firebase/util';
-
 type ICard = {
   item: IItemCode
 }
@@ -53,16 +51,17 @@ const CardItem: FC<ICard> = ({item}) => {
     const imageListRef = ref(storage, `images-${pathToFile}/${item.id}/`)
     const { items } = await listAll(imageListRef)
 
-    const urls = items.map( async (item: any) => {
-      return await getDownloadURL(item)
+    const data = items.map(async(item: any) => {
+      
+      return {
+        path: item?._location?.path_,
+        url: await getDownloadURL(item)
+      }
     })
 
-    Promise.all(urls).then((values) => {
-      console.log('values', values);
-      
+    Promise.all(data).then((values) => {
       setImages(values)
     })
-    return urls
   }
 
 
@@ -91,13 +90,9 @@ const CardItem: FC<ICard> = ({item}) => {
             console.log('file delited!')
           }).catch((error) => {
             console.log('deleteHandler', error);
-            
           })
         })
       }
-
-
-      // ...
     } else {
       // закрывается предупреждение
       setDeleteModal(false)
@@ -106,8 +101,6 @@ const CardItem: FC<ICard> = ({item}) => {
   
   useEffect(() => {
 
-    console.log('images', images)
-    
     if (!images) {
       getImages()
     }
