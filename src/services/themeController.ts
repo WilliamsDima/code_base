@@ -4,7 +4,7 @@ import { createTheme } from '@mui/material/styles'
 
 export const useThemeApp = () => {
 
-    const [mode, setMode] = React.useState<'light' | 'dark'>('light')
+    const [mode, setMode] = React.useState<'light' | 'dark'>('dark')
 
 
     const colorMode = React.useMemo(

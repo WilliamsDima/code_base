@@ -26,7 +26,7 @@ const UserInfo: FC<IUserInfo> = ({logout}) => {
 
   return (
     <div className="user" >
-        <Typography variant="h4" component="p" sx={{mr: 2}}>
+        <Typography className="user_name" variant="h4" component="p" sx={{mr: 2}}>
           {user?.displayName}
         </Typography>
 
