@@ -1,5 +1,5 @@
-import React, { FC, useState } from "react"
-import { Modal, Backdrop, Fade } from '@mui/material'
+import React, { FC } from "react"
+import { Modal, Fade } from '@mui/material'
 import './styles.scss';
 
 type IModal = {

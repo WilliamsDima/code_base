@@ -6,6 +6,7 @@ const initialState: IStore = {
     user: null,
     codeBase: [],
     filterList: null,
+    loading: false,
 }
 
 const counterSlice = createSlice({
@@ -15,6 +16,9 @@ const counterSlice = createSlice({
         setUser: (state, { payload }) => {
             state.user = payload
         },
+        setLoading: (state, { payload }) => {
+            state.loading = payload
+        },
         addCodeBase: (state, { payload }) => {
             state.codeBase?.push(payload)
 
@@ -23,10 +27,12 @@ const counterSlice = createSlice({
                 
                 addCode(state.user, state.codeBase)
             }
+            
         },
         setCodeBase: (state, { payload }) => {
             console.log('setCodeBase');
             state.codeBase = payload
+            state.loading = false
         },
         copyCode: (state, { payload }) => {
             state.codeBase = state.codeBase?.map((c: any) => {
@@ -57,4 +63,4 @@ export const mainReducer = (state = initialState, action: any) => {
     return counterSlice.reducer(state, action);
 };
 
-export const { setUser, setCodeBase, copyCode, deleteCode, setFilterData, addCodeBase } = counterSlice.actions;
+export const { setUser, setCodeBase, copyCode, deleteCode, setFilterData, addCodeBase, setLoading } = counterSlice.actions;

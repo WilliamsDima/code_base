@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react"
 import ModalForm from "../ModalForm"
-import {Fab} from '@mui/material'
+import {IconButton} from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import './styles.scss'
 import { IItemCode } from "../../../services/types"
 import { addCode, getDataUser, useAuth } from "../../../api/firebase"
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks"
-import { setCodeBase } from "../../../store/redusers/main/main"
+import { setCodeBase, setLoading } from "../../../store/redusers/main/main"
 import { ref, uploadBytes } from 'firebase/storage'
 import { v4 } from 'uuid'
 import FilterParams from "../FilterParams"
@@ -23,11 +23,14 @@ const Filter = () => {
 
   const getDataHandler = async () => {
 
+    dispatch(setLoading(true))
+
     if (user) {
       const res = await getDataUser(user)
 
       dispatch(setCodeBase([...res?.codes]))
-      
+    } else {
+      dispatch(setLoading(false))
     }
   }
 
@@ -71,14 +74,14 @@ const Filter = () => {
 
 
       <div className="filter-content_addBtn">
-        <Fab 
+        <IconButton 
         size="large"
         color="primary"
         sx={{bgcolor: 'action.selected',}}
         aria-label="add" 
         onClick={() => setModalOpen(true)}>
           <AddIcon sx={{fontSize: 30, color: '#2EE5AC'}}/>
-        </Fab>
+        </IconButton>
       </div>
 
     </div>

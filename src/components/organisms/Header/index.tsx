@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import {AppBar, Box, Toolbar, Typography, Button, IconButton } from '@mui/material/'
 import { useTheme } from '@mui/material/styles'
 import ModeNightIcon from '@mui/icons-material/ModeNight'
@@ -35,6 +35,7 @@ const Header = () => {
 
     console.log('Header');
 
+    
     dispatch(setUser(user))
 
   }, [user])

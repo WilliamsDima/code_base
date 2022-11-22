@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import Filter from "../../molecules/Filter"
 import MainList from "../MainList"
 import { CircularProgress } from "@mui/material"
@@ -8,13 +8,18 @@ import { useAppSelector } from "../../../hooks/hooks"
 
 const Main = () => {
 
-  const { codeBase } = useAppSelector(store => store.main)
+  const { loading } = useAppSelector(store => store.main)
+
+  useEffect(() => {
+
+    
+  }, [loading])
 
   return (
     <div className="main">
             
       <Filter />
-      {codeBase === null ? 
+      {loading ? 
       <CircularProgress 
       style={{width: 70, height: 70, marginTop: '20%'}}
       color="success" /> 

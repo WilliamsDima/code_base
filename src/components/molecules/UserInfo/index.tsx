@@ -30,11 +30,11 @@ const UserInfo: FC<IUserInfo> = ({logout}) => {
           {user?.displayName}
         </Typography>
 
-        <div className="avatar" onClick={handleClick}>
+        <Button className="avatar" onClick={handleClick}>
           <Avatar
             src={user?.photoURL?.toString()}
           />
-        </div>
+        </Button>
 
         <div>
           <Menu

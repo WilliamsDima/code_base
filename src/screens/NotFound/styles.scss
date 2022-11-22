@@ -1,0 +1,27 @@
+@import '../../assets/styles/colors.scss';
+@import '../../assets/styles/globalStyles.scss';
+
+.jhon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    @media screen and (max-width: 500px) {
+        width: 300px
+    }
+}
+
+.empty_pagy {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+
+    .link {
+        color: $mainColor;
+        text-decoration: none;
+    }
+}

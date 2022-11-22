@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Box, Typography, Zoom, IconButton   } from '@mui/material/'
+import { Box, Typography, Zoom, IconButton } from '@mui/material/'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import './styles.scss'
 import { useAppSelector } from "../../../hooks/hooks"

@@ -83,6 +83,8 @@ const FilterParams = () => {
   }
 
   useEffect(() => {
+    console.log('FilterParams')
+    
     dispatch(setFilterData(resCodeFilter))
   }, [tag, max, codeBase, search])
   
@@ -90,9 +92,10 @@ const FilterParams = () => {
     <div className="filter_params">
         <Search value={search} onChange={setSearch} submit={submit}/>
         <div className="params">
-          {!!tags?.length && <SelectList value={tag} onChange={handleChangeTag} label={'Tag'} list={tagsClear}/>}  
+          {!!tags?.length && <SelectList value={tag} onChange={handleChangeTag} label={'Tag'} list={tagsClear}/>} 
+           
           <Button 
-          sx={{fontSize: 10, mr: 1, ml: 1, bgcolor: 'action.selected', color: 'text.primary'}}
+          sx={[{fontSize: 10, bgcolor: 'action.selected', color: 'text.primary'}, !!tags?.length && {mr: 1, ml: 1,}]}
           onClick={clearFilter} 
           variant="contained" 
           size="large">сбросить фильтр</Button>
