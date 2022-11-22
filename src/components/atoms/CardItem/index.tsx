@@ -98,6 +98,12 @@ const CardItem: FC<ICard> = ({item}) => {
       setDeleteModal(false)
     }
   }
+
+  // const links = item.description.match(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g)
+  // const test = item.description.replace(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g, 'тут ссылка')
+
+  // console.log('links', links);
+  
   
   useEffect(() => {
 
@@ -119,10 +125,6 @@ const CardItem: FC<ICard> = ({item}) => {
           {item.title}
         </Typography>
 
-        <Typography variant="h5" color="text.secondary">
-          {item.description}
-        </Typography>
-
         <div className='tags'>
             {item.tags.map((tag) => {
               return <Chip 
@@ -133,12 +135,15 @@ const CardItem: FC<ICard> = ({item}) => {
             })}
         </div>
 
+        <Typography gutterBottom variant="h4" component="p" sx={{whiteSpace: 'pre-line'}}>
+        {`${item.description}`}
+        </Typography>
 
-        
 
         {!!item.code && <Typography variant="h5">
           <div className='language-javascript-of-snippet'>
               <Highlight
+              
               language="javascript" >
               {`${item.code}`}
             </Highlight>

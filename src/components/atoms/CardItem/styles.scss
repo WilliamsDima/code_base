@@ -1,6 +1,29 @@
 @import '../../../assets/styles/colors.scss';
 @import '../../../assets/styles/globalStyles.scss';
 
+.description {
+    color: #fff;
+    margin-top: 2rem;
+    font-size: 20px;
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+
+    @media screen and (max-width: 1200px) {
+        white-space: break-spaces;
+        overflow-x: hidden !important;
+    }
+
+    code {
+        background-color: transparent;
+        color: #fff;
+
+        span {
+            color: #fff !important;
+        }
+        
+    }
+}
+
 .language-javascript-of-snippet {
     position: relative;
     padding: 10px;
