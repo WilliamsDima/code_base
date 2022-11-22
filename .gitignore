@@ -9,6 +9,11 @@
 # testing
 /coverage
 
+# # firebase
+# .cache
+# .firebaserc
+# firebase.json
+
 # production
 /build
 
