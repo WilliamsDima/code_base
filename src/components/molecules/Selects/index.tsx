@@ -18,19 +18,20 @@ type ISelect = {
 const SelectList: FC<ISelect> = ({ label, value, onChange, list}) => {
 
   return (
-    <div className="select_list">
+    <div>
       <Box sx={{ minWidth: 90, maxWidth: 120, bgcolor: 'background.default' }}>
         <FormControl fullWidth>
           <InputLabel 
           sx={{bgcolor: 'background.default'}}
           id="demo-simple-select-label">
-            {label}
+            {label.toLocaleLowerCase()}
           </InputLabel>
           <Select
+            className="select_list"
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={value?.value}
-            label={label}
+            value={value?.value.toLocaleLowerCase()}
+            label={label.toLocaleLowerCase()}
             sx={{ bgcolor: 'background.default', fontSize: 14 }}
             
           >
@@ -39,7 +40,7 @@ const SelectList: FC<ISelect> = ({ label, value, onChange, list}) => {
               onClick={() => onChange(t)}
               sx={{ fontSize: 14 }}
               key={t.id} 
-              value={t.id}>{t.value}</MenuItem>
+              value={t.id}>{t.value.toLocaleLowerCase()}</MenuItem>
             })}
           </Select>
         </FormControl>

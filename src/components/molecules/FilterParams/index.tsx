@@ -31,19 +31,20 @@ const FilterParams = () => {
   }).flat()
 
   const tableTags = {} as any
-  const tagsClear = tags?.filter(({value}: any) => {
-    if (value) {
+  const tagsClear = tags?.filter(({value}: {value: string}) => {
+    const tag = value.toLowerCase()
+    if (tag) {
 
-      if (!tableTags[value]  && (tableTags[value] = 1)) {
-        return value
+      if (!tableTags[tag] && (tableTags[tag] = 1)) {
+        return tag
       }
     }
   })
 
 
   const handleChangeTag = (value: ITag | null) => {
-    const isTag = tags?.find((t: any) => t.id === value?.id)
-    
+    const isTag = tagsClear?.find((t: any) => t.id === value?.id)
+
     isTag && setTag(isTag)
   }
 
@@ -54,7 +55,7 @@ const FilterParams = () => {
   let resCodeFilter = codeBase
 
   if (tag) {
-    resCodeFilter = resCodeFilter?.filter((c: any) => c.tags.some((t: any) => t.value === tag.value))
+    resCodeFilter = resCodeFilter?.filter((c: any) => c.tags.some((t: ITag) => t.value?.toLocaleLowerCase() === tag.value.toLocaleLowerCase()))
   }
 
   if (max) {

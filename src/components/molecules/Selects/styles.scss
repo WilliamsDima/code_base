@@ -1,6 +1,16 @@
 @import '../../../assets/styles/colors.scss';
 @import '../../../assets/styles/globalStyles.scss';
 
-.select_list {
-
+div {
+    &::-webkit-scrollbar {
+        width: 2px;
+        background-color: transparent;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background-color: $mainColor;
+        border-radius: 5px;
+    }
+    
 }
+
