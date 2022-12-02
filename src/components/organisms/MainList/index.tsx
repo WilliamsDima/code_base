@@ -3,7 +3,7 @@ import { Box, Typography, Zoom, IconButton } from '@mui/material/'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import './styles.scss'
 import { useAppSelector } from "../../../hooks/hooks"
-import CardItem from "../../atoms/CardItem"
+import CardItem from "../CardItem"
 
 
 const MainList = () => {

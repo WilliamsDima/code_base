@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/hooks"
 import Search from "../../atoms/Search"
 import SelectList from "../Selects"
 import { ITag } from "../../../services/types"
-import { dataSortMaxValue, filterSearch } from "../../../hooks/helpers"
+import { dataSortByDate, dataSortMaxValue, filterSearch } from "../../../hooks/helpers"
 import { setFilterData } from "../../../store/redusers/main/main"
 import Button from '@mui/material/Button'
 
@@ -15,6 +15,8 @@ interface ICopy extends ITag {
 const copeList = [
   {id: 1, value: 'Популярные', max: true},
   {id: 2, value: 'Непопулярныне', max: false},
+  {id: 3, value: 'Сначало новые', max: true},
+  {id: 4, value: 'Сначало старые', max: false},
 ]
 
 const FilterParams = () => {
@@ -59,7 +61,12 @@ const FilterParams = () => {
   }
 
   if (max) {
-    resCodeFilter = resCodeFilter && dataSortMaxValue(resCodeFilter, max.max)
+
+    if (max.id === 3 || max.id === 4) {
+      resCodeFilter = resCodeFilter && dataSortByDate(resCodeFilter, max.max)
+    } else {
+      resCodeFilter = resCodeFilter && dataSortMaxValue(resCodeFilter, max.max)
+    }
   }
 
   if (search.trim()) {
@@ -100,7 +107,7 @@ const FilterParams = () => {
           onClick={clearFilter} 
           variant="contained" 
           size="large">сбросить фильтр</Button>
-          <SelectList value={max} onChange={handleChangeMaxValue} label={'Копирований'} list={copeList}/>
+          <SelectList value={max} onChange={handleChangeMaxValue} label={'Сортировка'} list={copeList}/>
         </div>
 
     </div>

@@ -9,6 +9,14 @@ export const dataSortMaxValue = (resCodeFilter: any[], max: boolean) => resCodeF
   return a.copy - b.copy
 })
 
+export const dataSortByDate= (resCodeFilter: IItemCode[], max: boolean) => resCodeFilter 
+&& resCodeFilter.slice().sort((a, b) => {
+  if (max) {
+    return b.id - a.id
+  }
+  return a.id - b.id
+})
+
 export const filterSearch = (codeBase: IItemCode[], search: string) => codeBase 
 && codeBase.slice().filter((c) => {
   const text = c.title.toLocaleLowerCase() + ' ' + c.description.toLocaleLowerCase()

@@ -4,7 +4,7 @@ import {IconButton} from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import './styles.scss'
 import { IItemCode } from "../../../services/types"
-import { addCode, getDataUser, useAuth } from "../../../api/firebase"
+import { getDataUser, useAuth } from "../../../api/firebase"
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks"
 import { setCodeBase, setLoading } from "../../../store/redusers/main/main"
 import { ref, uploadBytes } from 'firebase/storage'
@@ -49,14 +49,15 @@ const Filter = () => {
             console.log('uploadBytes', error)
           }).finally(() => {
             
-            addCode(user, [...codeBase, item])
-            getDataHandler()
+            dispatch(setCodeBase([item, ...codeBase]))
           })
         })
       } else {
-        addCode(user, [...codeBase, item])
-        getDataHandler()
+        dispatch(setCodeBase([item, ...codeBase]))
       }
+
+      console.log('submit');
+      
     }
   }
 

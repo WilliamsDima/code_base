@@ -19,19 +19,13 @@ const counterSlice = createSlice({
         setLoading: (state, { payload }) => {
             state.loading = payload
         },
-        addCodeBase: (state, { payload }) => {
-            state.codeBase?.push(payload)
-
-            if (state.user && state.codeBase) {
-                console.log('addCodeBase');
-                
-                addCode(state.user, state.codeBase)
-            }
-            
-        },
         setCodeBase: (state, { payload }) => {
             console.log('setCodeBase');
             state.codeBase = payload
+
+            if (state.user) {
+                addCode(state.user, payload)
+            }
             state.loading = false
         },
         copyCode: (state, { payload }) => {
@@ -63,4 +57,4 @@ export const mainReducer = (state = initialState, action: any) => {
     return counterSlice.reducer(state, action);
 };
 
-export const { setUser, setCodeBase, copyCode, deleteCode, setFilterData, addCodeBase, setLoading } = counterSlice.actions;
+export const { setUser, setCodeBase, copyCode, deleteCode, setFilterData, setLoading } = counterSlice.actions;

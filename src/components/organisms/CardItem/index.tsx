@@ -7,12 +7,12 @@ import { IItemCode } from '../../../services/types'
 import { listAll, ref, getDownloadURL, deleteObject } from 'firebase/storage'
 import { useAuth } from '../../../api/firebase'
 import Highlight from 'react-highlight'
-import CaruselImg from '../CaruselImg'
+import CaruselImg from '../../molecules/CaruselImg'
 import { green, grey } from '@mui/material/colors'
 import { useAppDispatch } from '../../../hooks/hooks';
 import { copyCode, deleteCode } from '../../../store/redusers/main/main';
-import PopinAttantions from '../PopinAttantions';
-import ImgModal from '../ImgModal';
+import PopinAttantions from '../../atoms/PopinAttantions';
+import ImgModal from '../../atoms/ImgModal';
 type ICard = {
   item: IItemCode
 }

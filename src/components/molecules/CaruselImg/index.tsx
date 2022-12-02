@@ -71,7 +71,7 @@ const CaruselImg: FC<IImgs> = ({ images, handleImage }) => {
       <MobileStepper
         steps={maxSteps}
         position="static"
-        sx={{width: '100%'}}
+        sx={{width: '100%', backgroundColor: 'transparent'}}
         activeStep={activeStep}
         nextButton={
           <Button
