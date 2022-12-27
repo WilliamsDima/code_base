@@ -29,5 +29,5 @@ jobs:
           REACT_APP_FIREBASE_APP_ID: ${{secrets.REACT_APP_FIREBASE_APP_ID}}
           REACT_APP_FIREBASE_MEASUREMENT_ID: ${{secrets.REACT_APP_FIREBASE_MEASUREMENT_ID}}
         run: npm run build
-      - name: check jest tests
-        run: npm run test
+      # - name: check jest tests
+      #   run: npm run test
