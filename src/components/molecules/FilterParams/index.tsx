@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable array-callback-return */
 import { useEffect, useState } from "react"
 import "./styles.scss"
 import { useAppSelector } from "../../../hooks/hooks"

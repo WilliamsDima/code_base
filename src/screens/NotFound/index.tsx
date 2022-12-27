@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import "./styles.scss"
 import { useTheme } from "@mui/material/styles"
 import { Box, Typography, Button } from "@mui/material"
