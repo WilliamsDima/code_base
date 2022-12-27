@@ -1,9 +1,12 @@
+import { useLocalStorage } from "./../hooks/useLocalStorage"
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useMemo } from "react"
 import { createTheme } from "@mui/material/styles"
 
 export const useThemeApp = () => {
 	const [mode, setMode] = useState<"light" | "dark">("dark")
+
+	const [themeLocal] = useLocalStorage("themeApp", "")
 
 	const colorMode = useMemo(
 		() => ({
@@ -32,8 +35,8 @@ export const useThemeApp = () => {
 	)
 
 	useEffect(() => {
-		if (localStorage.getItem("themeApp")) {
-			colorMode.toggleColorMode(localStorage.getItem("themeApp"))
+		if (themeLocal) {
+			colorMode.toggleColorMode(themeLocal)
 		}
 	}, [])
 

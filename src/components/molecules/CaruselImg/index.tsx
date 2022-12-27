@@ -1,4 +1,4 @@
-import { FC, useState } from "react"
+import { FC, useCallback, useState } from "react"
 import { useTheme } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 import MobileStepper from "@mui/material/MobileStepper"
@@ -27,6 +27,8 @@ const CaruselImg: FC<IImgs> = ({ images, handleImage }) => {
 	const [activeStep, setActiveStep] = useState(0)
 	const maxSteps = images.length
 
+	const imgHandler = useCallback(handleImage, [handleImage])
+
 	const handleNext = () => {
 		setActiveStep(prevActiveStep => prevActiveStep + 1)
 	}
@@ -52,7 +54,7 @@ const CaruselImg: FC<IImgs> = ({ images, handleImage }) => {
 						{Math.abs(activeStep - index) <= 2 ? (
 							<Box
 								component='img'
-								onClick={() => handleImage(step?.url)}
+								onClick={() => imgHandler(step?.url)}
 								sx={{
 									height: "auto",
 									display: "block",

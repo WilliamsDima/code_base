@@ -16,9 +16,11 @@ import { useAuth } from "../../../api/firebase"
 import UserInfo from "../../molecules/UserInfo"
 import { AppContext } from "../../../context"
 import { useActions } from "../../../hooks/useActions"
+import { useLocalStorage } from "../../../hooks/useLocalStorage"
 
 const Header = () => {
 	const { setUser } = useActions()
+	const [, setThemeLocal] = useLocalStorage("themeApp", "")
 
 	const { logout, signIn, user } = useAuth()
 	const theme = useTheme()
@@ -32,10 +34,8 @@ const Header = () => {
 
 	const chandeThemeHandler = () => {
 		colorMode.toggleColorMode()
-		localStorage.setItem(
-			"themeApp",
-			theme.palette.mode === "dark" ? "light" : "dark"
-		)
+
+		setThemeLocal(theme.palette.mode === "dark" ? "light" : "dark")
 	}
 
 	useEffect(() => {
