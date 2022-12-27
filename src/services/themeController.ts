@@ -1,45 +1,40 @@
-import { useEffect } from 'react';
-import React from 'react'
-import { createTheme } from '@mui/material/styles'
+import { useEffect, useState, useMemo } from "react"
+import { createTheme } from "@mui/material/styles"
 
 export const useThemeApp = () => {
+	const [mode, setMode] = useState<"light" | "dark">("dark")
 
-    const [mode, setMode] = React.useState<'light' | 'dark'>('dark')
+	const colorMode = useMemo(
+		() => ({
+			toggleColorMode: (value?: any) => {
+				if (!value) {
+					setMode(prevMode => (prevMode === "light" ? "dark" : "light"))
+				} else {
+					setMode(value)
+				}
+			},
+		}),
+		[]
+	)
 
+	const theme = useMemo(
+		() =>
+			createTheme({
+				palette: {
+					mode,
+					primary: {
+						main: "#fff",
+					},
+				},
+			}),
+		[mode]
+	)
 
-    const colorMode = React.useMemo(
-      () => ({
-        toggleColorMode: (value?: any) => {
+	useEffect(() => {
+		if (localStorage.getItem("themeApp")) {
+			colorMode.toggleColorMode(localStorage.getItem("themeApp"))
+		}
+	}, [])
 
-            if (!value) {
-                setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
-            } else {
-                setMode(value)
-            }   
-        },
-      }),
-      [],
-    )
-
-    const theme = React.useMemo(
-        () =>
-          createTheme({
-            palette: {
-              mode,
-              primary: {
-                main: '#fff',
-              },
-            },
-          }),
-        [mode],
-      )
-
-    useEffect(() => {
-
-        if (localStorage.getItem('themeApp')) {
-            colorMode.toggleColorMode(localStorage.getItem('themeApp'))
-        }
-    }, [])
-
-    return {theme, colorMode}
+	return { theme, colorMode }
 }

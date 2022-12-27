@@ -1,92 +1,88 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import ModalForm from "../ModalForm"
-import {IconButton} from '@mui/material'
-import AddIcon from '@mui/icons-material/Add'
-import './styles.scss'
+import { IconButton } from "@mui/material"
+import AddIcon from "@mui/icons-material/Add"
+import "./styles.scss"
 import { IItemCode } from "../../../services/types"
 import { getDataUser, useAuth } from "../../../api/firebase"
-import { useAppDispatch, useAppSelector } from "../../../hooks/hooks"
-import { setCodeBase, setLoading } from "../../../store/redusers/main/main"
-import { ref, uploadBytes } from 'firebase/storage'
-import { v4 } from 'uuid'
+import { useAppSelector } from "../../../hooks/hooks"
+import { ref, uploadBytes } from "firebase/storage"
+import { v4 } from "uuid"
 import FilterParams from "../FilterParams"
-
+import { useActions } from "../../../hooks/useActions"
 
 const Filter = () => {
+	const { setCodeBase, setLoading } = useActions()
+	const { codeBase } = useAppSelector(store => store.main)
 
-  const dispatch = useAppDispatch()
-  const { codeBase } = useAppSelector(store => store.main)
+	const [isModalOpen, setModalOpen] = useState(false)
 
-  const [isModalOpen, setModalOpen] = useState(false)
+	const { user, storage } = useAuth()
 
-  const { user, storage } = useAuth()
+	const getDataHandler = async () => {
+		setLoading(true)
 
-  const getDataHandler = async () => {
+		if (user) {
+			const res = await getDataUser(user)
 
-    dispatch(setLoading(true))
+			setCodeBase([...res?.codes])
+		} else {
+			setLoading(false)
+		}
+	}
 
-    if (user) {
-      const res = await getDataUser(user)
+	const submit = async (item: IItemCode, file: any[]) => {
+		if (user) {
+			const pathToFile = user?.providerData[0].uid
 
-      dispatch(setCodeBase([...res?.codes]))
-    } else {
-      dispatch(setLoading(false))
-    }
-  }
+			if (file.length) {
+				file.forEach((img: any) => {
+					const imgeRef = ref(
+						storage,
+						`images-${pathToFile}/${item.id}/${img.name + v4()}`
+					)
+					uploadBytes(imgeRef, img)
+						.then(() => {
+							console.log("uploadBytes ready")
+						})
+						.catch(error => {
+							console.log("uploadBytes", error)
+						})
+						.finally(() => {
+							setCodeBase([item, ...codeBase])
+						})
+				})
+			} else {
+				setCodeBase([item, ...codeBase])
+			}
 
-  const submit = async (item: IItemCode, file: any[]) => {
+			console.log("submit")
+		}
+	}
 
-    if (user) {
-      const pathToFile = user?.providerData[0].uid
+	useEffect(() => {
+		getDataHandler()
+		// console.log("Filter")
+	}, [])
 
-      if (file.length) {
-        file.forEach((img: any) => {
+	return (
+		<div className='filter-content'>
+			<FilterParams />
+			<ModalForm show={isModalOpen} setShow={setModalOpen} submit={submit} />
 
-          const imgeRef = ref(storage, `images-${pathToFile}/${item.id}/${img.name + v4()}`)
-          uploadBytes(imgeRef, img).then(() => {
-            console.log('uploadBytes ready')
-          }).catch(error => {
-            console.log('uploadBytes', error)
-          }).finally(() => {
-            
-            dispatch(setCodeBase([item, ...codeBase]))
-          })
-        })
-      } else {
-        dispatch(setCodeBase([item, ...codeBase]))
-      }
-
-      console.log('submit');
-      
-    }
-  }
-
-  useEffect(() => {
-    
-    getDataHandler()
-    console.log('Filter')
-  }, [])
-
-  return (
-    <div className="filter-content">
-
-      <FilterParams />
-      <ModalForm show={isModalOpen} setShow={setModalOpen} submit={submit}/>
-
-
-      <div className="filter-content_addBtn">
-        <IconButton 
-        size="large"
-        color="primary"
-        sx={{bgcolor: 'action.selected',}}
-        aria-label="add" 
-        onClick={() => setModalOpen(true)}>
-          <AddIcon sx={{fontSize: 30, color: '#2EE5AC'}}/>
-        </IconButton>
-      </div>
-
-    </div>
-  )
+			<div className='filter-content_addBtn'>
+				<IconButton
+					size='large'
+					color='primary'
+					sx={{ bgcolor: "action.selected" }}
+					aria-label='add'
+					onClick={() => setModalOpen(true)}
+				>
+					<AddIcon sx={{ fontSize: 30, color: "#2EE5AC" }} />
+				</IconButton>
+			</div>
+		</div>
+	)
 }
 
 export default Filter

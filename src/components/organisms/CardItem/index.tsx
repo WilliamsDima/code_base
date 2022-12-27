@@ -15,10 +15,9 @@ import { useAuth } from "../../../api/firebase"
 import Highlight from "react-highlight"
 import CaruselImg from "../../molecules/CaruselImg"
 import { green, grey } from "@mui/material/colors"
-import { useAppDispatch } from "../../../hooks/hooks"
-import { copyCode, deleteCode } from "../../../store/redusers/main/main"
 import PopinAttantions from "../../atoms/PopinAttantions"
 import ImgModal from "../../atoms/ImgModal"
+import { useActions } from "../../../hooks/useActions"
 type ICard = {
 	item: IItemCode
 }
@@ -31,7 +30,7 @@ const style = {
 }
 
 const CardItem: FC<ICard> = ({ item }) => {
-	const dispatch = useAppDispatch()
+	const { deleteCode, copyCode } = useActions()
 	const { storage, user } = useAuth()
 
 	const [images, setImages] = useState<null | any[]>(null)
@@ -72,7 +71,7 @@ const CardItem: FC<ICard> = ({ item }) => {
 		navigator.clipboard.writeText(item.code).then(
 			function () {
 				console.log("Async: Copying to clipboard was successful!")
-				dispatch(copyCode(item.id))
+				copyCode(item.id)
 				setCope(true)
 			},
 			function (err) {
@@ -84,7 +83,7 @@ const CardItem: FC<ICard> = ({ item }) => {
 	const deleteHandler = (value: boolean) => {
 		if (value) {
 			setDeleteModal(false)
-			dispatch(deleteCode(item.id))
+			deleteCode(item.id)
 
 			if (images?.length) {
 				images?.forEach(img => {
