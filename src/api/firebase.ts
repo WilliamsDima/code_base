@@ -1,11 +1,10 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react'
 import { initializeApp } from "firebase/app"
 import { getStorage } from "firebase/storage"
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth"
 import { doc, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore/lite"
 import { User as FirebaseUser } from "firebase/auth"
-import { IItemCode } from '../services/types';
+import { IItemCode } from '../services/types'
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
