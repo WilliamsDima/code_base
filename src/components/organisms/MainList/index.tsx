@@ -34,7 +34,7 @@ const MainList = () => {
 	}, [filterList])
 
 	return (
-		<Box sx={{ flexGrow: 1, width: "100%" }}>
+		<Box sx={{ flexGrow: 1, width: "100%" }} role={"list"}>
 			{filterList && !!filterList.length ? (
 				filterList.map(item => {
 					return <CardItem key={item.id} item={item} />

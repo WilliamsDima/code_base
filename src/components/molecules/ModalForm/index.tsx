@@ -55,7 +55,7 @@ type IModalForm = {
 	submit: (item: IItemCode, file: any[]) => any
 }
 
-const ModalForm: FC<IModalForm> = forwardRef(({ show, setShow, submit }) => {
+const ModalForm: FC<IModalForm> = ({ show, setShow, submit }) => {
 	const [showAttantion, setShowAttantion] = useState(false)
 
 	const maxTitle = 80
@@ -256,6 +256,6 @@ const ModalForm: FC<IModalForm> = forwardRef(({ show, setShow, submit }) => {
 			</Modal>
 		</div>
 	)
-})
+}
 
 export default ModalForm

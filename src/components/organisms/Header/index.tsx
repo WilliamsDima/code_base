@@ -7,6 +7,7 @@ import {
 	Typography,
 	Button,
 	IconButton,
+	Icon,
 } from "@mui/material/"
 import { useTheme } from "@mui/material/styles"
 import ModeNightIcon from "@mui/icons-material/ModeNight"
@@ -70,13 +71,12 @@ const Header = () => {
 							theme.palette.mode === "dark" ? "theme_app dark" : "theme_app"
 						}
 					>
-						<IconButton className='moon' color='primary'>
+						<div className='moon' color='primary'>
 							<ModeNightIcon sx={{ fontSize: 30, color: "#2EE5AC" }} />
-						</IconButton>
-
-						<IconButton className='sun' color='primary'>
+						</div>
+						<div className='sun' color='primary'>
 							<LightModeIcon sx={{ fontSize: 30, color: "#2EE5AC" }} />
-						</IconButton>
+						</div>
 					</Button>
 
 					{user ? (

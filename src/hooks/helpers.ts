@@ -2,7 +2,7 @@
 import { IItemCode } from "../services/types"
 
 // Поскольку массив заморожен в строгом режиме, нужно скопировать массив перед его сортировкой поэтому использую slice
-export const dataSortMaxValue = (resCodeFilter: any[], max: boolean) =>
+export const dataSortMaxValue = (resCodeFilter: IItemCode[], max: boolean) =>
 	resCodeFilter &&
 	resCodeFilter.slice().sort((a, b) => {
 		if (max) {

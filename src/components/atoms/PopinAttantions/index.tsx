@@ -30,45 +30,43 @@ interface IPopinAttantions {
 	text: string
 }
 
-const PopinAttantions: FC<IPopinAttantions> = forwardRef(
-	({ show, setShow, text }) => {
-		return (
-			<div>
-				<Modal
-					keepMounted
-					sx={{ zIndex: 1000 }}
-					open={show}
-					aria-labelledby='keep-mounted-modal-title'
-					aria-describedby='keep-mounted-modal-description'
-				>
-					<Box sx={style.box}>
-						<Typography
-							variant='h4'
-							fontWeight={500}
-							component='p'
-							sx={style.text}
-						>
-							{text}
-						</Typography>
+const PopinAttantions: FC<IPopinAttantions> = ({ show, setShow, text }) => {
+	return (
+		<div>
+			<Modal
+				keepMounted
+				sx={{ zIndex: 1000 }}
+				open={show}
+				aria-labelledby='keep-mounted-modal-title'
+				aria-describedby='keep-mounted-modal-description'
+			>
+				<Box sx={style.box}>
+					<Typography
+						variant='h4'
+						fontWeight={500}
+						component='p'
+						sx={style.text}
+					>
+						{text}
+					</Typography>
 
-						<div className='btns'>
-							<IconButton onClick={() => setShow(false)}>
-								<Icon fontSize='large' sx={{ color: red[500], fontSize: 30 }}>
-									close
-								</Icon>
-							</IconButton>
+					<div className='btns'>
+						<IconButton onClick={() => setShow(false)}>
+							<Icon fontSize='large' sx={{ color: red[500], fontSize: 30 }}>
+								close
+							</Icon>
+						</IconButton>
 
-							<IconButton onClick={() => setShow(true)}>
-								<Icon fontSize='large' sx={{ color: green[500], fontSize: 30 }}>
-									done
-								</Icon>
-							</IconButton>
-						</div>
-					</Box>
-				</Modal>
-			</div>
-		)
-	}
-)
+						<IconButton onClick={() => setShow(true)}>
+							<Icon fontSize='large' sx={{ color: green[500], fontSize: 30 }}>
+								done
+							</Icon>
+						</IconButton>
+					</div>
+				</Box>
+			</Modal>
+		</div>
+	)
+}
 
 export default PopinAttantions
