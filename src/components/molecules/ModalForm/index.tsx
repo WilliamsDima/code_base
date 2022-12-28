@@ -1,4 +1,4 @@
-import { FC, useState, ReactNode, forwardRef } from "react"
+import { FC, useState, ReactNode } from "react"
 import "./styles.scss"
 import { green } from "@mui/material/colors"
 import { Modal, Box, IconButton } from "@mui/material"
