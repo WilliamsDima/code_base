@@ -1,14 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useContext } from "react"
-import {
-	AppBar,
-	Box,
-	Toolbar,
-	Typography,
-	Button,
-	IconButton,
-	Icon,
-} from "@mui/material/"
+import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material/"
 import { useTheme } from "@mui/material/styles"
 import ModeNightIcon from "@mui/icons-material/ModeNight"
 import LightModeIcon from "@mui/icons-material/LightMode"
