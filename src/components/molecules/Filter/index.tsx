@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import ModalForm from "../ModalForm"
 import { IconButton } from "@mui/material"
 import AddIcon from "@mui/icons-material/Add"
@@ -13,10 +13,8 @@ import FilterParams from "../FilterParams"
 import { useActions } from "../../../hooks/useActions"
 
 const Filter = () => {
-	const { setCodeBase, setLoading } = useActions()
-	const { codeBase } = useAppSelector(store => store.main)
-
-	const [isModalOpen, setModalOpen] = useState(false)
+	const { setCodeBase, setLoading, setModal } = useActions()
+	const { codeBase, modalOpen } = useAppSelector(store => store.main)
 
 	const { user, storage } = useAuth()
 
@@ -44,7 +42,7 @@ const Filter = () => {
 					)
 					uploadBytes(imgeRef, img)
 						.then(() => {
-							console.log("uploadBytes ready")
+							// console.log("uploadBytes ready")
 						})
 						.catch(error => {
 							console.log("uploadBytes", error)
@@ -57,7 +55,7 @@ const Filter = () => {
 				setCodeBase([item, ...codeBase])
 			}
 
-			console.log("submit")
+			// console.log("submit")
 		}
 	}
 
@@ -69,7 +67,7 @@ const Filter = () => {
 	return (
 		<div className='filter-content'>
 			<FilterParams />
-			<ModalForm show={isModalOpen} setShow={setModalOpen} submit={submit} />
+			<ModalForm show={!!modalOpen} setShow={setModal} submit={submit} />
 
 			<div className='filter-content_addBtn'>
 				<IconButton
@@ -77,7 +75,7 @@ const Filter = () => {
 					color='primary'
 					sx={{ bgcolor: "action.selected" }}
 					aria-label='add'
-					onClick={() => setModalOpen(true)}
+					onClick={() => setModal(true)}
 				>
 					<AddIcon sx={{ fontSize: 30, color: "#2EE5AC" }} />
 				</IconButton>

@@ -7,7 +7,9 @@ import { IStore } from "../redusers/main/types"
 export type MainActions = {
 	setUser: (state: IStore, payload: PayloadAction<FirebaseUser | null>) => void
 	setLoading: (state: IStore, payload: PayloadAction<boolean>) => void
+	setModal: (state: IStore, payload: PayloadAction<IItemCode | boolean>) => void
 	setCodeBase: (state: IStore, payload: PayloadAction<IItemCode[]>) => void
+	editeItem: (state: IStore, payload: PayloadAction<IItemCode>) => void
 	copyCode: (state: IStore, payload: PayloadAction<number>) => void
 	deleteCode: (state: IStore, payload: PayloadAction<number>) => void
 	setFilterData: (state: IStore, payload: PayloadAction<IItemCode[]>) => void
@@ -16,6 +18,9 @@ export type MainActions = {
 export const mainActions: MainActions = {
 	setUser: (state, { payload }) => {
 		state.user = payload
+	},
+	setModal: (state, { payload }) => {
+		state.modalOpen = payload
 	},
 	setLoading: (state, { payload }) => {
 		state.loading = payload
@@ -27,6 +32,21 @@ export const mainActions: MainActions = {
 			addCode(state.user, payload)
 		}
 		state.loading = false
+	},
+	editeItem: (state, { payload }) => {
+		state.codeBase = state.codeBase.map((item: IItemCode) => {
+			if (item.id === payload.id) {
+				item.code = payload.code
+				item.description = payload.description
+				item.tags = payload.tags
+				item.title = payload.title
+			}
+			return item
+		})
+
+		if (state.user) {
+			addCode(state.user, state.codeBase)
+		}
 	},
 	copyCode: (state, { payload }) => {
 		state.codeBase = state.codeBase?.map((c: any) => {

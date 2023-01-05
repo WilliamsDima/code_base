@@ -7,6 +7,7 @@ const initialState: IStore = {
 	codeBase: [],
 	filterList: null,
 	loading: false,
+	modalOpen: false,
 }
 
 const counterSlice = createSlice({

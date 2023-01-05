@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { FC, useState, ReactNode } from "react"
 import "./styles.scss"
 import { green } from "@mui/material/colors"
@@ -10,6 +11,9 @@ import Tags from "../../atoms/Tags"
 import ImagesList from "../../atoms/ImagesList"
 import DropImg from "../../atoms/DropImg"
 import { IItemCode, ITag } from "../../../services/types"
+import { useAppSelector } from "../../../hooks/hooks"
+import { useEffect } from "react"
+import { useActions } from "../../../hooks/useActions"
 
 type IModalFormItem = {
 	id: number
@@ -40,23 +44,22 @@ const style = {
 		overflowY: "scroll",
 	},
 	modal: {
-		// top: 1,
 		zIndex: 100,
-		// maxHeight: '75vh',
-		// display: 'flex',
-		// justifyContent: 'center',
-		// alignItems: 'center',
 	},
 }
 
 type IModalForm = {
-	show: boolean
+	show: IItemCode | boolean
 	setShow: (target: any) => any
 	submit: (item: IItemCode, file: any[]) => any
 }
 
 const ModalForm: FC<IModalForm> = ({ show, setShow, submit }) => {
 	const [showAttantion, setShowAttantion] = useState(false)
+	const { modalOpen } = useAppSelector(store => store.main)
+	const { editeItem } = useActions()
+
+	const isItemCode = typeof modalOpen === "object"
 
 	const maxTitle = 80
 	const [title, setTitle] = useState("")
@@ -196,22 +199,40 @@ const ModalForm: FC<IModalForm> = ({ show, setShow, submit }) => {
 
 		if (done) {
 			const data: IItemCode = {
-				id: +new Date(),
+				id: isItemCode ? modalOpen?.id : +new Date(),
 				title,
 				description,
 				code,
-				file: [],
+				file: isItemCode ? modalOpen?.file : [],
 				tags,
-				copy: 0,
+				copy: isItemCode ? modalOpen?.copy : 0,
 			}
 
-			submit(data, file)
+			console.log("submit", data)
+
+			if (isItemCode) {
+				editeItem(data)
+			} else {
+				submit(data, file)
+			}
+
 			setShow(false)
 			clear()
 		} else {
 			alert("не все поля заполнены!")
 		}
 	}
+
+	useEffect(() => {
+		// console.log("isItemCode", isItemCode)
+
+		if (isItemCode) {
+			setTitle(modalOpen.title)
+			setDescription(modalOpen.description)
+			setTags(modalOpen.tags)
+			setCode(modalOpen.code)
+		}
+	}, [isItemCode])
 
 	return (
 		<div className='modal'>
@@ -224,7 +245,7 @@ const ModalForm: FC<IModalForm> = ({ show, setShow, submit }) => {
 			<Modal
 				keepMounted
 				sx={style.modal}
-				open={show}
+				open={!!show}
 				onClose={() => setShowAttantion(true)}
 				aria-labelledby='keep-mounted-modal-title'
 				aria-describedby='keep-mounted-modal-description'
@@ -237,12 +258,14 @@ const ModalForm: FC<IModalForm> = ({ show, setShow, submit }) => {
 					<ImagesList file={file} maxFiles={maxFiles} deleteImg={deleteImg} />
 
 					<div className='btns'>
-						<DropImg
-							drag={drag}
-							dragHandler={dragHandler}
-							maxFiles={maxFiles}
-							onDropHandler={onDropHandler}
-						/>
+						{!isItemCode && (
+							<DropImg
+								drag={drag}
+								dragHandler={dragHandler}
+								maxFiles={maxFiles}
+								onDropHandler={onDropHandler}
+							/>
+						)}
 
 						<IconButton
 							size='large'

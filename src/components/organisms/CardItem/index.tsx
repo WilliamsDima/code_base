@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { FC, useEffect, useState } from "react"
+import { FC, memo, useEffect, useState } from "react"
 import Card from "@mui/material/Card"
 import { CardActions, Button } from "@mui/material"
 import "./styles.scss"
@@ -19,11 +19,12 @@ const style = {
 	card: {
 		mb: 4,
 		width: "100%",
+		position: "relative",
 	},
 }
 
-const CardItem: FC<ICard> = ({ item }) => {
-	const { deleteCode } = useActions()
+const CardItem: FC<ICard> = memo(({ item }) => {
+	const { deleteCode, setModal } = useActions()
 
 	const { storage, user } = useAuth()
 
@@ -84,6 +85,8 @@ const CardItem: FC<ICard> = ({ item }) => {
 	}
 
 	useEffect(() => {
+		// console.log("card item")
+
 		if (!images) {
 			getImages()
 		}
@@ -91,6 +94,11 @@ const CardItem: FC<ICard> = ({ item }) => {
 
 	return (
 		<Card sx={style.card}>
+			<div className='edite'>
+				<Button size='large' color='success' onClick={() => setModal(item)}>
+					редактировать
+				</Button>
+			</div>
 			<PopinAttantions
 				show={deleteModal}
 				text={`Вы уверены что хотите удалить ${item.title}?`}
@@ -108,6 +116,6 @@ const CardItem: FC<ICard> = ({ item }) => {
 			</CardActions>
 		</Card>
 	)
-}
+})
 
 export default CardItem
