@@ -1,11 +1,11 @@
 import "./App.scss"
 import { Provider } from "react-redux"
-import { store } from "./store/index"
-import Navigations from "./navigations/routes"
 import { BrowserRouter } from "react-router-dom"
 import { ThemeProvider } from "@mui/material/styles"
 import { AppContext } from "./context"
-import { useThemeApp } from "./services/themeController"
+import { store } from "./store"
+import { useThemeApp } from "./hooks/useTheme"
+import Navigations from "./navigations/routes"
 
 function App() {
 	const { colorMode, theme } = useThemeApp()

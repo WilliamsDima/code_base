@@ -1,121 +1,120 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { FC, memo, useEffect, useState } from "react"
-import Card from "@mui/material/Card"
-import { CardActions, Button } from "@mui/material"
-import "./styles.scss"
-import { IItemCode } from "../../../services/types"
-import { listAll, ref, getDownloadURL, deleteObject } from "firebase/storage"
-import { useAuth } from "../../../api/firebase"
-import PopinAttantions from "../../atoms/PopinAttantions"
-import ImgModal from "../../atoms/ImgModal"
-import { useActions } from "../../../hooks/useActions"
-import CardItemContent from "../../molecules/CardContent"
+import { FC, memo, useEffect, useMemo, useState } from 'react'
+import Card from '@mui/material/Card'
+import { CardActions, Button, Typography } from '@mui/material'
+import './styles.scss'
+import { listAll, ref, getDownloadURL } from 'firebase/storage'
+import { IItemCode } from '../../../appTypes/types'
+import { useActions } from '../../../hooks/useActions'
+import { useAuth } from '../../../hooks/useAuth'
+import PopinAttantions from '../../atoms/PopinAttantions'
+import CardItemContent from '../../molecules/CardContent'
+import ImgModal from '../../atoms/ImgModal'
+import { deleteCode } from '../../../api/firebase'
+import { getDateDisplay } from '../../../hooks/helpers'
 
 type ICard = {
-	item: IItemCode
+  item: IItemCode
 }
 
 const style = {
-	card: {
-		mb: 4,
-		width: "100%",
-		position: "relative",
-	},
+  card: {
+    mb: 4,
+    width: '100%',
+    position: 'relative',
+  },
 }
 
 const CardItem: FC<ICard> = memo(({ item }) => {
-	const { deleteCode, setModal } = useActions()
+  const { deleteCode: deleteCodeAC, setModal } = useActions()
 
-	const { storage, user } = useAuth()
+  const { storage, user } = useAuth()
 
-	const [deleteModal, setDeleteModal] = useState<boolean>(false)
+  const dateText = useMemo(() => {
+    return getDateDisplay(item.id)
+  }, [])
 
-	const [open, setOpen] = useState(false)
-	const [image, setImage] = useState<null | string>(null)
-	const [images, setImages] = useState<null | any[]>(null)
+  const [deleteModal, setDeleteModal] = useState<boolean>(false)
 
-	const handleClose = () => {
-		setOpen(false)
-	}
+  const [open, setOpen] = useState(false)
+  const [image, setImage] = useState<null | string>(null)
+  const [images, setImages] = useState<null | any[]>(null)
 
-	const handleImage = (value: string) => {
-		setImage(value)
-		setOpen(true)
-	}
+  const handleClose = () => {
+    setOpen(false)
+  }
 
-	const pathToFile = user?.providerData[0].uid
+  const handleImage = (value: string) => {
+    setImage(value)
+    setOpen(true)
+  }
 
-	const getImages = async () => {
-		const imageListRef = ref(storage, `images-${pathToFile}/${item.id}/`)
-		const { items } = await listAll(imageListRef)
+  const pathToFile = user?.providerData[0].uid
 
-		const data = items.map(async (item: any) => {
-			return {
-				path: item?._location?.path_,
-				url: await getDownloadURL(item),
-			}
-		})
+  const getImages = async () => {
+    const imageListRef = ref(storage, `images-${pathToFile}/${item.id}/`)
+    const { items } = await listAll(imageListRef)
 
-		Promise.all(data).then(values => {
-			setImages(values)
-		})
-	}
+    const data = items.map(async (item: any) => {
+      return {
+        path: item?._location?.path_,
+        url: await getDownloadURL(item),
+      }
+    })
 
-	const deleteHandler = (value: boolean) => {
-		if (value) {
-			setDeleteModal(false)
-			deleteCode(item.id)
+    Promise.all(data).then((values) => {
+      setImages(values)
+    })
+  }
 
-			if (images?.length) {
-				images?.forEach(img => {
-					const imageListRef = ref(storage, `${img?.path}`)
-					deleteObject(imageListRef)
-						.then(() => {
-							console.log("file delited!")
-						})
-						.catch(error => {
-							console.log("deleteHandler", error)
-						})
-				})
-			}
-		} else {
-			// закрывается предупреждение
-			setDeleteModal(false)
-		}
-	}
+  const deleteHandler = (value: boolean) => {
+    if (value) {
+      setDeleteModal(false)
+      deleteCodeAC(item.id)
+      deleteCode(images)
+    } else {
+      // закрывается предупреждение
+      setDeleteModal(false)
+    }
+  }
 
-	useEffect(() => {
-		// console.log("card item")
+  useEffect(() => {
+    // console.log("card item")
 
-		if (!images) {
-			getImages()
-		}
-	}, [images])
+    if (!images) {
+      getImages()
+    }
+  }, [images])
 
-	return (
-		<Card sx={style.card}>
-			<div className='edite'>
-				<Button size='large' color='success' onClick={() => setModal(item)}>
-					редактировать
-				</Button>
-			</div>
-			<PopinAttantions
-				show={deleteModal}
-				text={`Вы уверены что хотите удалить ${item.title}?`}
-				setShow={deleteHandler}
-			/>
+  return (
+    <Card sx={style.card}>
+      <div className="edite">
+        <Button size="large" color="success" onClick={() => setModal(item)}>
+          редактировать
+        </Button>
+      </div>
+      <div className="date">
+        <Typography variant="body1" component="p" className="date_text">
+          {dateText}
+        </Typography>
+      </div>
+      <PopinAttantions
+        show={deleteModal}
+        text={`Вы уверены что хотите удалить ${item.title}?`}
+        setShow={deleteHandler}
+      />
 
-			<CardItemContent item={item} images={images} handleImage={handleImage} />
+      <CardItemContent item={item} images={images} handleImage={handleImage} />
 
-			<ImgModal open={open} image={image} handleClose={handleClose} />
+      <ImgModal open={open} image={image} handleClose={handleClose} />
 
-			<CardActions sx={{ justifyContent: "flex-end" }}>
-				<Button size='large' color='error' onClick={() => setDeleteModal(true)}>
-					Удалить
-				</Button>
-			</CardActions>
-		</Card>
-	)
+      <CardActions sx={{ justifyContent: 'flex-end' }}>
+        <Button size="large" color="error" onClick={() => setDeleteModal(true)}>
+          Удалить
+        </Button>
+      </CardActions>
+    </Card>
+  )
 })
 
 export default CardItem

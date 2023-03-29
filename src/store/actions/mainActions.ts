@@ -1,7 +1,7 @@
 import { PayloadAction } from "@reduxjs/toolkit"
 import { User as FirebaseUser } from "firebase/auth"
 import { addCode } from "../../api/firebase"
-import { IItemCode } from "../../services/types"
+import { IItemCode } from "../../appTypes/types"
 import { IStore } from "../redusers/main/types"
 
 export type MainActions = {

@@ -1,6 +1,6 @@
-import { counterActions } from "./../store/redusers/main/main"
 import { bindActionCreators } from "@reduxjs/toolkit"
 import { useMemo } from "react"
+import { counterActions } from "../store/redusers/main/main"
 import { useAppDispatch } from "./hooks"
 
 const allActions = {

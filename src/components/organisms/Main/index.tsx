@@ -1,9 +1,9 @@
 import { useEffect } from "react"
-import Filter from "../../molecules/Filter"
-import MainList from "../MainList"
 import { CircularProgress } from "@mui/material"
 import "./styles.scss"
 import { useAppSelector } from "../../../hooks/hooks"
+import Filter from "../../molecules/Filter"
+import MainList from "../MainList"
 
 const Main = () => {
 	const { loading } = useAppSelector(store => store.main)

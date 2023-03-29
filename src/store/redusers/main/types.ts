@@ -1,5 +1,5 @@
 import { User as FirebaseUser } from "firebase/auth"
-import { IItemCode } from "../../../services/types"
+import { IItemCode } from "../../../appTypes/types"
 
 export type IStore = {
 	user: FirebaseUser | null

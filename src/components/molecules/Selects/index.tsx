@@ -6,7 +6,7 @@ import FormControl from "@mui/material/FormControl"
 import Select from "@mui/material/Select"
 import {} from "@mui/material/colors"
 import "./styles.scss"
-import { ITag } from "../../../services/types"
+import { ITag } from "../../../appTypes/types"
 
 type ISelect = {
 	label: string

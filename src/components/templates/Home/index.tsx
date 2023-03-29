@@ -1,8 +1,8 @@
 import "./styles.scss"
-import { useAppSelector } from "../../../hooks/hooks"
-import Empty from "../../atoms/Empty"
-import Main from "../../organisms/Main"
 import { Container } from "@mui/material"
+import { useAppSelector } from "../../../hooks/hooks"
+import Main from "../../organisms/Main"
+import Empty from "../../atoms/Empty"
 
 const HomeTemplate = () => {
 	const { user } = useAppSelector(store => store.main)

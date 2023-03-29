@@ -1,85 +1,72 @@
-@import "../../../assets/styles/colors.scss";
-@import "../../../assets/styles/globalStyles.scss";
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/globalStyles.scss';
 
 .description {
-	color: #fff;
-	margin-top: 2rem;
-	font-size: 20px;
-	margin-bottom: 2rem;
-	padding: 1rem 0;
+  color: #fff;
+  margin-top: 2rem;
+  font-size: 20px;
+  margin-bottom: 2rem;
+  padding: 1rem 0;
 
-	@media screen and (max-width: 1200px) {
-		white-space: break-spaces;
-		overflow-x: hidden !important;
-	}
+  @media screen and (max-width: 1200px) {
+    white-space: break-spaces;
+    overflow-x: hidden !important;
+  }
 
-	code {
-		background-color: transparent;
-		color: #fff;
+  code {
+    background-color: transparent;
+    color: #fff;
 
-		span {
-			color: #fff !important;
-		}
-	}
+    span {
+      color: #fff !important;
+    }
+  }
 }
 
 .edite {
-	position: absolute;
-	top: 1rem;
-	right: 1rem;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.date {
+  position: absolute;
+  bottom: 1rem;
+  left: 2rem;
+
+  .date_text {
+    opacity: 0.5;
+  }
 }
 
 .language-javascript-of-snippet {
-	position: relative;
-	// padding: 10px;
-	// background-color: #000;
-	color: #fff;
-	border-radius: 5px;
-	margin-top: 2rem;
+  position: relative;
+  // padding: 10px;
+  // background-color: #000;
+  color: #fff;
+  border-radius: 5px;
+  margin-top: 2rem;
 
-	code {
-		// background-color: #000;
-		color: #fff;
-	}
-
-	.copy_btn {
-		position: absolute;
-		right: 1rem;
-		top: 1rem;
-		cursor: pointer;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		button {
-			padding: 0;
-			margin-right: 0.2rem;
-			&:hover {
-				border: none;
-				background-color: transparent;
-			}
-
-			svg {
-				font-size: 20px;
-			}
-		}
-	}
+  code {
+    // background-color: #000;
+    color: #fff;
+  }
 }
 
 .tags {
-	display: flex;
-	margin-top: 1rem;
-	flex-wrap: wrap;
+  display: flex;
+  margin-top: 1rem;
+  flex-wrap: wrap;
 }
 
 .imgs {
-	margin-top: 2rem;
+  margin-top: 2rem;
 }
 
 .carusel_wrapper {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
 }

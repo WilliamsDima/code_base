@@ -1,60 +1,62 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { CardContent, Typography, Chip } from "@mui/material"
-import "./styles.scss"
-import CaruselImg from "../../molecules/CaruselImg"
-import Code from "../../atoms/Code"
-import { FC } from "react"
-import { IItemCode } from "../../../services/types"
+import { CardContent, Typography, Chip } from '@mui/material'
+import './styles.scss'
+import { FC } from 'react'
+import { IItemCode } from '../../../appTypes/types'
+import Code from '../../atoms/Code'
+import CaruselImg from '../CaruselImg'
 
 type ContentType = {
-	item: IItemCode
-	images: null | any[]
-	handleImage: (value: string) => void
+  item: IItemCode
+  images: null | any[]
+  handleImage: (value: string) => void
 }
 
 const CardItemContent: FC<ContentType> = ({ item, images, handleImage }) => {
-	// const links = item.description.match(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g)
-	// const test = item.description.replace(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g, 'тут ссылка')
+  return (
+    <CardContent>
+      <Typography gutterBottom variant="h4" component="p">
+        {item.title}
+      </Typography>
 
-	// console.log('links', links);
+      <div className="tags">
+        {item.tags.map((tag) => {
+          return (
+            <Chip
+              sx={{ mr: 1, mb: 1, fontSize: 14 }}
+              key={tag.id}
+              label={tag.value}
+              variant="outlined"
+            />
+          )
+        })}
+      </div>
 
-	return (
-		<CardContent>
-			<Typography gutterBottom variant='h4' component='p'>
-				{item.title}
-			</Typography>
+      <Typography
+        gutterBottom
+        variant="h4"
+        component="p"
+        sx={{ whiteSpace: 'pre-line' }}
+      >
+        {`${item.description}`}
+      </Typography>
 
-			<div className='tags'>
-				{item.tags.map(tag => {
-					return (
-						<Chip
-							sx={{ mr: 1, mb: 1, fontSize: 14 }}
-							key={tag.id}
-							label={tag.value}
-							variant='outlined'
-						/>
-					)
-				})}
-			</div>
+      {!!item.code && (
+        <Code
+          code={item.code}
+          copy={item.copy}
+          id={item.id}
+          language={item.language}
+        />
+      )}
 
-			<Typography
-				gutterBottom
-				variant='h4'
-				component='p'
-				sx={{ whiteSpace: "pre-line" }}
-			>
-				{`${item.description}`}
-			</Typography>
-
-			{!!item.code && <Code code={item.code} copy={item.copy} id={item.id} />}
-
-			{!!images?.length && (
-				<div className='carusel_wrapper'>
-					<CaruselImg images={images} handleImage={handleImage} />
-				</div>
-			)}
-		</CardContent>
-	)
+      {!!images?.length && (
+        <div className="carusel_wrapper">
+          <CaruselImg images={images} handleImage={handleImage} />
+        </div>
+      )}
+    </CardContent>
+  )
 }
 
 export default CardItemContent

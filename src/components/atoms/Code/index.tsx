@@ -8,22 +8,26 @@ import {
 	oneLight,
 } from "react-syntax-highlighter/dist/esm/styles/prism"
 import "./styles.scss"
-import { useActions } from "../../../hooks/useActions"
 import { useTheme } from "@mui/material/styles"
+import { useActions } from "../../../hooks/useActions"
 
 type CodeType = {
 	code: string
 	copy: number
 	id: number
+	language?: string
 }
 
-const Code: FC<CodeType> = ({ code, copy, id }) => {
+const Code: FC<CodeType> = ({ code, copy, id, language }) => {
 	const { copyCode } = useActions()
 
 	const theme = useTheme()
 	const codeTheme = theme.palette.mode === "dark" ? dracula : oneLight
 
 	const [copyCount, setCopyCount] = useState<boolean>(false)
+	const [typeCode, setTypeCode] = useState<string>(
+		() => language || "javascript"
+	)
 
 	const copyHandler = () => {
 		navigator.clipboard.writeText(code).then(
@@ -40,7 +44,7 @@ const Code: FC<CodeType> = ({ code, copy, id }) => {
 	return (
 		<Typography variant='h5'>
 			<div className='language-javascript-of-snippet'>
-				<SyntaxHighlighter language='javascript' style={codeTheme}>
+				<SyntaxHighlighter language={typeCode} style={codeTheme}>
 					{`${code}`}
 				</SyntaxHighlighter>
 

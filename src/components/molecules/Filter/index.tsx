@@ -1,16 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react"
-import ModalForm from "../ModalForm"
 import { IconButton } from "@mui/material"
 import AddIcon from "@mui/icons-material/Add"
 import "./styles.scss"
-import { IItemCode } from "../../../services/types"
-import { getDataUser, useAuth } from "../../../api/firebase"
-import { useAppSelector } from "../../../hooks/hooks"
 import { ref, uploadBytes } from "firebase/storage"
 import { v4 } from "uuid"
-import FilterParams from "../FilterParams"
 import { useActions } from "../../../hooks/useActions"
+import { useAppSelector } from "../../../hooks/hooks"
+import { useAuth } from "../../../hooks/useAuth"
+import { getDataUser } from "../../../api/firebase"
+import { IItemCode } from "../../../appTypes/types"
+import FilterParams from "../FilterParams"
+import ModalForm from "../ModalForm"
 
 const Filter = () => {
 	const { setCodeBase, setLoading, setModal } = useActions()

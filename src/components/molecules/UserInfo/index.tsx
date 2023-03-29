@@ -1,7 +1,7 @@
 import { FC, useState, MouseEvent } from "react"
-import { useAppSelector } from "../../../hooks/hooks"
 import { Button, Menu, MenuItem, Avatar, Typography } from "@mui/material"
 import "./styles.scss"
+import { useAppSelector } from "../../../hooks/hooks"
 
 interface IUserInfo {
 	logout: () => void
