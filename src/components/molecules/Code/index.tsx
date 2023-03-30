@@ -25,6 +25,7 @@ const Code: FC<CodeType> = ({ code, copy, id, language }) => {
   const codeTheme = theme.palette.mode === 'dark' ? dracula : oneLight
 
   const [copyCount, setCopyCount] = useState<boolean>(false)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [typeCode, setTypeCode] = useState<string>(
     () => language || 'javascript'
   )
