@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { FC, useState, ReactNode } from 'react'
-import './styles.scss'
+import styles from './styles.module.scss'
 import { green } from '@mui/material/colors'
 import { Modal, Box, IconButton } from '@mui/material'
 import DoneIcon from '@mui/icons-material/Done'
@@ -31,20 +31,7 @@ type IModalFormItem = {
 
 const style = {
   box: {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '60%',
     bgcolor: 'background.paper',
-    boxShadow: 24,
-    borderRadius: 1,
-    maxHeight: '75vh',
-    p: 4,
-    overflowY: 'scroll',
-  },
-  modal: {
-    zIndex: 100,
   },
 }
 
@@ -235,49 +222,51 @@ const ModalForm: FC<IModalForm> = ({ show, setShow, submit }) => {
   }, [isItemCode])
 
   return (
-    <div className="modal">
+    <>
       <PopinAttantions
         show={showAttantion}
         text={'Вы уверены что хотите закрыть? Все данные будут стёрты.'}
         setShow={closeHandler}
       />
 
-      <Modal
-        keepMounted
-        sx={style.modal}
-        open={!!show}
-        onClose={() => setShowAttantion(true)}
-        aria-labelledby="keep-mounted-modal-title"
-        aria-describedby="keep-mounted-modal-description"
-      >
-        <Box sx={style.box} className="modal_content">
-          {itemsForm.map((item) => {
-            return <ModalFormItem key={item.id} {...item} />
-          })}
+      <div className={styles.modalWrapper}>
+        <Modal
+          keepMounted
+          className={styles.modal}
+          open={!!show}
+          onClose={() => setShowAttantion(true)}
+          aria-labelledby="keep-mounted-modal-title"
+          aria-describedby="keep-mounted-modal-description"
+        >
+          <Box sx={style.box} className={styles.modalContent}>
+            {itemsForm.map((item) => {
+              return <ModalFormItem key={item.id} {...item} />
+            })}
 
-          <ImagesList file={file} maxFiles={maxFiles} deleteImg={deleteImg} />
+            <ImagesList file={file} maxFiles={maxFiles} deleteImg={deleteImg} />
 
-          <div className="btns">
-            {!isItemCode && (
-              <DropImg
-                drag={drag}
-                dragHandler={dragHandler}
-                maxFiles={maxFiles}
-                onDropHandler={onDropHandler}
-              />
-            )}
+            <div className={styles.btns}>
+              {!isItemCode && (
+                <DropImg
+                  drag={drag}
+                  dragHandler={dragHandler}
+                  maxFiles={maxFiles}
+                  onDropHandler={onDropHandler}
+                />
+              )}
 
-            <IconButton
-              size="large"
-              sx={{ backgroundColor: green[500], ml: 2 }}
-              onClick={submitHandler}
-            >
-              <DoneIcon sx={{ fontSize: 30 }} fontSize="large" />
-            </IconButton>
-          </div>
-        </Box>
-      </Modal>
-    </div>
+              <IconButton
+                size="large"
+                sx={{ backgroundColor: green[500], ml: 2 }}
+                onClick={submitHandler}
+              >
+                <DoneIcon sx={{ fontSize: 30 }} fontSize="large" />
+              </IconButton>
+            </div>
+          </Box>
+        </Modal>
+      </div>
+    </>
   )
 }
 

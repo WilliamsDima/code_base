@@ -3,7 +3,7 @@ import { CardContent, Typography, Chip } from '@mui/material'
 import './styles.scss'
 import { FC } from 'react'
 import { IItemCode } from '../../../appTypes/types'
-import Code from '../../atoms/Code'
+import Code from '../Code'
 import CaruselImg from '../CaruselImg'
 
 type ContentType = {
