@@ -1,16 +1,14 @@
-import "./styles.scss"
-import { Container } from "@mui/material"
-import { useAppSelector } from "../../../hooks/hooks"
-import Main from "../../organisms/Main"
-import Empty from "../../atoms/Empty"
+import './styles.scss'
+import Button from '@storybook/atoms/Button'
+import Text from '@organisms/Text'
 
 const HomeTemplate = () => {
-	const { user } = useAppSelector(store => store.main)
-	return (
-		<Container maxWidth='lg' sx={{ mt: 5 }}>
-			{user ? <Main /> : <Empty />}
-		</Container>
-	)
+  return (
+    <div>
+      <Button>HomeTemplate</Button>
+      <Text />
+    </div>
+  )
 }
 
 export default HomeTemplate

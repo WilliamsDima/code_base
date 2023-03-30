@@ -1,0 +1,171 @@
+@import './colors.scss';
+
+%h1 {
+  color: $blue;
+  font-size: 44px;
+  font-weight: 700;
+  text-decoration: none;
+
+  @media screen and (max-width: 1050px) {
+    font-size: 32px;
+  }
+
+  @media screen and (max-width: 570px) {
+    font-size: 18px;
+  }
+}
+
+%h3 {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: normal;
+  text-decoration: none;
+
+  @media screen and (max-width: 1050px) {
+    font-size: 14px;
+  }
+
+  @media screen and (max-width: 570px) {
+    font-size: 12px;
+  }
+}
+
+%h4 {
+  font-size: 16px;
+  text-decoration: none;
+
+  @media screen and (max-width: 1050px) {
+    font-size: 12px;
+  }
+
+  @media screen and (max-width: 570px) {
+    font-size: 10px;
+  }
+}
+
+%p1 {
+  font-size: 18px;
+  text-align: center;
+  line-height: 1.5;
+  text-decoration: none;
+
+  @media screen and (max-width: 570px) {
+    font-size: 14px;
+  }
+}
+
+%p2 {
+  font-size: 16px;
+  text-align: center;
+  line-height: 1.5;
+  text-decoration: none;
+
+  @media screen and (max-width: 570px) {
+    font-size: 12px;
+  }
+}
+
+%titleDisk {
+  font-size: 24px;
+  line-height: normal;
+  color: $black;
+  text-decoration: none;
+
+  @media screen and (max-width: 1050px) {
+    font-size: 20px;
+  }
+
+  @media screen and (max-width: 570px) {
+    font-size: 16px;
+  }
+}
+
+%nameFile {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.4;
+  color: $black;
+  text-decoration: none;
+
+  @media screen and (max-width: 1050px) {
+    font-size: 11px;
+  }
+
+  @media screen and (max-width: 570px) {
+    font-size: 7px;
+  }
+}
+
+%neonText {
+  animation: neon 1.5s infinite alternate;
+  text-decoration: none;
+  text-shadow: 0 0 1px $white, 0 0 4px $white, 0 0 8px $white, 0 0 12px $blue,
+    0 0 18px $blue, 0 0 22px $blue, 0 0 26px $blue, 0 0 30px $blue;
+
+  @keyframes neon {
+    100% {
+      text-shadow: 0 0 10px $white, 0 0 14px $white, 0 0 18px $white,
+        0 0 22px $blue, 0 0 28px $blue, 0 0 32px $blue, 0 0 36px $blue,
+        0 0 40px $blue;
+    }
+    0% {
+      text-shadow: 0 0 1px $white, 0 0 4px $white, 0 0 8px $white,
+        0 0 12px $blue, 0 0 18px $blue, 0 0 22px $blue, 0 0 26px $blue,
+        0 0 30px $blue;
+    }
+  }
+}
+
+%sectionTitle {
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: $blue;
+  text-align: center;
+  @media screen and (max-width: 1050px) {
+    font-size: 40px;
+  }
+
+  @media screen and (max-width: 570px) {
+    font-size: 20px;
+  }
+}
+
+%titleGragient {
+  text-decoration: none;
+  background: rgb(252, 212, 98);
+  background: linear-gradient(
+    90deg,
+    rgba(252, 212, 98, 1) 50%,
+    rgba(236, 240, 243, 1) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+%titleGragientBlue {
+  text-decoration: none;
+  background: rgb(94, 181, 247);
+  background: linear-gradient(
+    90deg,
+    rgba(94, 181, 247, 1) 50%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+%titleGragientBlueLeft {
+  text-decoration: none;
+  background: rgb(94, 181, 247);
+  background: linear-gradient(
+    270deg,
+    rgba(94, 181, 247, 1) 50%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

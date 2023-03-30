@@ -1,0 +1,19 @@
+@import './reset.scss';
+@import './colors.scss';
+@import './styles.scss';
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+}
+
+label {
+  font-size: 1.4rem !important;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe\UI, Roboto,
+    Helvetica\Neue, Arial, Noto\Sans, sans-serif, Gilroy-Medium, Gilroy-Bold;
+  color: #fff;
+  font-size: 1.4rem;
+}

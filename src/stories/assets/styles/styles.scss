@@ -1,0 +1,243 @@
+@import './colors.scss';
+
+%borderGradientAnim {
+  padding: 1px;
+  background: linear-gradient(to right, red, purple);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+}
+
+%animBgGradient {
+  background: linear-gradient(-45deg, #5985b0, #2b5278, #17212b, #1e1e1e);
+
+  background-size: 400% 400%;
+  animation: gradient 20s ease infinite;
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+}
+
+%showAnimPopup {
+  animation-name: showPopup;
+  animation-duration: 0.3s;
+  animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation-iteration-count: 1;
+  animation-delay: 0s;
+  animation-fill-mode: forwards;
+  transform: translateY(20px);
+
+  @keyframes showPopup {
+    0% {
+      transform: translateY(20px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+}
+
+%neonBorderAnim {
+  animation: pulsate 1.5s infinite alternate;
+  border: 1px solid #fff;
+  box-shadow: 0 0 0.2rem #fff, 0 0 0.2rem #fff, 0 0 2rem $blue, 0 0 0.8rem $blue,
+    0 0 2.8rem $blue, inset 0 0 1.3rem $blue;
+
+  @keyframes pulsate {
+    100% {
+      text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff, 0 0 40px $blue,
+        0 0 80px $blue, 0 0 90px $blue, 0 0 100px $blue, 0 0 150px $blue;
+    }
+    0% {
+      text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 6px #fff, 0 0 10px $blue,
+        0 0 45px $blue, 0 0 55px $blue, 0 0 70px $blue, 0 0 80px $blue;
+    }
+  }
+}
+
+%bgColorShow {
+  animation-name: bgColorShow;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  animation-delay: 0s;
+  animation-fill-mode: forwards;
+  background-color: rgba(31, 41, 54, 0);
+
+  @keyframes bgColorShow {
+    0% {
+      background-color: rgba(31, 41, 54, 0);
+    }
+    100% {
+      background-color: rgba(31, 41, 54, 0.8);
+    }
+  }
+}
+
+%showAnimZoom {
+  animation-name: showBlockZoom;
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation-iteration-count: 1;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+  transform: scale(0);
+
+  @keyframes showBlockZoom {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+}
+
+%showAnimTooltip {
+  animation-name: showAnimTooltip;
+  animation-duration: 2s;
+  animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation-iteration-count: 1;
+  animation-delay: 0s;
+  animation-fill-mode: forwards;
+  transform: translateY(50px);
+  opacity: 0;
+
+  @keyframes showAnimTooltip {
+    0% {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    50% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+  }
+}
+
+%showAnimZoomMin {
+  animation-name: showBlockZoomMin;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  transform: scale(0);
+
+  @keyframes showBlockZoomMin {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(0.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+}
+
+%showAnimUp {
+  animation-name: showBlockUp;
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation-iteration-count: 1;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+  transform: translateY(-80vh);
+
+  @keyframes showBlockUp {
+    0% {
+      transform: translateY(-80vh);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+}
+
+%showAnimRight {
+  animation-name: showBlockRight;
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation-iteration-count: 1;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+  transform: translateX(300%);
+
+  @keyframes showBlockRight {
+    0% {
+      transform: translateX(300%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+}
+
+%progressAnim {
+  animation-name: progressBlock;
+  animation-duration: 1.5s;
+  animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+  width: 0%;
+
+  @keyframes progressBlock {
+    0% {
+      width: 0%;
+    }
+    100% {
+      width: 40%;
+    }
+  }
+}
+
+%shadow {
+  box-shadow: 0px 0px 4px 0px $black;
+}
+
+%pulseAnim {
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+  animation: pulse 2s infinite;
+
+  &:hover {
+    animation: none;
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(223, 223, 223, 0.4);
+    }
+    70% {
+      box-shadow: 0 0 0 20px rgba(151, 151, 151, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(134, 134, 134, 0);
+    }
+  }
+}

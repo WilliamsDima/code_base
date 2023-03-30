@@ -1,0 +1,40 @@
+@import '../../../../styles/colors.scss';
+@import '../../../../styles/styles.scss';
+@import '../../../../styles/typography.scss';
+@import '../../assets/styles/globals.scss';
+
+.inputWrapp {
+  position: relative;
+  display: flex;
+
+  &.block {
+    display: inline-block;
+  }
+  &::after {
+    position: absolute;
+    bottom: -2rem;
+    left: 0;
+    content: attr(data-error);
+    @extend %nameFile;
+    color: $red;
+  }
+  .input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid $gold;
+    outline: none !important;
+    transition: all 0.2s linear;
+    border-radius: 5px;
+    padding: 0.2rem 1rem;
+    @extend %p2;
+    text-align: start;
+
+    &.error {
+      border-color: $red;
+    }
+
+    &:focus {
+      border-color: $blue;
+    }
+  }
+}

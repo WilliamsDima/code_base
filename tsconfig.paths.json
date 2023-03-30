@@ -1,0 +1,10 @@
+// jsconfig.paths.json or tsconfig.paths.json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@storybook/*": ["src/stories/*"],
+      "@organisms/*": ["src/components/organisms/*"]
+    }
+  }
+}
