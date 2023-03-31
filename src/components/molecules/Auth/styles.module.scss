@@ -1,0 +1,29 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/typography.scss';
+@import '../../../assets/styles/globalStyles.scss';
+
+.auth {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  .btns {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+
+    .btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      p {
+        @extend %p1;
+        line-height: 0;
+        padding: 1.5rem;
+      }
+    }
+  }
+}

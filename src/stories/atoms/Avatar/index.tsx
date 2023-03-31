@@ -1,16 +1,19 @@
-import React, { FC, memo, DOMAttributes } from 'react'
+import React, { FC, memo, HTMLAttributes } from 'react'
 import styles from './style.module.scss'
+import cn from 'classnames'
 
-interface IAvatar extends DOMAttributes<HTMLDivElement> {
+interface IAvatar extends HTMLAttributes<HTMLDivElement> {
   src: string | undefined | null
   name: string | undefined | null
 }
 
 const Avatar: FC<IAvatar> = memo((props) => {
-  const { src = '', name = '', ...rest } = props
+  const { src = '', name = '', className, ...rest } = props
+
+  const classNames = cn(styles.avatar, className)
   return (
-    <div className={styles.avatar} {...rest}>
-      {src ? <img src={src} /> : <p>{name?.[0]}</p>}
+    <div className={classNames} {...rest}>
+      {src ? <img src={src} alt={name || 'img'} /> : <p>{name?.[0]}</p>}
     </div>
   )
 })

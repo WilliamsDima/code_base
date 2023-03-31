@@ -55,24 +55,6 @@
   }
 }
 
-%neonBorderAnim {
-  animation: pulsate 1.5s infinite alternate;
-  border: 1px solid #fff;
-  box-shadow: 0 0 0.2rem #fff, 0 0 0.2rem #fff, 0 0 2rem $blue, 0 0 0.8rem $blue,
-    0 0 2.8rem $blue, inset 0 0 1.3rem $blue;
-
-  @keyframes pulsate {
-    100% {
-      text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff, 0 0 40px $blue,
-        0 0 80px $blue, 0 0 90px $blue, 0 0 100px $blue, 0 0 150px $blue;
-    }
-    0% {
-      text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 6px #fff, 0 0 10px $blue,
-        0 0 45px $blue, 0 0 55px $blue, 0 0 70px $blue, 0 0 80px $blue;
-    }
-  }
-}
-
 %bgColorShow {
   animation-name: bgColorShow;
   animation-duration: 0.5s;

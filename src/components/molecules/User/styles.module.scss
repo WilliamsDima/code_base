@@ -1,0 +1,36 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/typography.scss';
+@import '../../../assets/styles/globalStyles.scss';
+
+.auth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1rem;
+  position: relative;
+
+  @media screen and (max-width: 570px) {
+    margin: 0;
+  }
+
+  .user {
+    padding: 0.2rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .avatar {
+      width: 35px;
+      height: 35px;
+    }
+
+    .userName {
+      @extend %p1;
+      margin-right: 2rem;
+
+      @media screen and (max-width: 570px) {
+        display: none;
+      }
+    }
+  }
+}

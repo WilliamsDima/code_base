@@ -1,0 +1,63 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/typography.scss';
+@import '../../../assets/styles/globalStyles.scss';
+
+.theme {
+  .themeChange {
+    overflow: hidden;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .moon,
+    .sun {
+      color: $main;
+      font-size: 30px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateY(-50%) translateX(-50%);
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+      @media screen and (max-width: 1050px) {
+        font-size: 26px;
+      }
+      @media screen and (max-width: 570px) {
+        font-size: 22px;
+      }
+    }
+
+    .moon {
+      font-size: 26px;
+      @media screen and (max-width: 1050px) {
+        font-size: 22px;
+      }
+      @media screen and (max-width: 570px) {
+        font-size: 18px;
+      }
+    }
+
+    &.dark {
+      .moon {
+        transform: translateY(-200%) translateX(-50%);
+
+        @media screen and (max-width: 570px) {
+          transform: translateY(-230%) translateX(-50%);
+        }
+      }
+    }
+
+    &.light {
+      .sun {
+        transform: translateY(-200%) translateX(-50%);
+        @media screen and (max-width: 570px) {
+          transform: translateY(-230%) translateX(-50%);
+        }
+      }
+    }
+  }
+}

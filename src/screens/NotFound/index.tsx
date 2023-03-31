@@ -1,9 +1,8 @@
-/* eslint-disable jsx-a11y/alt-text */
+import Layout from '@screens/Layout'
 import './styles.scss'
-import { Link } from 'react-router-dom'
 
 const NotFount = () => {
-  return <div>NotFount</div>
+  return <Layout>NotFount</Layout>
 }
 
 export default NotFount

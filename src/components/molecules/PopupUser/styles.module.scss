@@ -1,0 +1,21 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/typography.scss';
+@import '../../../assets/styles/globalStyles.scss';
+
+.popupUser {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  transition: all 0.2s linear;
+  background-color: $gray;
+  padding: 1rem;
+  border-radius: 5px;
+  &.show {
+    opacity: 1;
+    @extend %showAnimPopup;
+    visibility: visible;
+  }
+}
