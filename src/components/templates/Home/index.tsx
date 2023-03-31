@@ -3,7 +3,7 @@ import styles from './styles.module.scss'
 import Auth from '@molecules/Auth'
 
 const HomeTemplate = () => {
-  const { user, isLoading } = useAuth()
+  const { user } = useAuth()
   return (
     <div className={styles.content}>
       {user ? (

@@ -12,7 +12,10 @@ const Auth: FC = memo(() => {
     <div className={styles.auth}>
       {!isLoading && (
         <>
-          <p>Auth тут какой то текст и картинка</p>
+          <div className={styles.img} />
+          <h2 className={styles.authTitle}>
+            Авторизуйтесь, чтобы использовать сервис.
+          </h2>
           <div className={styles.btns}>
             <Button className={styles.btn} onClick={() => signIn('google')}>
               <FcGoogle />
