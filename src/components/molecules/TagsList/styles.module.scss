@@ -1,0 +1,16 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/typography.scss';
+@import '../../../assets/styles/globalStyles.scss';
+
+.tags {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .item {
+    margin-right: 1rem;
+    &:last-child {
+      margin: 0;
+    }
+  }
+}

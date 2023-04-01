@@ -1,6 +1,13 @@
 import { useLocalStorage } from '@hooks/useLocalStorage'
 import { THEME_LOCAL } from '@services/constans'
-import { useContext, createContext, useMemo, FC, ReactElement } from 'react'
+import {
+  useContext,
+  createContext,
+  useMemo,
+  FC,
+  ReactElement,
+  useCallback,
+} from 'react'
 
 type theme = 'dark' | 'light'
 type IContext = {
@@ -17,17 +24,17 @@ type AppProviderType = {
 export const AppProvider: FC<AppProviderType> = ({ children }) => {
   const [themeAppLS, setThemeAppLS] = useLocalStorage(THEME_LOCAL, 'dark')
 
-  const themeHandler = () => {
+  const themeHandler = useCallback(() => {
     const value = themeAppLS === 'dark' ? 'light' : 'dark'
     setThemeAppLS(value)
-  }
+  }, [setThemeAppLS, themeAppLS])
 
   const value = useMemo(() => {
     return {
       themeAppLS,
       themeHandler,
     }
-  }, [themeAppLS])
+  }, [themeAppLS, themeHandler])
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }

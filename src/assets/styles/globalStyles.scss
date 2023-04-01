@@ -221,6 +221,10 @@
   box-shadow: 0px 0px 4px 0px $black;
 }
 
+%shadowDark {
+  box-shadow: 0px 0px 4px 0px $bgDark;
+}
+
 %pulseAnim {
   box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
   animation: pulse 2s infinite;

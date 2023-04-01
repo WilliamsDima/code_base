@@ -27,7 +27,7 @@ const User: FC = memo(() => {
             />
           </Button>
           <div ref={ref}>
-            <PopupUser show={isShow} />
+            <PopupUser show={isShow} setIsShow={setIsShow} />
           </div>
         </>
       )}
