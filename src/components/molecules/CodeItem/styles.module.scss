@@ -7,7 +7,7 @@
   box-sizing: border-box;
   padding: 1rem;
   border-radius: 5px;
-  background-color: $bgHeaderDark;
+  background-color: $bgItemDark;
   margin-bottom: 2rem;
   display: flex;
   justify-content: center;
@@ -17,10 +17,57 @@
 
   .title {
     @extend %h2;
+  }
+
+  .description {
+    @extend %p1;
+    text-align: justify;
+    margin-top: 1rem;
     margin-bottom: 1rem;
   }
 
   &:last-child {
     margin: 0;
+  }
+
+  .topCard,
+  .bottomCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .btn {
+    @extend %p3;
+    padding: 0.5rem 1rem;
+    text-transform: uppercase;
+  }
+
+  .topCard {
+    margin-bottom: 2rem;
+
+    .btnEdite {
+      color: $main;
+      &:hover {
+        background-color: rgba($main, 0.1);
+      }
+    }
+  }
+
+  .bottomCard {
+    margin-top: 2rem;
+    .date {
+      @extend %p2;
+      opacity: 0.5;
+    }
+
+    .btnDelete {
+      color: $red;
+
+      &:hover {
+        background-color: rgba($red, 0.1);
+      }
+    }
   }
 }

@@ -1,0 +1,62 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/globalStyles.scss';
+@import '../../../assets/styles/typography.scss';
+
+.language-javascript-of-snippet {
+  width: 100%;
+  max-height: 500px;
+  overflow: hidden;
+  overflow-y: scroll;
+  position: relative;
+  border-radius: 1rem;
+
+  &::-webkit-scrollbar {
+    width: 2px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $main;
+    border-radius: 5px;
+  }
+
+  @media screen and (max-width: 1050px) {
+    max-height: 400px;
+  }
+
+  @media screen and (max-width: 570px) {
+    max-height: 200px;
+  }
+
+  .copyBtn {
+    position: sticky;
+    top: 3.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 1rem;
+
+    span {
+      @extend %p2;
+      margin-left: 0.5rem;
+      line-height: 0;
+    }
+
+    .btn {
+      padding: 0;
+      margin-right: 0.2rem;
+      &:hover {
+        border: none;
+        background-color: transparent;
+      }
+      svg {
+        @extend %h2;
+      }
+
+      .done {
+        color: $main;
+      }
+    }
+  }
+}
