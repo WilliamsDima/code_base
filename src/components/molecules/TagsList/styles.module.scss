@@ -4,11 +4,17 @@
 
 .tags {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  width: 100%;
+
+  @media screen and (max-width: 570px) {
+    overflow-x: scroll;
+  }
 
   .item {
     margin-right: 1rem;
+    display: flex;
     &:last-child {
       margin: 0;
     }

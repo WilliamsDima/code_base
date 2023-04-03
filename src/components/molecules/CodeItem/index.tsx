@@ -9,6 +9,8 @@ import cn from 'classnames'
 import { useAuth } from '@hooks/useAuth'
 import { getDownloadURL, listAll, ref } from 'firebase/storage'
 import { storage } from '@api/firebase'
+import Carusel from '@molecules/Carusel'
+import CaruselImg from '@molecules/CaruselImg'
 
 type code = {
   item: IItemCode
@@ -75,6 +77,7 @@ const CodeItem: FC<code> = ({ item }) => {
           id={item.id}
         />
       )}
+      {!!images?.length && <CaruselImg images={images} />}
       <div className={styles.bottomCard}>
         <span className={styles.date}>{dateText}</span>
         <Button

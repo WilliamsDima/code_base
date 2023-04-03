@@ -11,6 +11,10 @@
   justify-content: space-between;
   align-items: center;
 
+  @media screen and (max-width: 570px) {
+    padding: 1rem;
+  }
+
   a {
     text-decoration: none;
   }

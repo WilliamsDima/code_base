@@ -13,7 +13,7 @@
   }
 
   .main {
-    max-width: 1200px;
+    max-width: 1500px;
     width: 100%;
     margin: auto;
     margin-top: 5rem;
@@ -23,5 +23,14 @@
     flex-direction: column;
     box-sizing: border-box;
     padding: 2rem;
+
+    @media screen and (max-width: 1050px) {
+      margin-top: 3rem;
+    }
+
+    @media screen and (max-width: 570px) {
+      padding: 1rem;
+      margin-top: 2rem;
+    }
   }
 }

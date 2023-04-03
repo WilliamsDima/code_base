@@ -17,6 +17,7 @@
 
   .title {
     @extend %h2;
+    word-break: break-word;
   }
 
   .description {
@@ -24,6 +25,7 @@
     text-align: justify;
     margin-top: 1rem;
     margin-bottom: 1rem;
+    word-break: break-word;
   }
 
   &:last-child {
@@ -34,7 +36,6 @@
   .bottomCard {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     width: 100%;
   }
 
@@ -46,6 +47,7 @@
 
   .topCard {
     margin-bottom: 2rem;
+    align-items: flex-start;
 
     .btnEdite {
       color: $main;
@@ -57,6 +59,7 @@
 
   .bottomCard {
     margin-top: 2rem;
+    align-items: flex-end;
     .date {
       @extend %p2;
       opacity: 0.5;

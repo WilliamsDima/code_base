@@ -1,29 +1,36 @@
-import { FC, useCallback, useState } from 'react'
+import { FC, useState } from 'react'
+
+import Carusel from '@molecules/Carusel'
+import SlideImg from '@atoms/SlideImg'
 
 type IImgs = {
   images: any[]
-  handleImage: (value: string) => void
 }
 
-const CaruselImg: FC<IImgs> = ({ images, handleImage }) => {
-  const [activeStep, setActiveStep] = useState(0)
-  const maxSteps = images.length
-
-  const imgHandler = useCallback(handleImage, [handleImage])
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1)
+const CaruselImg: FC<IImgs> = ({ images }) => {
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const handlePrevClick = () => {
+    setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1))
+  }
+  const handleNextClick = () => {
+    setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1))
   }
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1)
-  }
-
-  const handleStepChange = (step: number) => {
-    setActiveStep(step)
-  }
-
-  return <div></div>
+  return (
+    <Carusel
+      handlePrevClick={handlePrevClick}
+      handleNextClick={handleNextClick}
+      dots={images}
+      currentSlide={currentSlide}
+      setSlide={setCurrentSlide}
+      showButton={images.length > 1}
+      overStyle={{ marginTop: '1rem' }}
+    >
+      {images.map((img, i) => (
+        <SlideImg key={i.toString()} active={currentSlide === i} image={img} />
+      ))}
+    </Carusel>
+  )
 }
 
 export default CaruselImg
