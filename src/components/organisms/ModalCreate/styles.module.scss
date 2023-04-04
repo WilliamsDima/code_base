@@ -1,0 +1,45 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/typography.scss';
+@import '../../../assets/styles/globalStyles.scss';
+
+.modalCreateContent {
+  padding: 2rem;
+  border-radius: 5px;
+  background-color: $bgItemDark;
+  width: 60vw;
+  max-height: 80vh;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 2px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $main;
+    border-radius: 5px;
+  }
+
+  .item {
+    width: 100%;
+
+    .itemText {
+      @extend %p3;
+      text-align: left;
+      margin-bottom: 0.5rem;
+      color: $gray;
+    }
+
+    .input {
+      background-color: $gray;
+      padding: 0.5rem 1rem;
+      border-radius: 3px;
+      overflow: hidden;
+
+      input {
+        @extend %p1;
+        text-align: left;
+      }
+    }
+  }
+}

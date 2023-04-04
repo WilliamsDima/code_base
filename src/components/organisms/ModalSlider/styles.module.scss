@@ -1,0 +1,17 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/typography.scss';
+@import '../../../assets/styles/globalStyles.scss';
+
+.modalSlider {
+  padding: 2rem;
+  border-radius: 5px;
+  background-color: transparent;
+  width: 70vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (max-width: 570px) {
+    width: 80vw;
+  }
+}

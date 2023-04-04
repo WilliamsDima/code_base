@@ -1,4 +1,4 @@
-import { FC, useMemo, useEffect, useState, useCallback } from 'react'
+import { FC, useMemo, useEffect, useState, useCallback, memo } from 'react'
 import styles from './styles.module.scss'
 import { IItemCode } from '@appTypes/types'
 import TagsList from '@molecules/TagsList'
@@ -9,30 +9,34 @@ import cn from 'classnames'
 import { useAuth } from '@hooks/useAuth'
 import { getDownloadURL, listAll, ref } from 'firebase/storage'
 import { storage } from '@api/firebase'
-import Carusel from '@molecules/Carusel'
 import CaruselImg from '@molecules/CaruselImg'
+
+type images = {
+  images: any[]
+  index: number
+}
 
 type code = {
   item: IItemCode
+  setImagesSlider: (value: images) => void
 }
 
-const CodeItem: FC<code> = ({ item }) => {
+const CodeItem: FC<code> = memo(({ item, setImagesSlider }) => {
   const dateText = useMemo(() => {
     return getDateDisplay(item.id)
   }, [item.id])
 
   const { user } = useAuth()
 
-  const [image, setImage] = useState<null | string>(null)
-  const [open, setOpen] = useState(false)
   const [images, setImages] = useState<null | any[]>(null)
-
   const pathToFile = user?.providerData[0].uid
 
-  const handleImage = (value: string) => {
-    setImage(value)
-    setOpen(true)
-  }
+  const handleImage = useCallback(
+    (images: any[], index: number) => {
+      setImagesSlider({ images, index })
+    },
+    [setImagesSlider]
+  )
 
   const getImages = useCallback(async () => {
     const imageListRef = ref(storage, `images-${pathToFile}/${item.id}/`)
@@ -77,7 +81,9 @@ const CodeItem: FC<code> = ({ item }) => {
           id={item.id}
         />
       )}
-      {!!images?.length && <CaruselImg images={images} />}
+      {!!images?.length && (
+        <CaruselImg images={images} imgHandler={handleImage} />
+      )}
       <div className={styles.bottomCard}>
         <span className={styles.date}>{dateText}</span>
         <Button
@@ -89,6 +95,6 @@ const CodeItem: FC<code> = ({ item }) => {
       </div>
     </li>
   )
-}
+})
 
 export default CodeItem

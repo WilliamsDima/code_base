@@ -3,7 +3,7 @@
 
 html {
   font-size: 62.5%;
-  overflow-x: hidden;
+  height: 100vh;
 }
 
 label {
@@ -35,4 +35,8 @@ body {
   // position: fixed;
   width: 100vw;
   height: 100vh;
+
+  &.modal {
+    overflow: hidden;
+  }
 }

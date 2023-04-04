@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC, memo, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 import Button from '@storybook/atoms/Button'
 import Avatar from '@storybook/atoms/Avatar'
@@ -8,7 +8,9 @@ import { useOutside } from '@hooks/useOutside'
 
 const User: FC = memo(() => {
   const { user } = useAuth()
-  const { isShow, ref, setIsShow } = useOutside(false)
+  const ref = useRef(null)
+  const [isModalOpen, setModalOpen] = useState(false)
+  useOutside(ref, () => setModalOpen(false))
 
   return (
     <div className={styles.auth}>
@@ -17,7 +19,7 @@ const User: FC = memo(() => {
           <Button
             className={styles.user}
             shadowClick={false}
-            onClick={() => setIsShow(true)}
+            onClick={() => setModalOpen(true)}
           >
             <p className={styles.userName}>{user.displayName}</p>
             <Avatar
@@ -27,7 +29,7 @@ const User: FC = memo(() => {
             />
           </Button>
           <div ref={ref}>
-            <PopupUser show={isShow} setIsShow={setIsShow} />
+            <PopupUser show={isModalOpen} setIsShow={setModalOpen} />
           </div>
         </>
       )}

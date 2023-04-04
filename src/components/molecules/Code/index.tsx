@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useState, memo } from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import {
   dracula,
@@ -17,7 +17,7 @@ type CodeType = {
   language?: string
 }
 
-const Code: FC<CodeType> = ({ code, copy, id, language }) => {
+const Code: FC<CodeType> = memo(({ code, copy, id, language }) => {
   const { copyCode } = useActions()
   const { themeAppLS } = useAppContext()
 
@@ -58,6 +58,6 @@ const Code: FC<CodeType> = ({ code, copy, id, language }) => {
       </SyntaxHighlighter>
     </div>
   )
-}
+})
 
 export default Code

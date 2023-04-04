@@ -7,14 +7,16 @@ type loading = {
   image: {
     url: string
   }
+  imgSelect: () => void
 }
 
-const SlideImg: FC<loading> = memo(({ active, image }) => {
+const SlideImg: FC<loading> = memo(({ active, image, imgSelect }) => {
   return (
     <div
       className={cn(styles.slide, {
         [styles.active]: active,
       })}
+      onClick={imgSelect}
     >
       <div
         className={styles.img}

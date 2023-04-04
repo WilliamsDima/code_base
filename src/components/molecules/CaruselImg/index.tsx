@@ -5,10 +5,12 @@ import SlideImg from '@atoms/SlideImg'
 
 type IImgs = {
   images: any[]
+  imgHandler?: (value: any[], index: number) => void
+  index?: number
 }
 
-const CaruselImg: FC<IImgs> = ({ images }) => {
-  const [currentSlide, setCurrentSlide] = useState(0)
+const CaruselImg: FC<IImgs> = ({ images, imgHandler, index }) => {
+  const [currentSlide, setCurrentSlide] = useState(() => index || 0)
   const handlePrevClick = () => {
     setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1))
   }
@@ -27,7 +29,12 @@ const CaruselImg: FC<IImgs> = ({ images }) => {
       overStyle={{ marginTop: '1rem' }}
     >
       {images.map((img, i) => (
-        <SlideImg key={i.toString()} active={currentSlide === i} image={img} />
+        <SlideImg
+          imgSelect={() => imgHandler && imgHandler(images, i)}
+          key={i.toString()}
+          active={currentSlide === i}
+          image={img}
+        />
       ))}
     </Carusel>
   )
