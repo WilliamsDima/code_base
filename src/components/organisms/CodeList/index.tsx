@@ -1,6 +1,5 @@
 import { FC, useState, useRef } from 'react'
 import styles from './styles.module.scss'
-import { useAppSelector } from '@hooks/hooks'
 import Empty from '@storybook/atoms/Empty'
 import CodeItem from '@molecules/CodeItem'
 import Modal from '@storybook/organisms/Modal'
@@ -10,6 +9,9 @@ import { IItemCode } from '@appTypes/types'
 import Button from '@storybook/atoms/Button'
 import { IoAdd } from 'react-icons/io5'
 import ModalSlider from '@organisms/ModalSlider'
+import { useFetchCodeListUserQuery } from '@services/UserServices'
+import { useAuth } from '@hooks/useAuth'
+import Loading from '@atoms/Loading'
 
 type images = {
   images: any[]
@@ -17,8 +19,6 @@ type images = {
 }
 
 const CodeList: FC = () => {
-  const { codeBase } = useAppSelector((store) => store.main)
-
   const refCreate = useRef(null)
   const [item, setItem] = useState<null | IItemCode>(null)
   const [isModalOpen, setModalOpen] = useState(false)
@@ -46,17 +46,21 @@ const CodeList: FC = () => {
     setModalOpenSlider(true)
   }
 
+  const { user } = useAuth()
+  const { data: codes, isLoading } = useFetchCodeListUserQuery(user)
+
   return (
     <div className={styles.contentList}>
+      <Loading active={isLoading} />
       <Modal open={isModalOpen} ref={refCreate}>
         <ModalCreate item={item} close={closeModalCreater} />
       </Modal>
       <Modal open={isModalOpenSlider} ref={refSlider}>
         <ModalSlider images={images} />
       </Modal>
-      {!!codeBase.length ? (
+      {!!codes?.length ? (
         <ul className={styles.list}>
-          {codeBase.map((item) => {
+          {codes.map((item) => {
             return (
               <CodeItem
                 key={item.id}
@@ -68,8 +72,12 @@ const CodeList: FC = () => {
         </ul>
       ) : (
         <div className={styles.empty}>
-          <Empty />
-          <p>кодавая база пуста</p>
+          {!isLoading && (
+            <>
+              <Empty />
+              <p>кодавая база пуста</p>
+            </>
+          )}
         </div>
       )}
       <Button className={styles.btnAdd} onClick={() => setModalOpen(true)}>

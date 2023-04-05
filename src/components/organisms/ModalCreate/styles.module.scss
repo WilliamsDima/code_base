@@ -9,6 +9,7 @@
   width: 60vw;
   max-height: 80vh;
   overflow-y: scroll;
+  overflow-x: hidden;
 
   &::-webkit-scrollbar {
     width: 2px;
@@ -22,6 +23,14 @@
 
   .item {
     width: 100%;
+    margin-bottom: 1.5rem;
+    &:last-child {
+      margin: 0;
+    }
+
+    span {
+      color: $white;
+    }
 
     .itemText {
       @extend %p3;

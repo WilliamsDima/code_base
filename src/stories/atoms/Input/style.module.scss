@@ -38,7 +38,8 @@
     }
   }
 
-  input {
+  input,
+  textarea {
     display: block;
     width: 100%;
     background-color: transparent;
@@ -54,6 +55,33 @@
 
     &:focus + .focusLine {
       width: 100%;
+    }
+  }
+
+  textarea {
+    min-height: 50px;
+    max-height: 100px;
+    resize: none;
+    &::-webkit-scrollbar {
+      width: 2px;
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $main;
+      border-radius: 5px;
+    }
+
+    &.code {
+      max-height: 700px;
+
+      @media screen and (max-width: 1050px) {
+        max-height: 500px;
+      }
+
+      @media screen and (max-width: 570px) {
+        max-height: 300px;
+      }
     }
   }
 }

@@ -8,13 +8,11 @@ interface ILoader extends HTMLAttributes<HTMLDivElement> {
 
 export const Loading: FC<ILoader> = memo((props) => {
   const { active, className, ...prev } = props
+  const classnames = cn(styles.loader, className, {
+    [styles.active]: active,
+  })
   return (
-    <div
-      className={cn(styles.loader, {
-        [styles.active]: active,
-      })}
-      {...prev}
-    >
+    <div className={classnames} {...prev}>
       <div></div>
       <div></div>
       <div></div>

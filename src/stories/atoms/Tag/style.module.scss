@@ -19,4 +19,20 @@
   @media screen and (max-width: 570px) {
     padding: 0.5rem 1rem;
   }
+
+  .deleteTag {
+    padding: 0;
+    border-radius: 50%;
+    margin-left: 0.5rem;
+    background-color: transparent;
+
+    svg {
+      @extend %p1;
+      color: $gray;
+    }
+
+    &:hover svg {
+      color: $red;
+    }
+  }
 }

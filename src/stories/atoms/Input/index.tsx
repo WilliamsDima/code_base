@@ -1,16 +1,42 @@
 import cn from 'classnames'
-import React, { FC, memo, InputHTMLAttributes } from 'react'
+import React, {
+  FC,
+  memo,
+  InputHTMLAttributes,
+  useRef,
+  RefObject,
+  useEffect,
+} from 'react'
 import styles from './style.module.scss'
+import autosize from 'autosize'
 
-interface IInput extends InputHTMLAttributes<HTMLInputElement> {
+interface IInput
+  extends InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   error?: boolean
+  inputType?: 'textarea' | 'input'
+  isCode?: boolean
 }
 
 const Input: FC<IInput> = memo((props) => {
-  const { className, maxLength, value, error = false, ...rest } = props
+  const {
+    className,
+    inputType,
+    maxLength,
+    value,
+    isCode,
+    error = false,
+    ...rest
+  } = props
   const classNames = cn(styles.inputWrapper, className, {
     [styles.error]: error,
   })
+
+  const ref = useRef(null) as RefObject<HTMLTextAreaElement>
+
+  useEffect(() => {
+    ref.current && autosize(ref.current)
+  }, [])
+
   return (
     <label className={classNames}>
       {!!maxLength && (
@@ -18,7 +44,18 @@ const Input: FC<IInput> = memo((props) => {
           {value?.toString().length}/{maxLength}
         </span>
       )}
-      <input {...rest} value={value} maxLength={maxLength} />
+      {inputType === 'textarea' ? (
+        <textarea
+          ref={ref}
+          {...rest}
+          value={value}
+          maxLength={maxLength}
+          className={isCode ? styles.code : ''}
+        />
+      ) : (
+        <input {...rest} value={value} maxLength={maxLength} />
+      )}
+
       <span className={styles.focusLine} />
     </label>
   )
