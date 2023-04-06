@@ -5,7 +5,6 @@ import {
   oneLight,
 } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import styles from './styles.module.scss'
-import { useActions } from '@hooks/useActions'
 import { useAppContext } from '@context/appContext'
 import Button from '@storybook/atoms/Button'
 import { MdOutlineContentCopy, MdOutlineDone } from 'react-icons/md'
@@ -18,7 +17,6 @@ type CodeType = {
 }
 
 const Code: FC<CodeType> = memo(({ code, copy, id, language }) => {
-  const { copyCode } = useActions()
   const { themeAppLS } = useAppContext()
 
   const codeTheme = themeAppLS === 'dark' ? dracula : oneLight

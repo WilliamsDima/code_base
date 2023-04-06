@@ -48,3 +48,15 @@ export const getDateDisplay = (d: Date | number | string) => {
 
   return display
 }
+
+export const updateItemCode = (codes: IItemCode[], item: IItemCode) => {
+  return codes.map((code) => {
+    if (code.id === item.id) {
+      code = {
+        ...code,
+        ...item,
+      }
+    }
+    return code
+  })
+}

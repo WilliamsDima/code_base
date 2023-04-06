@@ -7,9 +7,10 @@ type IImgs = {
   images: any[]
   imgHandler?: (value: any[], index: number) => void
   index?: number
+  isModal?: boolean
 }
 
-const CaruselImg: FC<IImgs> = ({ images, imgHandler, index }) => {
+const CaruselImg: FC<IImgs> = ({ images, isModal, imgHandler, index }) => {
   const [currentSlide, setCurrentSlide] = useState(() => index || 0)
   const handlePrevClick = () => {
     setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1))
@@ -30,6 +31,7 @@ const CaruselImg: FC<IImgs> = ({ images, imgHandler, index }) => {
     >
       {images.map((img, i) => (
         <SlideImg
+          isModal={isModal}
           imgSelect={() => imgHandler && imgHandler(images, i)}
           key={i.toString()}
           active={currentSlide === i}

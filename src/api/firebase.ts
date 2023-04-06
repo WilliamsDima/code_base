@@ -38,20 +38,6 @@ export const getDataUser = async (user: FirebaseUser) => {
   }
 }
 
-export const addCode = async (codes: IItemCode[]) => {
-  const id = auth?.currentUser?.providerData[0].uid
-
-  try {
-    if (id) {
-      await updateDoc(doc(db, 'users', id), {
-        codes,
-      })
-    }
-  } catch (error) {
-    console.log('Error addCode', error)
-  }
-}
-
 export const deleteCode = (images: null | any[]) => {
   if (images?.length) {
     images?.forEach((img) => {

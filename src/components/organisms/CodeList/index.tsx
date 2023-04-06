@@ -1,4 +1,4 @@
-import { FC, useState, useRef } from 'react'
+import { FC, useState, useRef, useCallback } from 'react'
 import styles from './styles.module.scss'
 import Empty from '@storybook/atoms/Empty'
 import CodeItem from '@molecules/CodeItem'
@@ -19,18 +19,21 @@ type images = {
 }
 
 const CodeList: FC = () => {
-  const refCreate = useRef(null)
   const [item, setItem] = useState<null | IItemCode>(null)
   const [isModalOpen, setModalOpen] = useState(false)
 
-  const closeModalCreater = () => {
+  const closeModalCreater = useCallback((closeHandler?: () => void) => {
     setModalOpen(false)
     setItem(null)
-  }
+    closeHandler && closeHandler()
+  }, [])
 
-  useOutside(refCreate, () => {
-    closeModalCreater()
-  })
+  const editeItemHandler = useCallback((itemSelect: IItemCode) => {
+    setItem(itemSelect)
+    setModalOpen(true)
+  }, [])
+
+  const refModalCreater = useRef(null)
 
   const refSlider = useRef(null)
   const [images, setImages] = useState<null | images>(null)
@@ -41,10 +44,10 @@ const CodeList: FC = () => {
     setImages(null)
   })
 
-  const imagesHandler = (value: null | images) => {
+  const imagesHandler = useCallback((value: null | images) => {
     setImages(value)
     setModalOpenSlider(true)
-  }
+  }, [])
 
   const { user } = useAuth()
   const { data: codes, isLoading } = useFetchCodeListUserQuery(user)
@@ -52,8 +55,15 @@ const CodeList: FC = () => {
   return (
     <div className={styles.contentList}>
       <Loading active={isLoading} />
-      <Modal open={isModalOpen} ref={refCreate}>
-        <ModalCreate item={item} close={closeModalCreater} />
+      <Modal open={isModalOpen} ref={refModalCreater}>
+        {isModalOpen && (
+          <ModalCreate
+            item={item}
+            codes={codes}
+            close={closeModalCreater}
+            ref={refModalCreater}
+          />
+        )}
       </Modal>
       <Modal open={isModalOpenSlider} ref={refSlider}>
         <ModalSlider images={images} />
@@ -65,6 +75,7 @@ const CodeList: FC = () => {
               <CodeItem
                 key={item.id}
                 item={item}
+                setItem={editeItemHandler}
                 setImagesSlider={imagesHandler}
               />
             )

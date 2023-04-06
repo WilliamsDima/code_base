@@ -9,6 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 
   .prev,
   .next {
@@ -31,18 +32,21 @@
   }
 
   .prev {
-    left: 0px;
+    left: 2rem;
   }
 
   .next {
-    right: 0px;
+    right: 2rem;
   }
 
   .sliderContent {
     position: relative;
     width: 70%;
-    height: 400px;
+    height: 20vh;
     display: flex;
+    justify-content: center;
+    align-items: center;
+
     transition: transform 0.3s ease-in-out;
 
     @media screen and (max-width: 1050px) {

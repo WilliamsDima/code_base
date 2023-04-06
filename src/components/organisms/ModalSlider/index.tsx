@@ -15,7 +15,13 @@ const ModalSlider: FC<modal> = ({ images }) => {
   useEffect(() => {}, [images])
   return (
     <div className={styles.modalSlider}>
-      {!!images && <CaruselImg images={images.images} index={images.index} />}
+      {!!images && (
+        <CaruselImg
+          isModal={true}
+          images={images.images}
+          index={images.index}
+        />
+      )}
     </div>
   )
 }

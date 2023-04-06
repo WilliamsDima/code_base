@@ -1,3 +1,4 @@
+import { Message } from '@appTypes/types'
 import { useLocalStorage } from '@hooks/useLocalStorage'
 import { THEME_LOCAL } from '@services/constans'
 import {
@@ -7,12 +8,15 @@ import {
   FC,
   ReactElement,
   useCallback,
+  useState,
 } from 'react'
 
 type theme = 'dark' | 'light'
 type IContext = {
   themeAppLS: theme
   themeHandler: () => void
+  messageWarning: Message | null
+  setMessageWarning: (message: Message | null) => void
 }
 
 const AppContext = createContext<IContext>({} as IContext)
@@ -23,6 +27,7 @@ type AppProviderType = {
 
 export const AppProvider: FC<AppProviderType> = ({ children }) => {
   const [themeAppLS, setThemeAppLS] = useLocalStorage(THEME_LOCAL, 'dark')
+  const [messageWarning, setMessageWarning] = useState<Message | null>(null)
 
   const themeHandler = useCallback(() => {
     const value = themeAppLS === 'dark' ? 'light' : 'dark'
@@ -33,8 +38,10 @@ export const AppProvider: FC<AppProviderType> = ({ children }) => {
     return {
       themeAppLS,
       themeHandler,
+      messageWarning,
+      setMessageWarning,
     }
-  }, [themeAppLS, themeHandler])
+  }, [themeAppLS, themeHandler, messageWarning])
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }

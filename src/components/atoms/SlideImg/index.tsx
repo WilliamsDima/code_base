@@ -8,22 +8,29 @@ type loading = {
     url: string
   }
   imgSelect: () => void
+  isModal?: boolean
 }
 
-const SlideImg: FC<loading> = memo(({ active, image, imgSelect }) => {
-  return (
-    <div
-      className={cn(styles.slide, {
-        [styles.active]: active,
-      })}
-      onClick={imgSelect}
-    >
+const SlideImg: FC<loading> = memo(
+  ({ active, isModal = false, image, imgSelect }) => {
+    return (
       <div
-        className={styles.img}
-        style={{ backgroundImage: `url(${image.url})` }}
-      />
-    </div>
-  )
-})
+        onClick={imgSelect}
+        className={cn(styles.slider, {
+          [styles.active]: active,
+          [styles.modal]: isModal,
+        })}
+      >
+        <div
+          role="img"
+          className={styles.img}
+          style={{
+            backgroundImage: `url(${image.url})`,
+          }}
+        />
+      </div>
+    )
+  }
+)
 
 export default SlideImg

@@ -1,21 +1,50 @@
-import { FC, useState, KeyboardEvent, useCallback } from 'react'
+import {
+  useState,
+  KeyboardEvent,
+  useCallback,
+  forwardRef,
+  RefObject,
+} from 'react'
 import styles from './styles.module.scss'
-import { IItemCode, ITag } from '@appTypes/types'
+import { IItemCode, ITag, Message } from '@appTypes/types'
 import Input from '@storybook/atoms/Input'
 import { useInput } from '@hooks/useInput'
 import TagsList from '@molecules/TagsList'
+import { IoMdClose } from 'react-icons/io'
+import { MdOutlineDone } from 'react-icons/md'
+
+import Button from '@storybook/atoms/Button'
+import { useOutside } from '@hooks/useOutside'
+import { useAppContext } from '@context/appContext'
+import DropImg from '@molecules/DropImg'
+import ImagesList from '@molecules/ImagesList'
+import {
+  useFetchAddCodeListUserMutation,
+  useFetchUpdateCodeItemMutation,
+} from '@services/UserServices'
+import { updateItemCode } from '@hooks/helpers'
 
 type modal = {
   item: IItemCode | null
-  close: () => void
+  close: (handler?: () => void) => void
+  codes: IItemCode[] | undefined
 }
 
-const ModalCreate: FC<modal> = ({ item, close }) => {
+type Ref = any
+
+const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
+  const { item, close, codes = [] } = props
+
+  const { setMessageWarning, messageWarning } = useAppContext()
+  const [addItemCode] = useFetchAddCodeListUserMutation()
+  const [updateItem] = useFetchUpdateCodeItemMutation()
+
   const {
     bind: bindTitle,
     value: title,
     error: errorTitle,
     setError: setErrorTitle,
+    reset: resetTitle,
   } = useInput(() => item?.title || '')
   const maxTitle = 80
 
@@ -43,7 +72,7 @@ const ModalCreate: FC<modal> = ({ item, close }) => {
     }
   }
 
-  const deleteHandler = useCallback(
+  const deleteTagHandler = useCallback(
     (id: number) => {
       const filterTag = tags.filter((t) => t.id !== id)
       setTags(filterTag)
@@ -56,6 +85,7 @@ const ModalCreate: FC<modal> = ({ item, close }) => {
     value: description,
     error: errorDescription,
     setError: setErrorDescription,
+    reset: resetDescription,
   } = useInput(() => item?.description || '')
   const maxDescription = 500
 
@@ -64,11 +94,112 @@ const ModalCreate: FC<modal> = ({ item, close }) => {
     value: code,
     error: errorCode,
     setError: setErrorCode,
+    reset: resetCode,
   } = useInput(() => item?.code || '')
   const maxCode = 10000
 
+  const [drag, setDrag] = useState(false)
+  const maxFiles = 3
+  const [file, setFile] = useState<any[]>([])
+
+  const deleteImg = useCallback(
+    (id: number) => {
+      const imgFilter = file.filter((t: any) => t.lastModified !== id)
+      setFile(imgFilter)
+    },
+    [file]
+  )
+
+  const dragHandler = useCallback((e: any, value: boolean) => {
+    e.preventDefault()
+    setDrag(value)
+  }, [])
+
+  const onDropHandler = useCallback(
+    (e: any) => {
+      const files = [...e?.target?.files]
+
+      setFile((prev) => [...prev, ...files])
+      setDrag(false)
+    },
+    [setFile, setDrag]
+  )
+
+  const clearHandler = useCallback(() => {
+    resetTitle()
+    clearTag()
+    resetDescription()
+    resetCode()
+    setErrorCode(false)
+    setErrorDescription(false)
+    setErrorTag(false)
+    setErrorTitle(false)
+    setTags([])
+    setFile([])
+    setDrag(false)
+  }, [
+    setErrorTitle,
+    setErrorTag,
+    setErrorDescription,
+    setErrorCode,
+    resetCode,
+    clearTag,
+    resetDescription,
+    resetTitle,
+  ])
+
+  const closeHandler = useCallback(() => {
+    const message: Message = {
+      body: 'Вы уверены что хотите закрыть? Все данные формы будут стёрты.',
+      handlerDone: () => close(clearHandler),
+    }
+    !messageWarning && setMessageWarning(message)
+  }, [messageWarning, setMessageWarning, close, clearHandler])
+
+  useOutside(ref as RefObject<HTMLElement>, () => {
+    closeHandler()
+  })
+
+  const submitHandler = () => {
+    const done =
+      title.length <= maxTitle &&
+      title.length >= 0 &&
+      tags.length <= maxTagLength &&
+      tags.length >= 0 &&
+      description.length <= maxDescription &&
+      description.length >= 0
+
+    if (done) {
+      const data: IItemCode = {
+        id: item ? item?.id : +new Date(),
+        title,
+        description,
+        code,
+        tags,
+        copy: item ? item?.copy : 0,
+      }
+
+      if (item) {
+        const newCodes = updateItemCode(codes, data)
+        console.log('update', newCodes)
+        updateItem({ codes: newCodes })
+      } else {
+        console.log('add', data)
+        addItemCode({ code: data, images: file })
+      }
+
+      clearHandler()
+      close()
+    } else {
+      alert('не все поля заполнены!')
+    }
+  }
+
   return (
     <div className={styles.modalCreateContent}>
+      <Button className={styles.btnClose} onClick={closeHandler}>
+        <IoMdClose />
+      </Button>
       <div className={styles.item}>
         <p className={styles.itemText}>* Краткое описание кода</p>
         <Input
@@ -97,7 +228,7 @@ const ModalCreate: FC<modal> = ({ item, close }) => {
         <div className={styles.item} style={{ margin: 0 }}>
           <TagsList
             tags={tags}
-            deleteHandler={deleteHandler}
+            deleteHandler={deleteTagHandler}
             maxTagLength={maxTagLength}
           />
         </div>
@@ -125,8 +256,29 @@ const ModalCreate: FC<modal> = ({ item, close }) => {
           placeholder="Код"
         />
       </div>
+
+      <div className={styles.item}>
+        <ImagesList deleteImg={deleteImg} file={file} maxFiles={maxFiles} />
+      </div>
+
+      <div className={styles.item}>
+        <p className={styles.itemText}>
+          * Скриншот (необязательно) .png, .jpg, .jpeg
+        </p>
+        <div className={styles.dropBlock}>
+          <DropImg
+            drag={drag}
+            dragHandler={dragHandler}
+            maxFiles={maxFiles}
+            onDropHandler={onDropHandler}
+          />
+          <Button className={styles.btnSubmit} onClick={submitHandler}>
+            <MdOutlineDone />
+          </Button>
+        </div>
+      </div>
     </div>
   )
-}
+})
 
 export default ModalCreate

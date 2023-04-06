@@ -6,15 +6,22 @@ import Button from '../Button'
 
 interface ITag extends HTMLAttributes<HTMLDivElement> {
   deleteHandler?: () => void
+  hiddenBtnDelete?: boolean
 }
 
 const Tag: FC<ITag> = memo((props) => {
-  const { deleteHandler, children, className, ...rest } = props
+  const {
+    deleteHandler,
+    hiddenBtnDelete = false,
+    children,
+    className,
+    ...rest
+  } = props
   const classNames = cn(styles.tag, className)
   return (
     <span className={classNames} {...rest}>
       {children}
-      {deleteHandler && (
+      {!hiddenBtnDelete && (
         <Button className={styles.deleteTag} onClick={deleteHandler}>
           <IoCloseCircle />
         </Button>

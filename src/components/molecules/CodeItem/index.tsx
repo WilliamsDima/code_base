@@ -1,6 +1,6 @@
 import { FC, useMemo, useEffect, useState, useCallback, memo } from 'react'
 import styles from './styles.module.scss'
-import { IItemCode } from '@appTypes/types'
+import { IItemCode, Message } from '@appTypes/types'
 import TagsList from '@molecules/TagsList'
 import Code from '@molecules/Code'
 import { getDateDisplay } from '@hooks/helpers'
@@ -10,6 +10,8 @@ import { useAuth } from '@hooks/useAuth'
 import { getDownloadURL, listAll, ref } from 'firebase/storage'
 import { storage } from '@api/firebase'
 import CaruselImg from '@molecules/CaruselImg'
+import { useFetchDeleteCodeItemMutation } from '@services/UserServices'
+import { useAppContext } from '@context/appContext'
 
 type images = {
   images: any[]
@@ -19,9 +21,13 @@ type images = {
 type code = {
   item: IItemCode
   setImagesSlider: (value: images) => void
+  setItem: (item: IItemCode) => void
 }
 
-const CodeItem: FC<code> = memo(({ item, setImagesSlider }) => {
+const CodeItem: FC<code> = memo(({ item, setImagesSlider, setItem }) => {
+  const [deleteItem] = useFetchDeleteCodeItemMutation()
+  const { setMessageWarning } = useAppContext()
+
   const dateText = useMemo(() => {
     return getDateDisplay(item.id)
   }, [item.id])
@@ -37,6 +43,14 @@ const CodeItem: FC<code> = memo(({ item, setImagesSlider }) => {
     },
     [setImagesSlider]
   )
+
+  const deleteHandler = () => {
+    const message: Message = {
+      body: `Вы уверены что хотите удалить ${item.title}?`,
+      handlerDone: () => deleteItem({ item, images }),
+    }
+    setMessageWarning(message)
+  }
 
   const getImages = useCallback(async () => {
     const imageListRef = ref(storage, `images-${pathToFile}/${item.id}/`)
@@ -66,12 +80,16 @@ const CodeItem: FC<code> = memo(({ item, setImagesSlider }) => {
     <li className={styles.item}>
       <div className={styles.topCard}>
         <h2 className={styles.title}>{item.title}</h2>
-        <Button shadowClick={false} className={cn(styles.btn, styles.btnEdite)}>
+        <Button
+          onClick={() => setItem(item)}
+          shadowClick={false}
+          className={cn(styles.btn, styles.btnEdite)}
+        >
           Редактировать
         </Button>
       </div>
 
-      <TagsList tags={item.tags} />
+      <TagsList tags={item.tags} hiddenBtnDelete={true} />
       <p className={styles.description}>{item.description}</p>
       {item.code && (
         <Code
@@ -89,6 +107,7 @@ const CodeItem: FC<code> = memo(({ item, setImagesSlider }) => {
         <Button
           shadowClick={false}
           className={cn(styles.btn, styles.btnDelete)}
+          onClick={deleteHandler}
         >
           Удалить
         </Button>
