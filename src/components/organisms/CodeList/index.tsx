@@ -1,4 +1,4 @@
-import { FC, useState, useRef, useCallback } from 'react'
+import { FC, useState, useRef, useCallback, useMemo } from 'react'
 import styles from './styles.module.scss'
 import Empty from '@storybook/atoms/Empty'
 import CodeItem from '@molecules/CodeItem'
@@ -11,7 +11,7 @@ import { IoAdd } from 'react-icons/io5'
 import ModalSlider from '@organisms/ModalSlider'
 import Loading from '@atoms/Loading'
 import { useRTKQuery } from '@hooks/useRTKQuery'
-import { updateItemCode } from '@hooks/helpers'
+import { listSortByDate, updateItemCode } from '@hooks/helpers'
 
 type images = {
   images: any[]
@@ -51,6 +51,10 @@ const CodeList: FC = () => {
 
   const { codes, isLoading, updateItem } = useRTKQuery()
 
+  const sortCodes = useMemo(() => {
+    return listSortByDate(codes, true)
+  }, [codes])
+
   const updateHandler = useCallback(
     (item: IItemCode) => {
       if (codes) {
@@ -80,9 +84,9 @@ const CodeList: FC = () => {
       <Modal open={isModalOpenSlider} ref={refSlider}>
         <ModalSlider images={images} />
       </Modal>
-      {!!codes?.length ? (
+      {!!sortCodes?.length ? (
         <ul className={styles.list}>
-          {codes.map((item) => {
+          {sortCodes.map((item) => {
             return (
               <CodeItem
                 key={item.id}

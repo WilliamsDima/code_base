@@ -6,6 +6,7 @@ export const useOutside = (ref: RefObject<HTMLElement>, handler: handler) => {
   useEffect(() => {
     const listener = (event: MouseEvent | TouchEvent) => {
       const target = event.target as HTMLElement
+
       if (!ref.current || ref.current.contains(target)) {
         return
       }

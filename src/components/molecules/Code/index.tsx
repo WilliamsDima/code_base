@@ -17,46 +17,44 @@ type CodeType = {
   copyHandler: () => void
 }
 
-const Code: FC<CodeType> = memo(({ code, copy, id, language, copyHandler }) => {
-  const { themeAppLS } = useAppContext()
+const Code: FC<CodeType> = memo(
+  ({ code, copy, id, language = 'javascript', copyHandler }) => {
+    const { themeAppLS } = useAppContext()
 
-  const codeTheme = themeAppLS === 'dark' ? dracula : oneLight
+    const codeTheme = themeAppLS === 'dark' ? dracula : oneLight
 
-  const [copyCount, setCopyCount] = useState<boolean>(false)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [typeCode, setTypeCode] = useState<string>(
-    () => language || 'javascript'
-  )
+    const [copyCount, setCopyCount] = useState<boolean>(false)
 
-  const copyHandlerBtn = () => {
-    navigator.clipboard.writeText(code).then(
-      function () {
-        //console.log('Async: Copying to clipboard was successful!')
-        copyHandler()
-        setCopyCount(true)
-      },
-      function (err) {
-        console.error('Async: Could not copy text: ', err, code)
-      }
+    const copyHandlerBtn = () => {
+      navigator.clipboard.writeText(code).then(
+        function () {
+          //console.log('Async: Copying to clipboard was successful!')
+          copyHandler()
+          setCopyCount(true)
+        },
+        function (err) {
+          console.error('Async: Could not copy text: ', err, code)
+        }
+      )
+    }
+    return (
+      <div className={styles['language-of-snippet']}>
+        <div className={styles.copyBtn}>
+          <Button className={styles.btn} onClick={copyHandlerBtn}>
+            {copyCount ? (
+              <MdOutlineDone className={styles.done} />
+            ) : (
+              <MdOutlineContentCopy />
+            )}
+            :<span>{copy}</span>
+          </Button>
+        </div>
+        <SyntaxHighlighter language={language} style={codeTheme}>
+          {`${code}`}
+        </SyntaxHighlighter>
+      </div>
     )
   }
-  return (
-    <div className={styles['language-javascript-of-snippet']}>
-      <div className={styles.copyBtn}>
-        <Button className={styles.btn} onClick={copyHandlerBtn}>
-          {copyCount ? (
-            <MdOutlineDone className={styles.done} />
-          ) : (
-            <MdOutlineContentCopy />
-          )}
-          :<span>{copy}</span>
-        </Button>
-      </div>
-      <SyntaxHighlighter language={typeCode} style={codeTheme}>
-        {`${code}`}
-      </SyntaxHighlighter>
-    </div>
-  )
-})
+)
 
 export default Code

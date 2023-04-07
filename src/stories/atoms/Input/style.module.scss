@@ -59,8 +59,7 @@
   }
 
   textarea {
-    min-height: 50px;
-    max-height: 100px;
+    min-height: 100px;
     resize: none;
     &::-webkit-scrollbar {
       width: 2px;

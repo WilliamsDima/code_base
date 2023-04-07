@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import Carusel from '@molecules/Carusel'
 import SlideImg from '@atoms/SlideImg'
@@ -18,6 +18,8 @@ const CaruselImg: FC<IImgs> = ({ images, isModal, imgHandler, index }) => {
   const handleNextClick = () => {
     setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1))
   }
+
+  useEffect(() => {}, [images])
 
   return (
     <Carusel

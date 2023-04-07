@@ -22,6 +22,9 @@ import ImagesList from '@molecules/ImagesList'
 import { updateItemCode } from '@hooks/helpers'
 import { useRTKQuery } from '@hooks/useRTKQuery'
 import { deleteImagesItem, getImagesItem } from '@api/firebase'
+import Select from '@storybook/molecules/Select'
+import { codeLanguges } from '@services/listLanguages'
+import { IItemSelect } from '@storybook/molecules/Select/types'
 
 type modal = {
   item: IItemCode | null
@@ -133,6 +136,14 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
     [setFile, setDrag]
   )
 
+  const [typeCode, setTypeCode] = useState<string>(
+    () => item?.language || 'javascript'
+  )
+
+  const setTypeCodeHandler = useCallback((item: IItemSelect) => {
+    setTypeCode(item.value as string)
+  }, [])
+
   const clearHandler = useCallback(() => {
     resetTitle()
     clearTag()
@@ -145,6 +156,7 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
     setTags([])
     setFile([])
     setDrag(false)
+    setTypeCode('javascript')
   }, [
     setErrorTitle,
     setErrorTag,
@@ -185,6 +197,7 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
         description,
         code,
         tags,
+        language: typeCode,
         copy: item ? item?.copy : 0,
       }
 
@@ -271,7 +284,15 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
           placeholder="Описание"
         />
       </div>
+
       <div className={styles.item}>
+        <Select
+          className={styles.codeSelect}
+          value={typeCode}
+          list={codeLanguges}
+          search={true}
+          selectHandler={setTypeCodeHandler}
+        />
         <p className={styles.itemText}>* Пример кода (необязательно)</p>
         <Input
           {...bindCode}

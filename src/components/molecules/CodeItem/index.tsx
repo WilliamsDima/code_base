@@ -66,10 +66,8 @@ const CodeItem: FC<code> = memo(
     useEffect(() => {
       // console.log('card item')
 
-      if (!images) {
-        getImages()
-      }
-    }, [getImages, images])
+      getImages()
+    }, [getImages])
     return (
       <li className={styles.item}>
         <div className={styles.topCard}>

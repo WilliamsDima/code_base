@@ -12,9 +12,9 @@ export const dataSortMaxValue = (resCodeFilter: IItemCode[], max: boolean) =>
     return a.copy - b.copy
   })
 
-export const dataSortByDate = (resCodeFilter: IItemCode[], max: boolean) =>
-  resCodeFilter &&
-  resCodeFilter.slice().sort((a, b) => {
+export const listSortByDate = (codes: IItemCode[] | undefined, max: boolean) =>
+  codes &&
+  codes.slice().sort((a, b) => {
     if (max) {
       return b.id - a.id
     }

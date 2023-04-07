@@ -1,0 +1,51 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/typography.scss';
+@import '../../../assets/styles/globalStyles.scss';
+
+.selectList {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  top: 4rem;
+  right: 0rem;
+  z-index: 100;
+  transition: all 0.2s linear;
+  color: $black;
+  background-color: $white;
+  padding: 1rem 0;
+  border-radius: 5px;
+
+  max-height: 150px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  @media screen and (max-width: 1050px) {
+    max-height: 100px;
+  }
+  &::-webkit-scrollbar {
+    width: 2px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $main;
+    border-radius: 5px;
+  }
+  &.open {
+    opacity: 1;
+    @extend %showAnimPopup;
+    visibility: visible;
+  }
+
+  .search {
+    input {
+      color: $black;
+      padding: 0.5rem;
+      border-bottom: 1px solid $bgItemDark;
+
+      &::placeholder {
+        color: $bgItemDark;
+      }
+    }
+  }
+}

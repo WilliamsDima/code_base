@@ -53,6 +53,15 @@
   .item {
     width: 100%;
     margin-bottom: 1.5rem;
+    position: relative;
+
+    .codeSelect {
+      position: absolute;
+      top: 3rem;
+      right: 1rem;
+      z-index: 100;
+      min-width: 100px;
+    }
     &:last-child {
       margin: 0;
     }
@@ -78,10 +87,6 @@
       }
     }
 
-    span {
-      color: $white;
-    }
-
     .itemText {
       @extend %p3;
       text-align: left;
@@ -94,6 +99,10 @@
       padding: 0.5rem 1rem;
       border-radius: 3px;
       overflow: hidden;
+
+      span {
+        color: $white;
+      }
 
       input,
       textarea {
