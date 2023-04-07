@@ -13,6 +13,16 @@
   overflow-x: hidden;
   position: relative;
 
+  @media screen and (max-width: 1050px) {
+    width: 70vw;
+  }
+
+  @media screen and (max-width: 570px) {
+    padding: 1rem;
+    padding-top: 3rem;
+    width: 85vw;
+  }
+
   &::-webkit-scrollbar {
     width: 2px;
     background-color: transparent;
@@ -34,6 +44,10 @@
       @extend %h2;
       color: $white;
     }
+
+    &:hover svg {
+      color: $red;
+    }
   }
 
   .item {
@@ -51,6 +65,9 @@
 
       div {
         margin-right: 2rem;
+        @media screen and (max-width: 1050px) {
+          margin-right: 0.5rem;
+        }
       }
 
       .btnSubmit {

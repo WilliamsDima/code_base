@@ -6,7 +6,7 @@ import ImgDrop from '@atoms/ImgDrop'
 type IImagesList = {
   file: any[]
   maxFiles: number
-  deleteImg: (id: number) => void
+  deleteImg: (id: number | string) => void
 }
 
 const ImagesList: FC<IImagesList> = memo(({ file, maxFiles, deleteImg }) => {
@@ -18,13 +18,8 @@ const ImagesList: FC<IImagesList> = memo(({ file, maxFiles, deleteImg }) => {
     >
       {!!file.length &&
         file.map((item: any) => {
-          return (
-            <ImgDrop
-              key={URL.createObjectURL(item)}
-              item={item}
-              deleteImg={deleteImg}
-            />
-          )
+          const key = item.url ? item.url : URL.createObjectURL(item)
+          return <ImgDrop key={key} item={item} deleteImg={deleteImg} />
         })}
 
       {!!file.length && (

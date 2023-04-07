@@ -6,12 +6,10 @@ import Code from '@molecules/Code'
 import { getDateDisplay } from '@hooks/helpers'
 import Button from '@storybook/atoms/Button'
 import cn from 'classnames'
-import { useAuth } from '@hooks/useAuth'
-import { getDownloadURL, listAll, ref } from 'firebase/storage'
-import { storage } from '@api/firebase'
+import { getImagesItem } from '@api/firebase'
 import CaruselImg from '@molecules/CaruselImg'
-import { useFetchDeleteCodeItemMutation } from '@services/UserServices'
 import { useAppContext } from '@context/appContext'
+import { useRTKQuery } from '@hooks/useRTKQuery'
 
 type images = {
   images: any[]
@@ -22,98 +20,96 @@ type code = {
   item: IItemCode
   setImagesSlider: (value: images) => void
   setItem: (item: IItemCode) => void
+  updateHandler: (item: IItemCode) => void
 }
 
-const CodeItem: FC<code> = memo(({ item, setImagesSlider, setItem }) => {
-  const [deleteItem] = useFetchDeleteCodeItemMutation()
-  const { setMessageWarning } = useAppContext()
+const CodeItem: FC<code> = memo(
+  ({ item, setImagesSlider, setItem, updateHandler }) => {
+    const { deleteItem } = useRTKQuery()
+    const { setMessageWarning } = useAppContext()
 
-  const dateText = useMemo(() => {
-    return getDateDisplay(item.id)
-  }, [item.id])
+    const dateText = useMemo(() => {
+      return getDateDisplay(item.id)
+    }, [item.id])
 
-  const { user } = useAuth()
+    const [images, setImages] = useState<null | any[]>(null)
 
-  const [images, setImages] = useState<null | any[]>(null)
-  const pathToFile = user?.providerData[0].uid
-
-  const handleImage = useCallback(
-    (images: any[], index: number) => {
-      setImagesSlider({ images, index })
-    },
-    [setImagesSlider]
-  )
-
-  const deleteHandler = () => {
-    const message: Message = {
-      body: `Вы уверены что хотите удалить ${item.title}?`,
-      handlerDone: () => deleteItem({ item, images }),
-    }
-    setMessageWarning(message)
-  }
-
-  const getImages = useCallback(async () => {
-    const imageListRef = ref(storage, `images-${pathToFile}/${item.id}/`)
-    const { items } = await listAll(imageListRef)
-
-    const data = items.map(async (item: any) => {
-      return {
-        path: item?._location?.path_,
-        url: await getDownloadURL(item),
+    const copyHandler = useCallback(() => {
+      const data = {
+        ...item,
+        copy: item.copy + 1,
       }
-    })
+      updateHandler(data)
+    }, [item, updateHandler])
 
-    if (data.length) {
-      Promise.all(data).then((values) => {
-        setImages(values)
-      })
+    const handleImage = useCallback(
+      (images: any[], index: number) => {
+        setImagesSlider({ images, index })
+      },
+      [setImagesSlider]
+    )
+
+    const deleteHandler = () => {
+      const message: Message = {
+        body: `Вы уверены что хотите удалить ${item.title}?`,
+        handlerDone: () => deleteItem({ item, images }),
+      }
+      setMessageWarning(message)
     }
-  }, [item.id, pathToFile])
-  useEffect(() => {
-    // console.log('card item', images)
 
-    if (!images) {
-      getImages()
-    }
-  }, [getImages, images])
-  return (
-    <li className={styles.item}>
-      <div className={styles.topCard}>
-        <h2 className={styles.title}>{item.title}</h2>
-        <Button
-          onClick={() => setItem(item)}
-          shadowClick={false}
-          className={cn(styles.btn, styles.btnEdite)}
-        >
-          Редактировать
-        </Button>
-      </div>
+    const getImages = useCallback(async () => {
+      const data = await getImagesItem(item.id)
+      if (data) {
+        setImages(data)
+      }
+    }, [item.id])
+    useEffect(() => {
+      // console.log('card item')
 
-      <TagsList tags={item.tags} hiddenBtnDelete={true} />
-      <p className={styles.description}>{item.description}</p>
-      {item.code && (
-        <Code
-          code={item.code}
-          copy={item.copy}
-          language={item.language}
-          id={item.id}
-        />
-      )}
-      {!!images?.length && (
-        <CaruselImg images={images} imgHandler={handleImage} />
-      )}
-      <div className={styles.bottomCard}>
-        <span className={styles.date}>{dateText}</span>
-        <Button
-          shadowClick={false}
-          className={cn(styles.btn, styles.btnDelete)}
-          onClick={deleteHandler}
-        >
-          Удалить
-        </Button>
-      </div>
-    </li>
-  )
-})
+      if (!images) {
+        getImages()
+      }
+    }, [getImages, images])
+    return (
+      <li className={styles.item}>
+        <div className={styles.topCard}>
+          <h2 className={styles.title}>{item.title}</h2>
+          <Button
+            onClick={() => setItem(item)}
+            shadowClick={false}
+            className={cn(styles.btn, styles.btnEdite)}
+          >
+            Редактировать
+          </Button>
+        </div>
+
+        <TagsList tags={item.tags} hiddenBtnDelete={true} />
+        <p className={styles.description}>{item.description}</p>
+        {item.code && (
+          <Code
+            code={item.code}
+            copy={item.copy}
+            language={item.language}
+            id={item.id}
+            copyHandler={copyHandler}
+          />
+        )}
+        {!!images?.length && (
+          <CaruselImg images={images} imgHandler={handleImage} />
+        )}
+        <div className={styles.bottomCard}>
+          <span className={styles.date}>{dateText}</span>
+          <Button
+            shadowClick={false}
+            className={cn(styles.btn, styles.btnDelete)}
+            onClick={deleteHandler}
+          >
+            Удалить
+          </Button>
+        </div>
+      </li>
+    )
+  }
+)
 
 export default CodeItem

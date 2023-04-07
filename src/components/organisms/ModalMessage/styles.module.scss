@@ -11,7 +11,12 @@
 
   @extend %shadowDark;
 
+  @media screen and (max-width: 1050px) {
+    width: 80%;
+  }
+
   @media screen and (max-width: 570px) {
+    padding: 1rem;
   }
 
   .title {
@@ -38,6 +43,10 @@
       border-radius: 50%;
 
       &:last-child {
+        color: $main;
+      }
+
+      &:first-child {
         color: $red;
       }
     }

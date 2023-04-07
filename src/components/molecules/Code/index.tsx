@@ -14,9 +14,10 @@ type CodeType = {
   copy: number
   id: number
   language?: string
+  copyHandler: () => void
 }
 
-const Code: FC<CodeType> = memo(({ code, copy, id, language }) => {
+const Code: FC<CodeType> = memo(({ code, copy, id, language, copyHandler }) => {
   const { themeAppLS } = useAppContext()
 
   const codeTheme = themeAppLS === 'dark' ? dracula : oneLight
@@ -27,22 +28,22 @@ const Code: FC<CodeType> = memo(({ code, copy, id, language }) => {
     () => language || 'javascript'
   )
 
-  const copyHandler = () => {
+  const copyHandlerBtn = () => {
     navigator.clipboard.writeText(code).then(
       function () {
-        console.log('Async: Copying to clipboard was successful!')
-        // copyCode(id)
+        //console.log('Async: Copying to clipboard was successful!')
+        copyHandler()
         setCopyCount(true)
       },
       function (err) {
-        console.error('Async: Could not copy text: ', err)
+        console.error('Async: Could not copy text: ', err, code)
       }
     )
   }
   return (
     <div className={styles['language-javascript-of-snippet']}>
       <div className={styles.copyBtn}>
-        <Button className={styles.btn} onClick={copyHandler}>
+        <Button className={styles.btn} onClick={copyHandlerBtn}>
           {copyCount ? (
             <MdOutlineDone className={styles.done} />
           ) : (

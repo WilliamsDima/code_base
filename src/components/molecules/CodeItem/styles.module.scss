@@ -26,6 +26,10 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
     word-break: break-word;
+
+    @media screen and (max-width: 570px) {
+      margin: 0.5rem 0;
+    }
   }
 
   &:last-child {
@@ -48,6 +52,9 @@
   .topCard {
     margin-bottom: 2rem;
     align-items: flex-start;
+    @media screen and (max-width: 570px) {
+      margin-bottom: 0.5rem;
+    }
 
     .btnEdite {
       color: $main;
@@ -63,6 +70,10 @@
     .date {
       @extend %p2;
       opacity: 0.5;
+    }
+
+    @media screen and (max-width: 570px) {
+      margin-top: 0.5rem;
     }
 
     .btnDelete {

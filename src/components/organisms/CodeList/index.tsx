@@ -9,9 +9,9 @@ import { IItemCode } from '@appTypes/types'
 import Button from '@storybook/atoms/Button'
 import { IoAdd } from 'react-icons/io5'
 import ModalSlider from '@organisms/ModalSlider'
-import { useFetchCodeListUserQuery } from '@services/UserServices'
-import { useAuth } from '@hooks/useAuth'
 import Loading from '@atoms/Loading'
+import { useRTKQuery } from '@hooks/useRTKQuery'
+import { updateItemCode } from '@hooks/helpers'
 
 type images = {
   images: any[]
@@ -49,12 +49,24 @@ const CodeList: FC = () => {
     setModalOpenSlider(true)
   }, [])
 
-  const { user } = useAuth()
-  const { data: codes, isLoading } = useFetchCodeListUserQuery(user)
+  const { codes, isLoading, updateItem } = useRTKQuery()
+
+  const updateHandler = useCallback(
+    (item: IItemCode) => {
+      if (codes) {
+        const newCodes = updateItemCode(codes, item)
+        updateItem({ codes: newCodes })
+      }
+    },
+    [codes, updateItem]
+  )
 
   return (
     <div className={styles.contentList}>
-      <Loading active={isLoading} />
+      <Modal open={isLoading}>
+        <Loading active={isLoading} className={styles.listLoader} />
+      </Modal>
+
       <Modal open={isModalOpen} ref={refModalCreater}>
         {isModalOpen && (
           <ModalCreate
@@ -77,6 +89,7 @@ const CodeList: FC = () => {
                 item={item}
                 setItem={editeItemHandler}
                 setImagesSlider={imagesHandler}
+                updateHandler={updateHandler}
               />
             )
           })}

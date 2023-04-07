@@ -9,7 +9,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
 
   .prev,
   .next {
@@ -37,6 +36,16 @@
 
   .next {
     right: 2rem;
+  }
+
+  @media screen and (max-width: 570px) {
+    .prev {
+      left: 0;
+    }
+
+    .next {
+      right: 0;
+    }
   }
 
   .sliderContent {

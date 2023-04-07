@@ -1,10 +1,17 @@
 import { initializeApp } from 'firebase/app'
-import { getStorage, ref, deleteObject } from 'firebase/storage'
+import {
+  deleteObject,
+  getDownloadURL,
+  getStorage,
+  listAll,
+  ref,
+  uploadBytes,
+} from 'firebase/storage'
 import { getAuth, GoogleAuthProvider, GithubAuthProvider } from 'firebase/auth'
-import { doc, getDoc, getFirestore, updateDoc } from 'firebase/firestore/lite'
+import { doc, getDoc, getFirestore } from 'firebase/firestore/lite'
 import { User as FirebaseUser } from 'firebase/auth'
-import { IItemCode } from '../appTypes/types'
 import { IUserData } from '@store/redusers/main/types'
+import { v4 } from 'uuid'
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -38,17 +45,46 @@ export const getDataUser = async (user: FirebaseUser) => {
   }
 }
 
-export const deleteCode = (images: null | any[]) => {
-  if (images?.length) {
-    images?.forEach((img) => {
-      const imageListRef = ref(storage, `${img?.path}`)
-      deleteObject(imageListRef)
-        .then(() => {
-          console.log('file delited!')
-        })
-        .catch((error) => {
-          console.log('deleteHandler', error)
-        })
+export const getImagesItem = async (id: number) => {
+  try {
+    const path = auth?.currentUser?.providerData[0].uid
+    const imageListRef = ref(storage, `images-${path}/${id}/`)
+    const { items } = await listAll(imageListRef)
+
+    const data = items.map(async (item: any) => {
+      return {
+        path: item?._location?.path_,
+        url: await getDownloadURL(item),
+      }
     })
+
+    if (data.length) {
+      return await Promise.all(data)
+    }
+  } catch (error) {
+    console.log('getImagesItem error', error)
+  }
+}
+
+export const uploadImagesItem = (images: any[], id: number) => {
+  const path = auth?.currentUser?.providerData[0].uid
+  try {
+    images.forEach(async (img: any) => {
+      const imgeRef = ref(storage, `images-${path}/${id}/${img.name + v4()}`)
+      await uploadBytes(imgeRef, img)
+    })
+  } catch (error) {
+    console.log('uploadImagesItem error', error)
+  }
+}
+
+export const deleteImagesItem = (images: any[]) => {
+  try {
+    images?.forEach(async (img: any) => {
+      const imageListRef = ref(storage, `${img?.path}`)
+      await deleteObject(imageListRef)
+    })
+  } catch (error) {
+    console.log('deleteImagesItem error', error)
   }
 }

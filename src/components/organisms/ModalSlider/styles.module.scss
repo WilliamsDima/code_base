@@ -17,5 +17,10 @@
 
   @media screen and (max-width: 570px) {
     width: 80vw;
+    padding: 0;
+
+    div[class*='sliderContent'] {
+      height: 30vh;
+    }
   }
 }

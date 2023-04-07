@@ -5,18 +5,20 @@ import { Loading } from '@storybook/atoms/Loading'
 
 type loading = {
   active: boolean
+  className?: string
 }
 
-const LoadingModal: FC<loading> = memo(({ active }) => {
-  return (
-    <div
-      className={cn(styles.loader, {
-        [styles.active]: active,
-      })}
-    >
-      <Loading active={active} />
-    </div>
-  )
-})
+const LoadingModal: FC<loading> = memo(
+  ({ active, className = '', ...rest }) => {
+    const classnames = cn(styles.loader, className, {
+      [styles.active]: active,
+    })
+    return (
+      <div className={classnames}>
+        <Loading active={active} {...rest} />
+      </div>
+    )
+  }
+)
 
 export default LoadingModal

@@ -9,13 +9,7 @@
   width: 100%;
 
   .listLoader {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateY(-50%) translateX(-50%);
-    div {
-      background-color: $main !important;
-    }
+    position: static;
   }
 
   .btnAdd {

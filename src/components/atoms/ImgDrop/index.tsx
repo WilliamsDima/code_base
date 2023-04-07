@@ -5,22 +5,16 @@ import Button from '@storybook/atoms/Button'
 
 type img = {
   item: any
-  deleteImg: (id: number) => void
+  deleteImg: (id: number | string) => void
 }
 
 const ImgDrop: FC<img> = memo(({ item, deleteImg }) => {
-  const urlImg = item && URL.createObjectURL(item)
+  const urlImg = item.url ? item.url : URL.createObjectURL(item)
+  const id = item.url ? item.url : item.lastModified
 
   return (
-    <div
-      key={item.lastModified}
-      style={{ backgroundImage: `url(${urlImg})` }}
-      className={styles.img}
-    >
-      <Button
-        className={styles.delete}
-        onClick={() => deleteImg(item.lastModified)}
-      >
+    <div style={{ backgroundImage: `url(${urlImg})` }} className={styles.img}>
+      <Button className={styles.delete} onClick={() => deleteImg(id)}>
         <IoMdClose />
       </Button>
     </div>
