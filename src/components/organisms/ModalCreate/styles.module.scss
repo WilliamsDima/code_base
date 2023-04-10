@@ -109,6 +109,10 @@
         @extend %p1;
         text-align: left;
       }
+
+      &.textareaDescription textarea {
+        max-height: 200px;
+      }
     }
   }
 }

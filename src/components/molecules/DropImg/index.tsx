@@ -1,19 +1,28 @@
-import { FC } from 'react'
+import { FC, SetStateAction, useState, useCallback } from 'react'
 import styles from './styles.module.scss'
 
 type IDropImg = {
-  drag: boolean
   maxFiles: number
-  dragHandler: (e: any, value: boolean) => any
-  onDropHandler: (e: any) => any
+  setFile: React.Dispatch<SetStateAction<any[]>>
 }
 
-const DropImg: FC<IDropImg> = ({
-  drag,
-  dragHandler,
-  maxFiles,
-  onDropHandler,
-}) => {
+const DropImg: FC<IDropImg> = ({ maxFiles, setFile }) => {
+  const [drag, setDrag] = useState(false)
+
+  const dragHandler = useCallback((e: any, value: boolean) => {
+    e.preventDefault()
+    setDrag(value)
+  }, [])
+
+  const onDropHandler = useCallback(
+    (e: any) => {
+      const files = [...e?.target?.files]
+
+      setFile((prev) => [...prev, ...files])
+      setDrag(false)
+    },
+    [setFile, setDrag]
+  )
   return (
     <div className={styles.drop}>
       {drag ? (

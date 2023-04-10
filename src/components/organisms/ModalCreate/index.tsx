@@ -4,7 +4,6 @@ import {
   useCallback,
   forwardRef,
   RefObject,
-  useEffect,
 } from 'react'
 import styles from './styles.module.scss'
 import { IItemCode, ITag, Message } from '@appTypes/types'
@@ -13,7 +12,6 @@ import { useInput } from '@hooks/useInput'
 import TagsList from '@molecules/TagsList'
 import { IoMdClose } from 'react-icons/io'
 import { MdOutlineDone } from 'react-icons/md'
-
 import Button from '@storybook/atoms/Button'
 import { useOutside } from '@hooks/useOutside'
 import { useAppContext } from '@context/appContext'
@@ -21,10 +19,11 @@ import DropImg from '@molecules/DropImg'
 import ImagesList from '@molecules/ImagesList'
 import { updateItemCode } from '@hooks/helpers'
 import { useRTKQuery } from '@hooks/useRTKQuery'
-import { deleteImagesItem, getImagesItem } from '@api/firebase'
+import { deleteImagesItem } from '@api/firebase'
 import Select from '@storybook/molecules/Select'
 import { codeLanguges } from '@services/listLanguages'
 import { IItemSelect } from '@storybook/molecules/Select/types'
+import cn from 'classnames'
 
 type modal = {
   item: IItemCode | null
@@ -99,42 +98,9 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
   } = useInput(() => item?.code || '')
   const maxCode = 10000
 
-  const [drag, setDrag] = useState(false)
   const maxFiles = 3
   const [file, setFile] = useState<any[]>([])
   const [storageImg, setStorageImg] = useState<any[]>([])
-
-  const deleteImg = useCallback(
-    (id: number | string) => {
-      const imgFilter = file.filter(
-        (t: any) =>
-          (t.lastModified && t.lastModified !== id) || (t.url && t.url !== id)
-      )
-      if (typeof id === 'string') {
-        const imgStorageFolter = file.filter((t: any) => t.url && t.url === id)
-        console.log([...storageImg, ...imgStorageFolter])
-        setStorageImg((prev) => [...prev, ...imgStorageFolter])
-      }
-
-      setFile(imgFilter)
-    },
-    [file, storageImg]
-  )
-
-  const dragHandler = useCallback((e: any, value: boolean) => {
-    e.preventDefault()
-    setDrag(value)
-  }, [])
-
-  const onDropHandler = useCallback(
-    (e: any) => {
-      const files = [...e?.target?.files]
-
-      setFile((prev) => [...prev, ...files])
-      setDrag(false)
-    },
-    [setFile, setDrag]
-  )
 
   const [typeCode, setTypeCode] = useState<string>(
     () => item?.language || 'javascript'
@@ -155,7 +121,6 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
     setErrorTitle(false)
     setTags([])
     setFile([])
-    setDrag(false)
     setTypeCode('javascript')
   }, [
     setErrorTitle,
@@ -221,20 +186,6 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
     }
   }
 
-  const getImages = useCallback(async () => {
-    if (item) {
-      const images = await getImagesItem(item?.id)
-      console.log(images)
-      images && setFile(images)
-    }
-  }, [item])
-
-  useEffect(() => {
-    if (item) {
-      getImages()
-    }
-  }, [getImages, item])
-
   return (
     <div className={styles.modalCreateContent}>
       <Button className={styles.btnClose} onClick={closeHandler}>
@@ -277,7 +228,7 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
         <p className={styles.itemText}>* Развернутое описание</p>
         <Input
           {...bindDescription}
-          className={styles.input}
+          className={cn(styles.input, styles.textareaDescription)}
           inputType="textarea"
           maxLength={maxDescription}
           error={errorDescription}
@@ -306,7 +257,13 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
       </div>
 
       <div className={styles.item}>
-        <ImagesList deleteImg={deleteImg} file={file} maxFiles={maxFiles} />
+        <ImagesList
+          setFile={setFile}
+          id={item?.id}
+          setStorageImg={setStorageImg}
+          file={file}
+          maxFiles={maxFiles}
+        />
       </div>
 
       <div className={styles.item}>
@@ -314,12 +271,7 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
           * Скриншот (необязательно) .png, .jpg, .jpeg
         </p>
         <div className={styles.dropBlock}>
-          <DropImg
-            drag={drag}
-            dragHandler={dragHandler}
-            maxFiles={maxFiles}
-            onDropHandler={onDropHandler}
-          />
+          <DropImg maxFiles={maxFiles} setFile={setFile} />
           <Button className={styles.btnSubmit} onClick={submitHandler}>
             <MdOutlineDone />
           </Button>
