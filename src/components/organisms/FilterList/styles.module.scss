@@ -1,0 +1,58 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/typography.scss';
+@import '../../../assets/styles/globalStyles.scss';
+
+.filter {
+  width: 100%;
+  margin-bottom: 4rem;
+
+  .search {
+    margin-bottom: 1rem;
+    width: 100%;
+    position: relative;
+
+    .searchIcon {
+      position: absolute;
+      top: 50%;
+      left: 1rem;
+      z-index: 10;
+      transform: translateY(-50%);
+      opacity: 0.5;
+      @extend %p1;
+    }
+
+    .searchFild {
+      width: 100%;
+      background-color: $gray;
+
+      border-radius: 5px;
+      padding: 1rem;
+      padding-left: 3.5rem;
+
+      input {
+        @extend %p1;
+        text-align: left;
+      }
+    }
+  }
+
+  .selects {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    .tagsSelect {
+      position: absolute;
+      top: 3rem;
+      right: 1rem;
+      z-index: 100;
+      min-width: 100px;
+    }
+
+    .reset {
+      text-transform: uppercase;
+      @extend %p2;
+    }
+  }
+}

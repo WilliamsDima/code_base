@@ -18,8 +18,13 @@ const PopupSelect: FC<IPopup> = (props) => {
   const { bind, value } = useInput('')
 
   const listFilter = useMemo(() => {
-    return list.filter((it) =>
-      it.text.toLocaleLowerCase().includes(value.toLocaleLowerCase())
+    return list.filter(
+      (it) =>
+        it?.text?.toLocaleLowerCase().includes(value.toLocaleLowerCase()) ||
+        it?.value
+          ?.toString()
+          .toLocaleLowerCase()
+          .includes(value.toLocaleLowerCase())
     )
   }, [list, value])
 

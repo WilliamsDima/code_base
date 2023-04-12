@@ -4,6 +4,8 @@ import Button from '@storybook/atoms/Button'
 import cn from 'classnames'
 import { useAuth } from '@hooks/useAuth'
 import { getDateDisplay } from '@hooks/helpers'
+import Avatar from '@storybook/atoms/Avatar'
+import { BiLogOutCircle } from 'react-icons/bi'
 
 type popup = {
   show: boolean
@@ -24,10 +26,21 @@ const PopupUser: FC<popup> = ({ show, setIsShow }) => {
         [styles.show]: show,
       })}
     >
-      <p>{user?.displayName}</p>
-      <Button onClick={logoutHandler}>выйти</Button>
+      <div className={styles.user}>
+        <Avatar
+          className={styles.avatar}
+          name={user?.displayName}
+          src={user?.photoURL}
+        />
+        <p className={styles.userName}>{user?.displayName}</p>
+      </div>
+
+      <Button className={styles.logout} onClick={logoutHandler}>
+        <BiLogOutCircle className={styles.logoutIcon} />
+        выйти
+      </Button>
       {user && (
-        <p>
+        <p className={styles.lastIn}>
           Последний вход был:{' '}
           {getDateDisplay(user?.metadata?.lastSignInTime as string)}
         </p>

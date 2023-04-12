@@ -12,6 +12,7 @@ import ModalSlider from '@organisms/ModalSlider'
 import Loading from '@atoms/Loading'
 import { useRTKQuery } from '@hooks/useRTKQuery'
 import { listSortByDate, updateItemCode } from '@hooks/helpers'
+import FilterList from '@organisms/FilterList'
 
 type images = {
   images: any[]
@@ -67,6 +68,7 @@ const CodeList: FC = () => {
 
   return (
     <div className={styles.contentList}>
+      <FilterList codes={codes} />
       <Modal open={isLoading}>
         <Loading active={isLoading} className={styles.listLoader} />
       </Modal>

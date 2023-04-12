@@ -11,7 +11,7 @@ const SelectItem: FC<ISelect> = (props) => {
   const { onSelect, item } = props
   return (
     <li className={styles.item} onClick={() => onSelect(item)}>
-      <label>{item.text}</label>
+      <label>{item.text || item.value}</label>
     </li>
   )
 }
