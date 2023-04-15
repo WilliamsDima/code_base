@@ -1,40 +1,55 @@
-import { FC, useMemo, useState } from 'react'
+import {
+  FC,
+  useMemo,
+  useState,
+  ChangeEvent,
+  useTransition,
+  useCallback,
+} from 'react'
 import Input from '@storybook/atoms/Input'
-import { useInput } from '@hooks/useInput'
 import { BiSearchAlt } from 'react-icons/bi'
+import { GrPowerReset } from 'react-icons/gr'
 import Button from '@storybook/atoms/Button'
 import { IItemCode, ITag } from '@appTypes/types'
 import Select from '@storybook/molecules/Select'
 import styles from './styles.module.scss'
+import { codeLanguges } from '@services/listLanguages'
+import { IItemSelect } from '@storybook/molecules/Select/types'
+import { useCodeListContext } from '@context/codeListContext'
 
-type Props = {
-  codes: IItemCode[] | undefined
-}
+type Props = {}
 
-const FilterList: FC<Props> = ({ codes }) => {
-  const { bind, value } = useInput('')
-  const [tag, setTag] = useState('')
+const FilterList: FC<Props> = () => {
+  const {
+    searchValue,
+    searchHandler,
+    clearFilter,
+    tagsSelect,
+    setTagsSelect,
+    language,
+    tagsListClear,
+    setLanguage,
+  } = useCodeListContext()
 
-  const tags: ITag[] | undefined = codes
-    ?.map((c: any) => {
-      return c?.tags
-    })
-    .flat()
+  const setTagsHandler = useCallback(
+    (tag: IItemSelect) => {
+      const tags =
+        tagsListClear?.filter((it) => {
+          const isTag = tagsSelect.some((tg) => tg.id === tag.id)
+          if (it.id === tag.id && !isTag) {
+            return it
+          }
+        }) || []
+      setTagsSelect((prev) => [
+        ...prev.filter((it) => it.id !== tag.id),
+        ...tags,
+      ])
+    },
+    [tagsSelect, setTagsSelect, tagsListClear]
+  )
 
-  const tableTags: Record<string, number> = {}
-  const tagsListClear = useMemo(() => {
-    return tags?.filter(({ value }) => {
-      const tag = value.toLowerCase()
-      if (tag) {
-        if (!tableTags[tag] && (tableTags[tag] = 1)) {
-          return tag
-        }
-      }
-    })
-  }, [tags])
-
-  const setTagHandler = (tag: any) => {
-    console.log(tag)
+  const setLangHandler = (lang: IItemSelect) => {
+    setLanguage(lang?.value as string)
   }
 
   return (
@@ -42,7 +57,8 @@ const FilterList: FC<Props> = ({ codes }) => {
       <div className={styles.search}>
         <BiSearchAlt className={styles.searchIcon} />
         <Input
-          {...bind}
+          onChange={searchHandler}
+          value={searchValue}
           className={styles.searchFild}
           alt="search"
           placeholder="поиск"
@@ -52,14 +68,30 @@ const FilterList: FC<Props> = ({ codes }) => {
         {tagsListClear && (
           <Select
             className={styles.tagsSelect}
-            value={tag}
             list={tagsListClear}
             search={true}
-            selectHandler={setTagHandler}
+            classList={styles.list}
+            multiselect
+            multiselectChecked={tagsSelect}
+            placeholder="ключевые слова"
+            selectHandler={setTagsHandler}
           />
         )}
 
-        <Button className={styles.reset}>сбросить фильтр</Button>
+        <Button onClick={clearFilter} className={styles.reset}>
+          <GrPowerReset className={styles.iconReset} />
+          <span className={styles.btnTextReset}>сбросить фильтр</span>
+        </Button>
+
+        <Select
+          className={styles.languagesSelect}
+          value={language}
+          list={codeLanguges}
+          search={true}
+          classList={styles.languagesList}
+          placeholder="синтаксис"
+          selectHandler={setLangHandler}
+        />
       </div>
     </div>
   )

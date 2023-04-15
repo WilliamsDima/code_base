@@ -7,9 +7,11 @@
   padding: 0.5rem;
   box-sizing: border-box;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   label {
-    width: 100%;
     cursor: pointer;
     @extend %p2;
   }

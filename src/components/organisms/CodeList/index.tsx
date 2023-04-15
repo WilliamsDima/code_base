@@ -1,4 +1,12 @@
-import { FC, useState, useRef, useCallback, useMemo } from 'react'
+import {
+  FC,
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+  memo,
+  useEffect,
+} from 'react'
 import styles from './styles.module.scss'
 import Empty from '@storybook/atoms/Empty'
 import CodeItem from '@molecules/CodeItem'
@@ -10,16 +18,16 @@ import Button from '@storybook/atoms/Button'
 import { IoAdd } from 'react-icons/io5'
 import ModalSlider from '@organisms/ModalSlider'
 import Loading from '@atoms/Loading'
-import { useRTKQuery } from '@hooks/useRTKQuery'
 import { listSortByDate, updateItemCode } from '@hooks/helpers'
 import FilterList from '@organisms/FilterList'
+import { useCodeListContext } from '@context/codeListContext'
 
 type images = {
   images: any[]
   index: number
 }
 
-const CodeList: FC = () => {
+const CodeList: FC = memo(() => {
   const [item, setItem] = useState<null | IItemCode>(null)
   const [isModalOpen, setModalOpen] = useState(false)
 
@@ -50,7 +58,7 @@ const CodeList: FC = () => {
     setModalOpenSlider(true)
   }, [])
 
-  const { codes, isLoading, updateItem } = useRTKQuery()
+  const { codes, isLoading, updateItem } = useCodeListContext()
 
   const sortCodes = useMemo(() => {
     return listSortByDate(codes, true)
@@ -65,10 +73,9 @@ const CodeList: FC = () => {
     },
     [codes, updateItem]
   )
-
   return (
     <div className={styles.contentList}>
-      <FilterList codes={codes} />
+      <FilterList />
       <Modal open={isLoading}>
         <Loading active={isLoading} className={styles.listLoader} />
       </Modal>
@@ -115,6 +122,6 @@ const CodeList: FC = () => {
       </Button>
     </div>
   )
-}
+})
 
 export default CodeList

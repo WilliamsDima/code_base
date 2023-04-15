@@ -19,6 +19,10 @@
   overflow-y: scroll;
   overflow-x: hidden;
 
+  &.searchList {
+    padding-top: 0;
+  }
+
   @media screen and (max-width: 1050px) {
     max-height: 100px;
   }
@@ -37,14 +41,46 @@
     visibility: visible;
   }
 
-  .search {
-    input {
-      color: $black;
-      padding: 0.5rem;
-      border-bottom: 1px solid $bgItemDark;
+  .emptyList {
+    margin-top: 1rem;
+    margin-left: 1rem;
+    @extend %p2;
+    text-align: left;
+  }
 
-      &::placeholder {
-        color: $bgItemDark;
+  .searchWrapper {
+    position: relative;
+    .search {
+      input {
+        color: $black;
+        padding: 1rem 0.5rem;
+        border-bottom: 1px solid $bgItemDark;
+
+        &::placeholder {
+          color: $bgItemDark;
+        }
+      }
+    }
+
+    .btnClear {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      width: initial;
+      border-radius: 50%;
+      padding: 0.5rem;
+
+      svg {
+        @extend %p2;
+        color: $black;
+      }
+
+      &:hover {
+        background-color: rgba($red, 0.1);
+        svg {
+          color: $red;
+        }
       }
     }
   }

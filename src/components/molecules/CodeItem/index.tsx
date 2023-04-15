@@ -67,7 +67,8 @@ const CodeItem: FC<code> = memo(
       // console.log('card item')
 
       getImages()
-    }, [getImages])
+    }, [])
+
     return (
       <li className={styles.item}>
         <div className={styles.topCard}>

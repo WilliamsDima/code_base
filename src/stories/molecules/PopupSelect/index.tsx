@@ -5,17 +5,33 @@ import SelectItem from '@storybook/atoms/SelectItem'
 import { IItemSelect } from '../Select/types'
 import Input from '@storybook/atoms/Input'
 import { useInput } from '@hooks/useInput'
+import { RiCloseFill } from 'react-icons/ri'
+import Button from '@storybook/atoms/Button'
 
 interface IPopup extends HTMLAttributes<HTMLElement> {
   open: boolean
   selectHandler: (value: IItemSelect) => void
   list: IItemSelect[]
+  multiselectChecked: IItemSelect[]
   search?: boolean
+  multiselect?: boolean
 }
 
 const PopupSelect: FC<IPopup> = (props) => {
-  const { open, search, selectHandler, list } = props
-  const { bind, value } = useInput('')
+  const {
+    open,
+    search,
+    className,
+    multiselect,
+    multiselectChecked,
+    selectHandler,
+    list,
+  } = props
+  const { bind, value, reset } = useInput('')
+  const classnames = cn(styles.selectList, className, {
+    [styles.open]: open,
+    [styles.searchList]: search,
+  })
 
   const listFilter = useMemo(() => {
     return list.filter(
@@ -28,26 +44,40 @@ const PopupSelect: FC<IPopup> = (props) => {
     )
   }, [list, value])
 
+  const onSelect = (value: IItemSelect) => {
+    reset()
+    selectHandler(value)
+  }
+
   return (
-    <div
-      className={cn(styles.selectList, {
-        [styles.open]: open,
-      })}
-    >
+    <div className={classnames}>
       {search && (
-        <Input {...bind} placeholder="поиск..." className={styles.search} />
+        <div className={styles.searchWrapper}>
+          <Input {...bind} placeholder="поиск..." className={styles.search} />
+          {!!value.length && (
+            <Button className={styles.btnClear} onClick={reset}>
+              <RiCloseFill />
+            </Button>
+          )}
+        </div>
       )}
-      <ul>
-        {listFilter.map((item) => {
-          return (
-            <SelectItem
-              key={item.id.toString()}
-              onSelect={selectHandler}
-              item={item}
-            />
-          )
-        })}
-      </ul>
+      {listFilter.length > 0 ? (
+        <ul>
+          {listFilter.map((item) => {
+            return (
+              <SelectItem
+                key={item.id.toString()}
+                onSelect={onSelect}
+                item={item}
+                multiselect={multiselect}
+                checked={multiselectChecked.some((it) => it.id === item.id)}
+              />
+            )
+          })}
+        </ul>
+      ) : (
+        <p className={styles.emptyList}>ничего не найдено...</p>
+      )}
     </div>
   )
 }
