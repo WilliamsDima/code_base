@@ -15,7 +15,7 @@
   padding: 1rem 0;
   border-radius: 5px;
 
-  max-height: 150px;
+  max-height: 200px;
   overflow-y: scroll;
   overflow-x: hidden;
 
@@ -23,9 +23,6 @@
     padding-top: 0;
   }
 
-  @media screen and (max-width: 1050px) {
-    max-height: 100px;
-  }
   &::-webkit-scrollbar {
     width: 2px;
     background-color: transparent;

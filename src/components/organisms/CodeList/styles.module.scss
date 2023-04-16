@@ -49,6 +49,10 @@
     flex-direction: column;
     width: 100%;
 
+    @media screen and (max-width: 500px) {
+      margin-top: 5rem;
+    }
+
     p {
       @extend %p1;
     }

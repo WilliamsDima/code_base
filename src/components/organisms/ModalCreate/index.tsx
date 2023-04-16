@@ -149,11 +149,11 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
   const submitHandler = () => {
     const done =
       title.length <= maxTitle &&
-      title.length >= 0 &&
+      title.length > 0 &&
       tags.length <= maxTagLength &&
-      tags.length >= 0 &&
+      tags.length > 0 &&
       description.length <= maxDescription &&
-      description.length >= 0
+      description.length > 0
 
     if (done) {
       const data: IItemCode = {
@@ -182,7 +182,11 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
       clearHandler()
       close()
     } else {
-      alert('не все поля заполнены!')
+      const message: Message = {
+        body: 'Не все поля заполнены!',
+      }
+
+      !messageWarning && setMessageWarning(message)
     }
   }
 

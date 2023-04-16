@@ -59,7 +59,9 @@ const FilterList: FC<Props> = () => {
           alt="search"
           placeholder="поиск"
         />
-        {!!searchValue.length && <ButtonClearInput clear={clearSearch} />}
+        {!!searchValue.length && (
+          <ButtonClearInput className={styles.clear} clear={clearSearch} />
+        )}
       </div>
       <div className={styles.selects}>
         {tagsListClear && (
