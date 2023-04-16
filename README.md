@@ -1,4 +1,12 @@
-Шаблон для разработки приложений на React
+<a href="https://code-base-702c2.web.app/"><h1>CODE BASE</h1></a>
+
+<p>Платформа, которая позволит вам сохранить ваши полезные функции, фичи, описание ошибок и их решение, хуки, стили и любые другие полезные формулировки, которые были собраны вами в течении вашего опыта разработки. Большне не нужно гулять по своим старым проектам, в поисах той заветной фичи которую вы когда-то написали. Просто сохраните её тут и благодаря поиску вы быстро будите получать доступ к вашим фичам.</p>
+
+<a href="https://t.me/DyWilliams">Telegram автора - Dmitry Williams</a>
+
+---
+
+## Основные паттерны, архитектура и структура проекта
 
 ---
 
@@ -14,11 +22,17 @@
 
 ---
 
-## Работа с шаблоном
+## Работа со структурой
 
 паттерны:
 
 - `hooks` - дирректория, которая хранит в себе кастомные хуки и хэлперы.
+- `api` - иницилизация firebase, создание пользователя, загруга и удаление файлов.
+- `services` - дирректория, которая хранит в себе костанты, моковые данные, API сервисы.
+- `store` - глобальное хранилище со state и actions.
+- `stories` - структура для использования storybook.
+- `assets` - глобальные стили, изображения.
+- `appTypes` - типы и интерфейсы.
 
 Также, в шаблоне структурированы компоненты по Atomic Design. Компоненты деляться на:
 
@@ -26,11 +40,16 @@
 - `/molecules/*` – тут расположены связки/группы примитивов: группы кнопок, карточки и пр.
 - `/organisms/*` – тут расположены связки/группы молекул. То есть компоненты, которая состоит из молекул, которые состоят из примитивов: шапка, списки карточек, модальные окна и пр.
 - `/templates/*` – тут расположены шаблоны страницы
+- `/screens/*` – тут расположены страницы
+- `/navigations/*` – навигация и роутинг
 
 Подробнее можно почитать:
 
 - [Atomic Design Methodology](https://atomicdesign.bradfrost.com/chapter-2/)
 - [Atomic Design in practice](https://blog.ippon.tech/atomic-design-in-practice/)
+
+<p>Для создание 'алис' путей используется - Craco</p>
+<p>Далее будут описы основыне команды для взаимодействия с проектом</p>
 
 # Getting Started with Create React App
 
@@ -40,7 +59,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `npm start`
+### `yarn start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -48,12 +67,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
+### `yarn test`
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+### `yarn run build`
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -63,7 +82,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### `yarn run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
