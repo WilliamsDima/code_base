@@ -1,0 +1,22 @@
+@import '../../assets/styles/colors.scss';
+@import '../../assets/styles/typography.scss';
+@import '../../assets/styles/globalStyles.scss';
+
+.sortBtn {
+  justify-content: space-between;
+  padding: 0;
+
+  &:hover {
+    background-color: transparent;
+  }
+
+  &.active {
+    .icon {
+      transform: rotate(-180deg);
+    }
+  }
+
+  .icon {
+    margin-left: 1rem;
+  }
+}

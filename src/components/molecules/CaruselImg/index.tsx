@@ -1,109 +1,47 @@
-import { FC, useCallback, useState } from "react"
-import { useTheme } from "@mui/material/styles"
-import Box from "@mui/material/Box"
-import MobileStepper from "@mui/material/MobileStepper"
-import Button from "@mui/material/Button"
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft"
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight"
-import SwipeableViews from "react-swipeable-views"
+import { FC, useEffect, useState } from 'react'
+
+import Carusel from '@molecules/Carusel'
+import SlideImg from '@atoms/SlideImg'
 
 type IImgs = {
-	images: any[]
-	handleImage: (value: string) => void
+  images: any[]
+  imgHandler?: (value: any[], index: number) => void
+  index?: number
+  isModal?: boolean
 }
 
-const style = {
-	carusel: {
-		display: "flex",
-		flexDirection: "column",
-		justifyContent: "center",
-		alignItems: "center",
-		maxWidth: "250px",
-	},
-}
+const CaruselImg: FC<IImgs> = ({ images, isModal, imgHandler, index }) => {
+  const [currentSlide, setCurrentSlide] = useState(() => index || 0)
+  const handlePrevClick = () => {
+    setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1))
+  }
+  const handleNextClick = () => {
+    setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1))
+  }
 
-const CaruselImg: FC<IImgs> = ({ images, handleImage }) => {
-	const theme = useTheme()
-	const [activeStep, setActiveStep] = useState(0)
-	const maxSteps = images.length
+  useEffect(() => {}, [images])
 
-	const imgHandler = useCallback(handleImage, [handleImage])
-
-	const handleNext = () => {
-		setActiveStep(prevActiveStep => prevActiveStep + 1)
-	}
-
-	const handleBack = () => {
-		setActiveStep(prevActiveStep => prevActiveStep - 1)
-	}
-
-	const handleStepChange = (step: number) => {
-		setActiveStep(step)
-	}
-
-	return (
-		<Box sx={style.carusel}>
-			<SwipeableViews
-				axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-				index={activeStep}
-				onChangeIndex={handleStepChange}
-				enableMouseEvents
-			>
-				{images.map((step, index) => (
-					<div key={index}>
-						{Math.abs(activeStep - index) <= 2 ? (
-							<Box
-								component='img'
-								onClick={() => imgHandler(step?.url)}
-								sx={{
-									height: "auto",
-									display: "block",
-									maxWidth: 400,
-									overflow: "hidden",
-									width: "100%",
-								}}
-								src={step?.url}
-							/>
-						) : null}
-					</div>
-				))}
-			</SwipeableViews>
-			<MobileStepper
-				steps={maxSteps}
-				position='static'
-				sx={{ width: "100%", backgroundColor: "transparent" }}
-				activeStep={activeStep}
-				nextButton={
-					<Button
-						size='small'
-						onClick={handleNext}
-						sx={{ fontSize: 14 }}
-						disabled={activeStep === maxSteps - 1}
-					>
-						{theme.direction === "rtl" ? (
-							<KeyboardArrowLeft />
-						) : (
-							<KeyboardArrowRight />
-						)}
-					</Button>
-				}
-				backButton={
-					<Button
-						sx={{ fontSize: 14 }}
-						size='small'
-						onClick={handleBack}
-						disabled={activeStep === 0}
-					>
-						{theme.direction === "rtl" ? (
-							<KeyboardArrowRight />
-						) : (
-							<KeyboardArrowLeft />
-						)}
-					</Button>
-				}
-			/>
-		</Box>
-	)
+  return (
+    <Carusel
+      handlePrevClick={handlePrevClick}
+      handleNextClick={handleNextClick}
+      dots={images}
+      currentSlide={currentSlide}
+      setSlide={setCurrentSlide}
+      showButton={images.length > 1}
+      overStyle={{ marginTop: '1rem' }}
+    >
+      {images.map((img, i) => (
+        <SlideImg
+          isModal={isModal}
+          imgSelect={() => imgHandler && imgHandler(images, i)}
+          key={i.toString()}
+          active={currentSlide === i}
+          image={img}
+        />
+      ))}
+    </Carusel>
+  )
 }
 
 export default CaruselImg

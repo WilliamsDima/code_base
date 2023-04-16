@@ -1,0 +1,85 @@
+@import '../../assets/styles/colors.scss';
+@import '../../assets/styles/typography.scss';
+@import '../../assets/styles/globals.scss';
+
+.inputWrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+
+  .inputCounter {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    @extend %p2;
+    color: $white;
+  }
+
+  .focusLine {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: $main;
+    transition: width 0.2s linear;
+  }
+
+  &.error {
+    .focusLine {
+      width: 100%;
+      background-color: $red;
+    }
+  }
+
+  input,
+  textarea {
+    display: block;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: 0;
+    box-sizing: border-box;
+    color: $white;
+
+    &::placeholder {
+      color: $white;
+      opacity: 0.5;
+    }
+
+    &:focus + .focusLine {
+      width: 100%;
+    }
+  }
+
+  textarea {
+    min-height: 100px;
+    resize: none;
+    &::-webkit-scrollbar {
+      width: 2px;
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $main;
+      border-radius: 5px;
+    }
+
+    &.code {
+      max-height: 700px;
+
+      @media screen and (max-width: 1050px) {
+        max-height: 500px;
+      }
+
+      @media screen and (max-width: 570px) {
+        max-height: 300px;
+      }
+    }
+  }
+}

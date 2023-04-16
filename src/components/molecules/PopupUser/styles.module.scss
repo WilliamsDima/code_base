@@ -1,0 +1,61 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/typography.scss';
+@import '../../../assets/styles/globalStyles.scss';
+
+.popupUser {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  transition: all 0.2s linear;
+  background-color: $gray;
+  padding: 1rem;
+  border-radius: 5px;
+
+  .user {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: max-content;
+
+    .avatar {
+      margin-right: 1rem;
+    }
+
+    .userName {
+      @extend %p1;
+      text-align: left;
+    }
+  }
+
+  .logout {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    @extend %p1;
+    .logoutIcon {
+      @extend %p1;
+      margin-right: 1rem;
+    }
+
+    &:hover {
+      color: $red;
+      background-color: rgba($red, 0.1);
+    }
+  }
+
+  .lastIn {
+    @extend %p2;
+    color: $main;
+    text-align: left;
+    width: max-content;
+  }
+
+  &.show {
+    opacity: 1;
+    @extend %showAnimPopup;
+    visibility: visible;
+  }
+}

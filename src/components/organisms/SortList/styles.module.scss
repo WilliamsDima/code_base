@@ -1,0 +1,30 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/typography.scss';
+@import '../../../assets/styles/globalStyles.scss';
+
+.sort {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .item {
+    .byDate {
+      flex-direction: row-reverse;
+      svg {
+        margin: 0;
+        margin-right: 1rem;
+      }
+    }
+
+    .byCopy {
+      padding: 0;
+      &:hover {
+        background-color: transparent;
+      }
+      .checkbox {
+        margin-left: 1rem;
+        border-color: $white;
+      }
+    }
+  }
+}

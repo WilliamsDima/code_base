@@ -1,0 +1,20 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/globalStyles.scss';
+@import '../../../assets/styles/typography.scss';
+
+.images {
+  display: flex;
+  margin-bottom: 1rem;
+  align-items: center;
+
+  .counterImg {
+    @extend %p1;
+    color: $white;
+  }
+
+  &.error {
+    .counterImg {
+      color: red;
+    }
+  }
+}

@@ -1,0 +1,27 @@
+@import '../../assets/styles/colors.scss';
+@import '../../assets/styles/typography.scss';
+@import '../../assets/styles/globalStyles.scss';
+
+.checkbox {
+  padding: 0.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  border: 1px solid $black;
+
+  .done {
+    opacity: 0;
+    visibility: hidden;
+    @extend %p1;
+    color: $main;
+    transition: all 0.2s linear;
+  }
+
+  &.checked {
+    .done {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}

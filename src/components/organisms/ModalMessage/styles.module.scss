@@ -1,0 +1,54 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/typography.scss';
+@import '../../../assets/styles/globalStyles.scss';
+
+.message {
+  padding: 2rem;
+  border-radius: 5px;
+  background-color: $bgItemDark;
+  max-height: 80vh;
+  position: relative;
+
+  @extend %shadowDark;
+
+  @media screen and (max-width: 1050px) {
+    width: 80%;
+  }
+
+  @media screen and (max-width: 570px) {
+    padding: 1rem;
+  }
+
+  .title {
+    @extend %h2;
+    color: $white;
+    margin-bottom: 1rem;
+  }
+
+  .body {
+    @extend %p1;
+    color: $white;
+    // text-align: left;
+  }
+
+  .btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    .btn {
+      padding: 1rem;
+      margin-top: 1rem;
+      @extend %h2;
+      border-radius: 50%;
+
+      &:last-child {
+        color: $main;
+      }
+
+      &:first-child {
+        color: $red;
+      }
+    }
+  }
+}

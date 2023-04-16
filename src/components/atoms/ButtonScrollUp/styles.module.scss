@@ -1,0 +1,25 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/typography.scss';
+@import '../../../assets/styles/globalStyles.scss';
+
+.btn {
+  position: fixed;
+  bottom: 4rem;
+  right: 2rem;
+  border-radius: 50%;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0);
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+    @extend %showAnimZoom;
+  }
+
+  .up {
+    color: $main;
+    @extend %h1;
+  }
+}

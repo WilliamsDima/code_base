@@ -1,0 +1,46 @@
+@import '../../assets/styles/colors.scss';
+@import '../../assets/styles/typography.scss';
+@import '../../assets/styles/globalStyles.scss';
+
+.select {
+  background-color: $white;
+  @extend %shadow;
+
+  border-radius: 5px;
+  cursor: pointer;
+
+  .btn {
+    padding: 0.5rem 1rem;
+    width: 100%;
+  }
+
+  &:hover {
+    background-color: $white;
+  }
+
+  .value {
+    @extend %p2;
+    color: $black;
+  }
+
+  .selectContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+
+    .icon {
+      @extend %h2;
+      color: $black;
+      margin-left: 1rem;
+      transition: all 0.2s linear;
+    }
+  }
+
+  &.open {
+    .icon {
+      transform: rotate(-180deg);
+    }
+  }
+}

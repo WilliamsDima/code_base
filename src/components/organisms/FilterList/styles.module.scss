@@ -1,0 +1,135 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/typography.scss';
+@import '../../../assets/styles/globalStyles.scss';
+
+.filter {
+  width: 100%;
+  margin-bottom: 1rem;
+
+  .search {
+    margin-bottom: 1rem;
+    width: 100%;
+    position: relative;
+
+    .searchIcon {
+      position: absolute;
+      top: 50%;
+      left: 1rem;
+      z-index: 10;
+      transform: translateY(-50%);
+      opacity: 0.5;
+      @extend %p1;
+    }
+
+    .clear {
+      right: 0;
+    }
+
+    .searchFild {
+      width: 100%;
+      background-color: $gray;
+
+      border-radius: 5px;
+      padding: 1rem;
+      padding-left: 3.5rem;
+
+      @media screen and (max-width: 1050px) {
+        padding: 0.5rem;
+        padding-left: 3.5rem;
+      }
+
+      input {
+        @extend %p1;
+        text-align: left;
+      }
+    }
+  }
+
+  .selects {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+
+    @media screen and (max-width: 500px) {
+      flex-direction: column;
+    }
+
+    .tagsSelect {
+      position: relative;
+      min-width: 200px;
+      max-width: 200px;
+      @media screen and (max-width: 500px) {
+        margin-bottom: 1rem;
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+
+    .list {
+      left: 0;
+      max-height: 50vh;
+      min-width: 200px;
+      @media screen and (max-width: 500px) {
+        width: 100%;
+      }
+    }
+
+    .languagesSelect {
+      position: relative;
+      min-width: 200px;
+      max-width: 200px;
+      @media screen and (max-width: 500px) {
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+
+    .languagesList {
+      max-height: 50vh;
+      min-width: 200px;
+      @media screen and (max-width: 500px) {
+        width: 100%;
+      }
+    }
+
+    .reset {
+      text-transform: uppercase;
+      padding: 0.5rem 2rem;
+
+      .btnTextReset {
+        @extend %p2;
+        margin-left: 1rem;
+
+        @media screen and (max-width: 650px) {
+          display: none;
+        }
+        @media screen and (max-width: 500px) {
+          display: inline-block;
+        }
+      }
+
+      @media screen and (max-width: 650px) {
+        padding: 0.8rem;
+      }
+
+      @media screen and (max-width: 500px) {
+        position: absolute;
+        left: 50%;
+        bottom: -7rem;
+        transform: translateX(-50%);
+        width: 100%;
+        padding: 0.5rem 1rem;
+      }
+
+      .iconReset {
+        @extend %p2;
+        path {
+          stroke: $white;
+          color: $white;
+        }
+      }
+    }
+  }
+}

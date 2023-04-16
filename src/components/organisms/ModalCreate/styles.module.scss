@@ -1,0 +1,118 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/typography.scss';
+@import '../../../assets/styles/globalStyles.scss';
+
+.modalCreateContent {
+  padding: 2rem;
+  padding-top: 4rem;
+  border-radius: 5px;
+  background-color: $bgItemDark;
+  width: 60vw;
+  max-height: 80vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  position: relative;
+
+  @media screen and (max-width: 1050px) {
+    width: 70vw;
+  }
+
+  @media screen and (max-width: 570px) {
+    padding: 1rem;
+    padding-top: 3rem;
+    width: 85vw;
+  }
+
+  &::-webkit-scrollbar {
+    width: 2px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $main;
+    border-radius: 5px;
+  }
+
+  .btnClose {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 1rem;
+    border-radius: 50%;
+
+    svg {
+      @extend %h2;
+      color: $white;
+    }
+
+    &:hover svg {
+      color: $red;
+    }
+  }
+
+  .item {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    position: relative;
+
+    .codeSelect {
+      position: absolute;
+      top: 3rem;
+      right: 1rem;
+      z-index: 100;
+      min-width: 100px;
+    }
+    &:last-child {
+      margin: 0;
+    }
+
+    .dropBlock {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
+      div {
+        margin-right: 2rem;
+        @media screen and (max-width: 1050px) {
+          margin-right: 0.5rem;
+        }
+      }
+
+      .btnSubmit {
+        padding: 1rem;
+        @extend %h1;
+        border-radius: 50%;
+        color: $main;
+      }
+    }
+
+    .itemText {
+      @extend %p3;
+      text-align: left;
+      margin-bottom: 0.5rem;
+      color: $gray;
+    }
+
+    .input {
+      background-color: $gray;
+      padding: 0.5rem 1rem;
+      border-radius: 3px;
+      overflow: hidden;
+
+      span {
+        color: $white;
+      }
+
+      input,
+      textarea {
+        @extend %p1;
+        text-align: left;
+      }
+
+      &.textareaDescription textarea {
+        max-height: 200px;
+      }
+    }
+  }
+}

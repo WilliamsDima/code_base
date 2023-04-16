@@ -1,0 +1,42 @@
+@import '../../assets/styles/colors.scss';
+@import '../../assets/styles/typography.scss';
+
+.emptyPage {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  .empty {
+    margin-top: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    h1 {
+      @extend %h1;
+
+      &:first-child {
+        margin-bottom: 1rem;
+      }
+    }
+
+    a {
+      @extend %logo;
+      margin-top: 1rem;
+    }
+  }
+
+  .jhon {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+
+    @media screen and (max-width: 500px) {
+      width: 300px;
+    }
+  }
+}

@@ -1,16 +1,23 @@
-import "./styles.scss"
-import { Container } from "@mui/material"
-import { useAppSelector } from "../../../hooks/hooks"
-import Main from "../../organisms/Main"
-import Empty from "../../atoms/Empty"
+import { useAuth } from '@hooks/useAuth'
+import styles from './styles.module.scss'
+import Auth from '@molecules/Auth'
+import CodeList from '@organisms/CodeList'
+import { CodeListProvider } from '@context/codeListContext'
 
 const HomeTemplate = () => {
-	const { user } = useAppSelector(store => store.main)
-	return (
-		<Container maxWidth='lg' sx={{ mt: 5 }}>
-			{user ? <Main /> : <Empty />}
-		</Container>
-	)
+  const { user } = useAuth()
+
+  return (
+    <div className={styles.content}>
+      {user ? (
+        <CodeListProvider>
+          <CodeList />
+        </CodeListProvider>
+      ) : (
+        <Auth />
+      )}
+    </div>
+  )
 }
 
 export default HomeTemplate
