@@ -6,7 +6,6 @@ import {
   useRef,
   useCallback,
   useMemo,
-  useEffect,
 } from 'react'
 import styles from './styles.module.scss'
 import cn from 'classnames'
@@ -25,6 +24,7 @@ interface ISelect extends HTMLAttributes<HTMLElement> {
   search?: boolean
   classList?: string
   placeholder?: string
+  selectTextLength?: number
 }
 
 const Select: FC<ISelect> = (props) => {
@@ -40,6 +40,7 @@ const Select: FC<ISelect> = (props) => {
     multiselectChecked = [],
     multiselect,
     className,
+    selectTextLength = 20,
     placeholder,
     children,
     ...rest
@@ -61,9 +62,11 @@ const Select: FC<ISelect> = (props) => {
   )
 
   const selectText = useMemo(() => {
-    return multiselectChecked
+    const text = multiselectChecked?.length
       ? multiselectChecked.map((it) => it.value).join(', ') || placeholder
       : value || placeholder
+
+    return text
   }, [multiselectChecked, value])
 
   return (
@@ -76,8 +79,8 @@ const Select: FC<ISelect> = (props) => {
         <div className={styles.selectContent}>
           <span className={styles.value}>
             {selectText?.toString()?.length &&
-            selectText?.toString()?.length > 20
-              ? selectText?.toString().slice(0, 20) + '...'
+            selectText?.toString()?.length > selectTextLength
+              ? selectText?.toString().slice(0, selectTextLength) + '...'
               : selectText}
           </span>
           <MdOutlineArrowDropDown className={styles.icon} />

@@ -1,21 +1,15 @@
-import {
-  FC,
-  useMemo,
-  useState,
-  ChangeEvent,
-  useTransition,
-  useCallback,
-} from 'react'
+import { FC, useCallback } from 'react'
 import Input from '@storybook/atoms/Input'
 import { BiSearchAlt } from 'react-icons/bi'
 import { GrPowerReset } from 'react-icons/gr'
 import Button from '@storybook/atoms/Button'
-import { IItemCode, ITag } from '@appTypes/types'
 import Select from '@storybook/molecules/Select'
 import styles from './styles.module.scss'
 import { codeLanguges } from '@services/listLanguages'
 import { IItemSelect } from '@storybook/molecules/Select/types'
 import { useCodeListContext } from '@context/codeListContext'
+import { filterUnionList } from '@hooks/helpers'
+import ButtonClearInput from '@storybook/atoms/ButtonClearInput'
 
 type Props = {}
 
@@ -26,20 +20,15 @@ const FilterList: FC<Props> = () => {
     clearFilter,
     tagsSelect,
     setTagsSelect,
-    language,
+    clearSearch,
+    languages,
     tagsListClear,
-    setLanguage,
+    setLanguages,
   } = useCodeListContext()
 
   const setTagsHandler = useCallback(
     (tag: IItemSelect) => {
-      const tags =
-        tagsListClear?.filter((it) => {
-          const isTag = tagsSelect.some((tg) => tg.id === tag.id)
-          if (it.id === tag.id && !isTag) {
-            return it
-          }
-        }) || []
+      const tags = filterUnionList(tagsListClear, tagsSelect, tag)
       setTagsSelect((prev) => [
         ...prev.filter((it) => it.id !== tag.id),
         ...tags,
@@ -48,9 +37,16 @@ const FilterList: FC<Props> = () => {
     [tagsSelect, setTagsSelect, tagsListClear]
   )
 
-  const setLangHandler = (lang: IItemSelect) => {
-    setLanguage(lang?.value as string)
-  }
+  const setLangHandler = useCallback(
+    (lang: IItemSelect) => {
+      const langs = filterUnionList(codeLanguges, languages, lang)
+      setLanguages((prev) => [
+        ...prev.filter((it) => it.id !== lang.id),
+        ...langs,
+      ])
+    },
+    [languages, setLanguages, codeLanguges]
+  )
 
   return (
     <div className={styles.filter}>
@@ -63,6 +59,7 @@ const FilterList: FC<Props> = () => {
           alt="search"
           placeholder="поиск"
         />
+        {!!searchValue.length && <ButtonClearInput clear={clearSearch} />}
       </div>
       <div className={styles.selects}>
         {tagsListClear && (
@@ -85,11 +82,12 @@ const FilterList: FC<Props> = () => {
 
         <Select
           className={styles.languagesSelect}
-          value={language}
           list={codeLanguges}
           search={true}
           classList={styles.languagesList}
           placeholder="синтаксис"
+          multiselect
+          multiselectChecked={languages}
           selectHandler={setLangHandler}
         />
       </div>

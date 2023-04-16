@@ -5,8 +5,7 @@ import SelectItem from '@storybook/atoms/SelectItem'
 import { IItemSelect } from '../Select/types'
 import Input from '@storybook/atoms/Input'
 import { useInput } from '@hooks/useInput'
-import { RiCloseFill } from 'react-icons/ri'
-import Button from '@storybook/atoms/Button'
+import ButtonClearInput from '@storybook/atoms/ButtonClearInput'
 
 interface IPopup extends HTMLAttributes<HTMLElement> {
   open: boolean
@@ -45,7 +44,7 @@ const PopupSelect: FC<IPopup> = (props) => {
   }, [list, value])
 
   const onSelect = (value: IItemSelect) => {
-    reset()
+    !multiselect && reset()
     selectHandler(value)
   }
 
@@ -55,9 +54,7 @@ const PopupSelect: FC<IPopup> = (props) => {
         <div className={styles.searchWrapper}>
           <Input {...bind} placeholder="поиск..." className={styles.search} />
           {!!value.length && (
-            <Button className={styles.btnClear} onClick={reset}>
-              <RiCloseFill />
-            </Button>
+            <ButtonClearInput className={styles.clear} clear={reset} />
           )}
         </div>
       )}

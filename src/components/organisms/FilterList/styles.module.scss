@@ -4,11 +4,7 @@
 
 .filter {
   width: 100%;
-  margin-bottom: 4rem;
-
-  @media screen and (max-width: 500px) {
-    margin-bottom: 6rem;
-  }
+  margin-bottom: 1rem;
 
   .search {
     margin-bottom: 1rem;

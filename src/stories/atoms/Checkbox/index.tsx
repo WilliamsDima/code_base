@@ -2,7 +2,6 @@ import cn from 'classnames'
 import React, { FC, memo, HTMLAttributes } from 'react'
 import { MdOutlineDone } from 'react-icons/md'
 import styles from './style.module.scss'
-import Button from '../Button'
 
 interface ICheckbox extends HTMLAttributes<HTMLElement> {
   value: boolean

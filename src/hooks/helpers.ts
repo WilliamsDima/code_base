@@ -1,9 +1,13 @@
 /* eslint-disable array-callback-return */
 
-import { IItemCode } from '../appTypes/types'
+import { IItemSelect } from '@storybook/molecules/Select/types'
+import { IItemCode, ITag } from '../appTypes/types'
 
 // Поскольку массив заморожен в строгом режиме, нужно скопировать массив перед его сортировкой поэтому использую slice
-export const dataSortMaxValue = (resCodeFilter: IItemCode[], max: boolean) =>
+export const sortByCopyList = (
+  resCodeFilter: IItemCode[] | undefined,
+  max: boolean
+) =>
   resCodeFilter &&
   resCodeFilter.slice().sort((a, b) => {
     if (max) {
@@ -21,12 +25,35 @@ export const listSortByDate = (codes: IItemCode[] | undefined, max: boolean) =>
     return a.id - b.id
   })
 
-export const filterSearch = (codeBase: IItemCode[], search: string) =>
+export const filterSearch = (
+  codeBase: IItemCode[] | undefined,
+  search: string
+) =>
   codeBase &&
-  codeBase.slice().filter((c) => {
-    const text =
-      c.title.toLocaleLowerCase() + ' ' + c.description.toLocaleLowerCase()
+  codeBase.filter((c) => {
+    const text = (c.title + ' ' + c.description).toLocaleLowerCase()
     if (text.includes(search.toLocaleLowerCase())) {
+      return c
+    }
+  })
+
+export const filterTags = (codes: IItemCode[] | undefined, tags: ITag[]) =>
+  codes &&
+  codes.filter((c) => {
+    const isCode = tags.some((tag) => c.tags.some((it) => it.id === tag.id))
+    if (isCode) {
+      return c
+    }
+  })
+
+export const filterSyntax = (
+  codes: IItemCode[] | undefined,
+  languages: IItemSelect[]
+) =>
+  codes &&
+  codes.filter((c) => {
+    const isCode = languages.some((lang) => c.language === lang.value)
+    if (isCode) {
       return c
     }
   })
@@ -47,6 +74,21 @@ export const getDateDisplay = (d: Date | number | string) => {
     date.getFullYear()
 
   return display
+}
+
+export const filterUnionList = (
+  list: IItemSelect[] | undefined,
+  goalList: IItemSelect[],
+  goal: IItemSelect
+): any[] => {
+  return (
+    list?.filter((it) => {
+      const isItem = goalList.some((tg) => tg.id === goal.id)
+      if (it.id === goal.id && !isItem) {
+        return it
+      }
+    }) || []
+  )
 }
 
 export const updateItemCode = (codes: IItemCode[], item: IItemCode) => {

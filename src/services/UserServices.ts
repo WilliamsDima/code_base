@@ -21,7 +21,8 @@ export const userAPI = createApi({
             const docRef = doc(db, 'users', id)
             const docSnap = await getDoc(docRef)
             const data = docSnap.data() as IUserData
-            return { data: data.codes }
+
+            return { data: data?.codes }
           } else {
             throw new Error('Пользователь не найден!')
           }

@@ -43,14 +43,15 @@ export const AuthProvider: FC<AuthProviderType> = ({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const createUser = async (user: FirebaseUser) => {
+    const id = user?.providerData[0].uid
     const userData = {
-      id: user.uid,
+      id,
       name: user.displayName,
       email: user.email,
       codes: [],
     }
     try {
-      await setDoc(doc(db, 'users', user.uid), userData)
+      await setDoc(doc(db, 'users', id), userData)
     } catch (error) {
       console.log('createUser error', error)
     }
@@ -81,6 +82,7 @@ export const AuthProvider: FC<AuthProviderType> = ({ children }) => {
     try {
       await signOut(auth)
       setUser(null)
+      window.location.reload()
     } catch (error) {
       console.log('logout error', error)
     } finally {

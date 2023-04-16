@@ -18,9 +18,10 @@ import Button from '@storybook/atoms/Button'
 import { IoAdd } from 'react-icons/io5'
 import ModalSlider from '@organisms/ModalSlider'
 import Loading from '@atoms/Loading'
-import { listSortByDate, updateItemCode } from '@hooks/helpers'
+import { listSortByDate, sortByCopyList, updateItemCode } from '@hooks/helpers'
 import FilterList from '@organisms/FilterList'
 import { useCodeListContext } from '@context/codeListContext'
+import SortList from '@organisms/SortList'
 
 type images = {
   images: any[]
@@ -60,9 +61,18 @@ const CodeList: FC = memo(() => {
 
   const { codes, isLoading, updateItem } = useCodeListContext()
 
+  const [sortByDate, setSortByDate] = useState(true)
+  const [sortByCopy, setSortByCopy] = useState(false)
+
   const sortCodes = useMemo(() => {
-    return listSortByDate(codes, true)
-  }, [codes])
+    let sort
+    sort = listSortByDate(codes, sortByDate)
+    if (sortByCopy) {
+      sort = sortByCopyList(sort, sortByCopy)
+    }
+
+    return sort
+  }, [codes, sortByDate, sortByCopy])
 
   const updateHandler = useCallback(
     (item: IItemCode) => {
@@ -76,6 +86,12 @@ const CodeList: FC = memo(() => {
   return (
     <div className={styles.contentList}>
       <FilterList />
+      <SortList
+        sortByDate={sortByDate}
+        setSortByCopy={setSortByCopy}
+        setSortByDate={setSortByDate}
+        sortByCopy={sortByCopy}
+      />
       <Modal open={isLoading}>
         <Loading active={isLoading} className={styles.listLoader} />
       </Modal>
@@ -112,7 +128,7 @@ const CodeList: FC = memo(() => {
           {!isLoading && (
             <>
               <Empty />
-              <p>кодавая база пуста</p>
+              <p>ничего не найдено...</p>
             </>
           )}
         </div>

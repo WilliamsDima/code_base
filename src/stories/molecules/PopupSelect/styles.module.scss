@@ -62,24 +62,15 @@
       }
     }
 
-    .btnClear {
-      position: absolute;
-      top: 50%;
-      right: 0;
-      transform: translateY(-50%);
-      width: initial;
-      border-radius: 50%;
+    .clear {
       padding: 0.5rem;
-
-      svg {
-        @extend %p2;
-        color: $black;
+      right: 0.5rem;
+      svg path {
+        stroke: $black;
       }
-
       &:hover {
-        background-color: rgba($red, 0.1);
-        svg {
-          color: $red;
+        svg path {
+          stroke: $red;
         }
       }
     }

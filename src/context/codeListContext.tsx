@@ -1,5 +1,7 @@
 import { IItemCode, ITag } from '@appTypes/types'
+import { filterSearch, filterSyntax, filterTags } from '@hooks/helpers'
 import { useRTKQuery } from '@hooks/useRTKQuery'
+import { IItemSelect } from '@storybook/molecules/Select/types'
 import {
   useContext,
   createContext,
@@ -16,13 +18,14 @@ type IContext = {
   searchValue: string
   tagsSelect: ITag[]
   tagsListClear: ITag[] | undefined
-  language: string | number
+  languages: IItemSelect[]
   isLoading: boolean
   isPending: boolean
   codes: IItemCode[] | undefined
   clearFilter: () => void
+  clearSearch: () => void
   setTagsSelect: React.Dispatch<SetStateAction<ITag[]>>
-  setLanguage: (value: string | number) => void
+  setLanguages: React.Dispatch<SetStateAction<IItemSelect[]>>
   updateItem: (codes: { codes: IItemCode[] }) => void
   setSearchValue: (value: string) => void
   searchHandler: (event: ChangeEvent<HTMLInputElement>) => void
@@ -42,17 +45,25 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
   const [isPending, startTransition] = useTransition()
 
   const [tagsSelect, setTagsSelect] = useState<ITag[]>([])
-  const [language, setLanguage] = useState<string | number>('')
+  const [languages, setLanguages] = useState<IItemSelect[]>([])
 
   const codesFilter = useMemo(() => {
     // console.log('filtredValue', filtredValue)
-    return codes?.filter((code) => {
-      const textContent = (code.title + code.description).toLocaleLowerCase()
-      if (textContent.includes(filtredValue.toLocaleLowerCase())) {
-        return code
-      }
-    })
-  }, [filtredValue, codes])
+    // console.log('tagsSelect', tagsSelect)
+
+    let search = codes
+
+    if (filtredValue.length) {
+      search = filterSearch(codes, filtredValue)
+    }
+    if (tagsSelect.length) {
+      search = filterTags(search, tagsSelect)
+    }
+    if (languages.length) {
+      search = filterSyntax(search, languages)
+    }
+    return search
+  }, [filtredValue, codes, tagsSelect, languages])
 
   const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { target } = event
@@ -70,7 +81,7 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
         return c.tags
       })
       .flat()
-  }, [codesFilter])
+  }, [codes])
 
   const tableTags: Record<string, number> = {}
   const tagsListClear = useMemo(() => {
@@ -84,13 +95,17 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
     })
   }, [tags])
 
-  const clearFilter = () => {
-    console.log('clearFilter')
-
+  const clearSearch = () => {
     setSearchValue('')
-    setTagsSelect([])
-    setLanguage('')
     setFiltredValue('')
+  }
+
+  const clearFilter = () => {
+    // console.log('clearFilter')
+
+    clearSearch()
+    setTagsSelect([])
+    setLanguages([])
   }
 
   const value = useMemo(() => {
@@ -99,14 +114,15 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
       isLoading,
       tagsSelect,
       tagsListClear,
-      language,
+      languages,
       codes: codesFilter,
       updateItem,
       setTagsSelect,
-      setLanguage,
+      setLanguages,
       setSearchValue,
       searchHandler,
       clearFilter,
+      clearSearch,
       isPending,
     }
   }, [
@@ -115,7 +131,7 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
     codes,
     codesFilter,
     tagsSelect,
-    language,
+    languages,
     tagsListClear,
   ])
 

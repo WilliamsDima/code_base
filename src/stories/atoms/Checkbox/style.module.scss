@@ -15,6 +15,7 @@
     visibility: hidden;
     @extend %p1;
     color: $main;
+    transition: all 0.2s linear;
   }
 
   &.checked {

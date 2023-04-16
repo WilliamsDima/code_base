@@ -1,0 +1,29 @@
+@import '../../assets/styles/colors.scss';
+@import '../../assets/styles/typography.scss';
+@import '../../assets/styles/globalStyles.scss';
+
+.clear {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  z-index: 10;
+  transform: translateY(-50%);
+  padding: 1rem;
+  border-radius: 50%;
+  svg {
+    @extend %p2;
+
+    path {
+      stroke: $white;
+    }
+  }
+
+  &:hover {
+    background-color: rgba($red, 0.1);
+    svg {
+      path {
+        stroke: $red;
+      }
+    }
+  }
+}
