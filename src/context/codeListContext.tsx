@@ -58,6 +58,8 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
     }
     if (tagsSelect.length) {
       search = filterTags(search, tagsSelect)
+
+      // console.log('search', search)
     }
     if (languages.length) {
       search = filterSyntax(search, languages)

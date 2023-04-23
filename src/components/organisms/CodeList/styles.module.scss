@@ -9,6 +9,15 @@
   flex-direction: column;
   width: 100%;
 
+  .find {
+    @extend %p2;
+    opacity: 0.5;
+
+    @media screen and (max-width: 500px) {
+      margin-top: 6rem;
+    }
+  }
+
   .listLoader {
     position: static;
   }
@@ -38,7 +47,7 @@
     margin-top: 4rem;
 
     @media screen and (max-width: 500px) {
-      margin-top: 6rem;
+      margin-top: 2rem;
     }
   }
 

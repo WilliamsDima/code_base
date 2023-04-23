@@ -14,11 +14,12 @@
     opacity: 0;
     visibility: hidden;
     @extend %p1;
-    color: $main;
+    color: 'blue';
     transition: all 0.2s linear;
   }
 
   &.checked {
+    background-color: $main;
     .done {
       opacity: 1;
       visibility: visible;

@@ -40,7 +40,11 @@ export const filterSearch = (
 export const filterTags = (codes: IItemCode[] | undefined, tags: ITag[]) =>
   codes &&
   codes.filter((c) => {
-    const isCode = tags.some((tag) => c.tags.some((it) => it.id === tag.id))
+    const isCode = tags.some((tag) =>
+      c.tags.some((it) =>
+        tag.value.toLocaleLowerCase().includes(it.value.toLocaleLowerCase())
+      )
+    )
     if (isCode) {
       return c
     }

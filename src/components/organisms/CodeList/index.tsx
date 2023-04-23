@@ -110,19 +110,22 @@ const CodeList: FC = memo(() => {
         <ModalSlider images={images} />
       </Modal>
       {!!sortCodes?.length ? (
-        <ul className={styles.list}>
-          {sortCodes.map((item) => {
-            return (
-              <CodeItem
-                key={item.id}
-                item={item}
-                setItem={editeItemHandler}
-                setImagesSlider={imagesHandler}
-                updateHandler={updateHandler}
-              />
-            )
-          })}
-        </ul>
+        <>
+          <p className={styles.find}>Всего найдено: {sortCodes.length}</p>
+          <ul className={styles.list}>
+            {sortCodes.map((item) => {
+              return (
+                <CodeItem
+                  key={item.id}
+                  item={item}
+                  setItem={editeItemHandler}
+                  setImagesSlider={imagesHandler}
+                  updateHandler={updateHandler}
+                />
+              )
+            })}
+          </ul>
+        </>
       ) : (
         <div className={styles.empty}>
           {!isLoading && (
