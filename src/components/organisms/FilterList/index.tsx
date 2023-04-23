@@ -45,7 +45,7 @@ const FilterList: FC<Props> = () => {
         ...langs,
       ])
     },
-    [languages, setLanguages, codeLanguges]
+    [languages, setLanguages]
   )
 
   return (

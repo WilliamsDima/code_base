@@ -48,9 +48,6 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
   const [languages, setLanguages] = useState<IItemSelect[]>([])
 
   const codesFilter = useMemo(() => {
-    // console.log('filtredValue', filtredValue)
-    // console.log('tagsSelect', tagsSelect)
-
     let search = codes
 
     if (filtredValue.length) {
@@ -58,8 +55,6 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
     }
     if (tagsSelect.length) {
       search = filterTags(search, tagsSelect)
-
-      // console.log('search', search)
     }
     if (languages.length) {
       search = filterSyntax(search, languages)

@@ -1,12 +1,4 @@
-import {
-  FC,
-  useState,
-  useRef,
-  useCallback,
-  useMemo,
-  memo,
-  useEffect,
-} from 'react'
+import { FC, useState, useRef, useCallback, useMemo, memo } from 'react'
 import styles from './styles.module.scss'
 import Empty from '@storybook/atoms/Empty'
 import CodeItem from '@molecules/CodeItem'
