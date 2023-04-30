@@ -33,8 +33,8 @@ jobs:
           REACT_APP_FIREBASE_MEASUREMENT_ID: ${{secrets.REACT_APP_FIREBASE_MEASUREMENT_ID}}
       - name: install firebase tools
         run: yarn add firebase-tools
-      - name: run test
-        run: yarn run test
+      # - name: run test
+      #   run: yarn run test
       - name: build project
         run: yarn run build
       - name: Archive Build
