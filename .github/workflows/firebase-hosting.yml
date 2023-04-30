@@ -52,8 +52,12 @@ jobs:
       - name: Dowload Build
         uses: actions/dowload-artifact@v3
         with:
+          workflow: firebase-hosting.yml
+          commit: ${{ github.event.pull_request.head.sha || github.sha }}
           name: build
           path: build
+          search_artifacts: true
+
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
