@@ -12,7 +12,6 @@ import {
   useState,
   SetStateAction,
   useTransition,
-  useCallback,
 } from 'react'
 
 type IContext = {
@@ -84,14 +83,14 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
 
   const tableTags: Record<string, number> = {}
   const tagsListClear = useMemo(() => {
+    // eslint-disable-next-line array-callback-return
     return tags?.filter(({ value }) => {
       const tag = value.toLowerCase()
       if (tag) {
         if (!tableTags[tag] && (tableTags[tag] = 1)) {
-          return true
+          return tag
         }
       }
-      return true
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tags])
@@ -101,13 +100,13 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
     setFiltredValue('')
   }
 
-  const clearFilter = useCallback(() => {
+  const clearFilter = () => {
     // console.log('clearFilter')
 
     clearSearch()
     setTagsSelect([])
     setLanguages([])
-  }, [])
+  }
 
   const value = useMemo(() => {
     return {
@@ -126,16 +125,15 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
       clearSearch,
       isPending,
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     searchValue,
     isLoading,
-    tagsSelect,
-    tagsListClear,
-    languages,
+    codes,
     codesFilter,
-    updateItem,
-    clearFilter,
-    isPending,
+    tagsSelect,
+    languages,
+    tagsListClear,
   ])
 
   return (

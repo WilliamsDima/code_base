@@ -8,7 +8,7 @@ const Header: FC = () => {
   return (
     <header className={styles.header}>
       <Link to={'/'}>
-        <h1 className={styles.logo}>code base v2</h1>
+        <h1 className={styles.logo}>code base v1</h1>
       </Link>
 
       <div className={styles.headerRigth}>
