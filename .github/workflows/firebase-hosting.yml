@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main]
 jobs:
- init:
+  init:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -28,30 +28,30 @@ jobs:
           REACT_APP_FIREBASE_APP_ID: ${{secrets.REACT_APP_FIREBASE_APP_ID}}
           REACT_APP_FIREBASE_MEASUREMENT_ID: ${{secrets.REACT_APP_FIREBASE_MEASUREMENT_ID}}
       - name: install firebase tools
-        run: yarn add firebase-tools 
+        run: yarn add firebase-tools
       - name: run test
         run: yarn run test
       - name: build project
         run: yarn run build
       - name: Archive Build
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: build
           path: build
-  deploy: 
+  deploy:
     name: Deploy
     needs: build
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - uses: actions/checkout@v2
       - name: Dowload Build
         uses: actions/dowload-artifact@v2
-        with: 
+        with:
           name: build
           path: build
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
-        with: 
+        with:
           args: deploy --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
