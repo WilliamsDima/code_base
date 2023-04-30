@@ -12,14 +12,15 @@
 
 ## Techstack
 
-[![typescript](https://img.shields.io/static/v1?label=typescript&message=4.8.4&color=3178C6&style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![node](https://img.shields.io/static/v1?label=node&message=16.4.0&color=026E00&style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/en/)
-[![react](https://img.shields.io/static/v1?label=react&message=18.2.0&color=61DBFB&style=for-the-badge&logo=react&logoColor=white)](https://ru.reactjs.org/)
-[![redux](https://img.shields.io/static/v1?label=redux&message=4.2.0&color=764ABD&style=for-the-badge&logo=redux&logoColor=white)](https://redux-toolkit.js.org/)
-[![reduxtoolkit](https://img.shields.io/static/v1?label=redux%20toolkit&message=1.9.0&color=764ABD&style=for-the-badge&logo=redux&logoColor=white)](https://redux-toolkit.js.org/)
-[![sass](https://img.shields.io/static/v1?label=sass&message=7.0.3&color=BF4080&style=for-the-badge&logo=sass&logoColor=white)](https://sass-lang.com/)
-[![firebase](https://img.shields.io/static/v1?label=firebase&message=9.13.0&color=FECB30&style=for-the-badge&logo=firebase&logoColor=white)](https://firebase.google.com/)
-[![jest](https://img.shields.io/static/v1?label=jest&message=29.5.0&color=15C213&style=for-the-badge&logo=jest&logoColor=white)](https://jestjs.io/ru/)
+[![typescript](https://img.shields.io/static/v1?label=typescript&message=4.8.4&color=3178C6&style=for-the-badge&logo=typescript&logoColor=3178C6)](https://www.typescriptlang.org/)
+[![node](https://img.shields.io/static/v1?label=node&message=16.4.0&color=026E00&style=for-the-badge&logo=node.js&logoColor=026E00)](https://nodejs.org/en/)
+[![react](https://img.shields.io/static/v1?label=react&message=18.2.0&color=61DBFB&style=for-the-badge&logo=react&logoColor=61DBFB)](https://ru.reactjs.org/)
+[![redux](https://img.shields.io/static/v1?label=redux&message=4.2.0&color=764ABD&style=for-the-badge&logo=redux&logoColor=764ABD)](https://redux.js.org/)
+[![reduxtoolkit](https://img.shields.io/static/v1?label=redux%20toolkit&message=1.9.0&color=764ABD&style=for-the-badge&logo=redux&logoColor=764ABD)](https://redux-toolkit.js.org/)
+[![sass](https://img.shields.io/static/v1?label=sass&message=7.0.3&color=BF4080&style=for-the-badge&logo=sass&logoColor=BF4080)](https://sass-lang.com/)
+[![firebase](https://img.shields.io/static/v1?label=firebase&message=9.13.0&color=FECB30&style=for-the-badge&logo=firebase&logoColor=FECB30)](https://firebase.google.com/)
+[![jest](https://img.shields.io/static/v1?label=jest&message=29.5.0&color=15C213&style=for-the-badge&logo=jest&logoColor=15C213)](https://jestjs.io/ru/)
+[![storybook](https://img.shields.io/static/v1?label=storybook&message=6.5.16&color=FF4785&style=for-the-badge&logo=storybook&logoColor=white)](https://storybook.js.org/)
 
 ---
 
