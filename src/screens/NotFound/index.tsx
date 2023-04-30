@@ -14,6 +14,7 @@ const NotFount = () => {
         <img
           className={styles.jhon}
           src={require('../../assets/images/what.gif')}
+          alt="404"
         />
       </div>
     </Layout>

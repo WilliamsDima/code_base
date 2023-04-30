@@ -1,5 +1,5 @@
 name: Firebase CI
-run-name: ${{ github.actor }} is learning GitHub Actions
+run-name: Build and deploy to Firebase hosting
 
 on:
   push:

@@ -4,7 +4,7 @@ import cn from 'classnames'
 import Button from '@storybook/atoms/Button'
 import { IoIosArrowUp } from 'react-icons/io'
 
-const ButtonScrollUp: FC = memo(({}) => {
+const ButtonScrollUp: FC = memo(() => {
   const scrollToHandler = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }

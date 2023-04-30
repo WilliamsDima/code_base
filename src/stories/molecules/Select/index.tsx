@@ -58,7 +58,8 @@ const Select: FC<ISelect> = (props) => {
       selectHandler && selectHandler(item)
       !multiselect && setOpen(false)
     },
-    [selectHandler]
+
+    [multiselect, selectHandler]
   )
 
   const selectText = useMemo(() => {
@@ -67,7 +68,7 @@ const Select: FC<ISelect> = (props) => {
       : value || placeholder
 
     return text
-  }, [multiselectChecked, value])
+  }, [multiselectChecked, placeholder, value])
 
   return (
     <div className={classnames} ref={ref}>

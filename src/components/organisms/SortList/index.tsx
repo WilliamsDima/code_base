@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import styles from './styles.module.scss'
 import ButtonSort from '@storybook/atoms/ButtonSort'
-import { useCodeListContext } from '@context/codeListContext'
 import Button from '@storybook/atoms/Button'
 import Checkbox from '@storybook/atoms/Checkbox'
 

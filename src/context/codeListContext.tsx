@@ -12,6 +12,7 @@ import {
   useState,
   SetStateAction,
   useTransition,
+  useCallback,
 } from 'react'
 
 type IContext = {
@@ -78,6 +79,7 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
         return c.tags
       })
       .flat()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [codes])
 
   const tableTags: Record<string, number> = {}
@@ -86,10 +88,12 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
       const tag = value.toLowerCase()
       if (tag) {
         if (!tableTags[tag] && (tableTags[tag] = 1)) {
-          return tag
+          return true
         }
       }
+      return true
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tags])
 
   const clearSearch = () => {
@@ -97,13 +101,13 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
     setFiltredValue('')
   }
 
-  const clearFilter = () => {
+  const clearFilter = useCallback(() => {
     // console.log('clearFilter')
 
     clearSearch()
     setTagsSelect([])
     setLanguages([])
-  }
+  }, [])
 
   const value = useMemo(() => {
     return {
@@ -125,11 +129,13 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
   }, [
     searchValue,
     isLoading,
-    codes,
-    codesFilter,
     tagsSelect,
-    languages,
     tagsListClear,
+    languages,
+    codesFilter,
+    updateItem,
+    clearFilter,
+    isPending,
   ])
 
   return (

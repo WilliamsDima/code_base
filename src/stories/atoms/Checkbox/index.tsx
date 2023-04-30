@@ -13,7 +13,7 @@ const Checkbox: FC<ICheckbox> = memo((props) => {
     [styles.checked]: value,
   })
   return (
-    <div className={classNames}>
+    <div className={classNames} {...rest}>
       <MdOutlineDone className={styles.done} />
     </div>
   )
