@@ -21,6 +21,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: install modules
         run: yarn
+      - name: check jest tests
+        run: yarn run test
       - name: build project
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
