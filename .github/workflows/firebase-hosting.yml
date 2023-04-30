@@ -8,11 +8,12 @@ on:
     branches: [main]
 
 jobs:
-  init:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [16.10.0]
+
     steps:
       - uses: actions/checkout@v2
       - name: Staring Node.js ${{ matrix.node-version }}
@@ -44,7 +45,7 @@ jobs:
 
   deploy:
     name: Deploy
-    needs: build project
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
