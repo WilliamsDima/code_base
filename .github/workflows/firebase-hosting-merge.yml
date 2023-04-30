@@ -24,7 +24,7 @@ jobs:
       - run: yarn run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: '${{ secrets.FIREBASE_TOKEN }}'
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CODE_BASE_702C2 }}'
           channelId: live
           projectId: code-base-702c2
