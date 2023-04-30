@@ -18,9 +18,12 @@
 [![redux](https://img.shields.io/static/v1?label=redux&message=4.2.0&color=764ABD&style=for-the-badge&logo=redux&logoColor=white)](https://redux-toolkit.js.org/)
 [![reduxtoolkit](https://img.shields.io/static/v1?label=redux%20toolkit&message=1.9.0&color=764ABD&style=for-the-badge&logo=redux&logoColor=white)](https://redux-toolkit.js.org/)
 [![sass](https://img.shields.io/static/v1?label=sass&message=7.0.3&color=BF4080&style=for-the-badge&logo=sass&logoColor=white)](https://sass-lang.com/)
-[![firebase](https://img.shields.io/static/v1?label=firebase&message=9.13.0&color=FECB30&style=for-the-badge&logo=firebase&logoColor=white)](https://axios-http.com/ru/docs/intro/)
+[![firebase](https://img.shields.io/static/v1?label=firebase&message=9.13.0&color=FECB30&style=for-the-badge&logo=firebase&logoColor=white)](https://firebase.google.com/)
+[![jest](https://img.shields.io/static/v1?label=jest&message=29.5.0&color=15C213&style=for-the-badge&logo=jest&logoColor=white)](https://jestjs.io/ru/)
 
 ---
+
+<p>На проекте настроен CI/CD pipeline - сборка, тесты, деплой на хостинг</p>
 
 ## Работа со структурой
 
