@@ -1,18 +1,15 @@
 name: Firebase CI
-
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
-
 jobs:
  init:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [16.10.0]
-      
     steps:
       - uses: actions/checkout@v2
       - name: Staring Node.js ${{ matrix.node-version }}
@@ -40,7 +37,6 @@ jobs:
         with: 
           name: build
           path: build
-
   deploy: 
     name: Deploy
     needs: build
