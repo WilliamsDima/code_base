@@ -40,7 +40,7 @@ describe('Поиск', () => {
     expect(filterSearch(codes, 'ЗАГОЛОВОК')).toEqual([codes[0]])
   })
   test('Пустой массив поиска', () => {
-    expect(filterSearch(undefined, 'заголовок')).toBe(undefined)
+    expect(filterSearch(undefined, 'заголовок')).toBeUndefined()
   })
 })
 
@@ -52,7 +52,7 @@ describe('Сортировка по количеству копирований'
     expect(sortByCopyList(codes, false)).toEqual([codes[1], codes[0]])
   })
   test('Пустой массив сортировки', () => {
-    expect(sortByCopyList(undefined, false)).toBe(undefined)
+    expect(sortByCopyList(undefined, false)).toBeUndefined()
   })
 })
 
@@ -64,7 +64,7 @@ describe('Сортировка по дате', () => {
     expect(listSortByDate(codes, false)).toEqual([codes[1], codes[0]])
   })
   test('Пустой массив сортировки', () => {
-    expect(listSortByDate(undefined, false)).toBe(undefined)
+    expect(listSortByDate(undefined, false)).toBeUndefined()
   })
 })
 
@@ -76,7 +76,7 @@ describe('Фильтр по тэгам', () => {
     expect(filterTags(codes, tags)).toEqual(codes)
   })
   test('Фильтр пустого массив с кодом', () => {
-    expect(filterTags(undefined, tags)).toBe(undefined)
+    expect(filterTags(undefined, tags)).toBeUndefined()
   })
 })
 
@@ -88,7 +88,7 @@ describe('Фильтр по синтаксису языка', () => {
     expect(filterSyntax(codes, languages)).toEqual(codes)
   })
   test('Фильтр пустого массив с кодом', () => {
-    expect(filterSyntax(undefined, languages)).toBe(undefined)
+    expect(filterSyntax(undefined, languages)).toBeUndefined()
   })
 })
 

@@ -1,23 +1,32 @@
 const path = require(`path`)
+const { pathsToModuleNameMapper } = require('ts-jest')
+const aliases = require('./tsconfig.paths.json')
+
+function getWebpackAliasesFromPaths(configPaths) {
+  const alias = Object.entries(configPaths).reduce(
+    (webpackAliases, [configAlias, configPathList]) => {
+      const [aliasKey] = configAlias.split('/')
+      const [relativePathToDir] = configPathList[0].split('/*')
+      return {
+        ...webpackAliases,
+        [aliasKey]: path.resolve(__dirname, relativePathToDir),
+      }
+    },
+    {}
+  )
+  return alias
+}
 
 module.exports = {
   webpack: {
-    alias: {
-      '@': path.resolve(__dirname, 'src/'),
-      '@storybook': path.resolve(__dirname, 'src/stories'),
-      '@atoms': path.resolve(__dirname, 'src/components/atoms'),
-      '@molecules': path.resolve(__dirname, 'src/components/molecules'),
-      '@organisms': path.resolve(__dirname, 'src/components/organisms'),
-      '@templates': path.resolve(__dirname, 'src/components/templates'),
-      '@screens': path.resolve(__dirname, 'src/screens'),
-      '@nanigations': path.resolve(__dirname, 'src/nanigations'),
-      '@api': path.resolve(__dirname, 'src/api'),
-      '@appTypes': path.resolve(__dirname, 'src/appTypes'),
-      '@assets': path.resolve(__dirname, 'src/assets'),
-      '@context': path.resolve(__dirname, 'src/context'),
-      '@hooks': path.resolve(__dirname, 'src/hooks'),
-      '@store': path.resolve(__dirname, 'src/store'),
-      '@services': path.resolve(__dirname, 'src/services'),
+    alias: getWebpackAliasesFromPaths(aliases.compilerOptions.paths),
+  },
+  jest: {
+    configure: {
+      preset: 'ts-jest',
+      moduleNameMapper: pathsToModuleNameMapper(aliases.compilerOptions.paths, {
+        prefix: '<rootDir>/',
+      }),
     },
   },
 }

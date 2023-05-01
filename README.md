@@ -20,7 +20,7 @@
 [![sass](https://img.shields.io/static/v1?label=sass&message=7.0.3&color=BF4080&style=for-the-badge&logo=sass&logoColor=BF4080)](https://sass-lang.com/)
 [![firebase](https://img.shields.io/static/v1?label=firebase&message=9.13.0&color=FECB30&style=for-the-badge&logo=firebase&logoColor=FECB30)](https://firebase.google.com/)
 [![jest](https://img.shields.io/static/v1?label=jest&message=29.5.0&color=15C213&style=for-the-badge&logo=jest&logoColor=15C213)](https://jestjs.io/ru/)
-[![storybook](https://img.shields.io/static/v1?label=storybook&message=6.5.16&color=FF4785&style=for-the-badge&logo=storybook&logoColor=white)](https://storybook.js.org/)
+[![storybook](https://img.shields.io/static/v1?label=storybook&message=6.5.16&color=FF4785&style=for-the-badge&logo=storybook&logoColor=FF4785)](https://storybook.js.org/)
 
 ---
 

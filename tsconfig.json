@@ -21,7 +21,7 @@
     "forceConsistentCasingInFileNames": true,
     "incremental": true
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
   "extends": "./tsconfig.paths.json",
   "exclude": ["node_modules"]
 }

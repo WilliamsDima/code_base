@@ -1,7 +1,7 @@
 import { FC, memo } from 'react'
 import styles from './styles.module.scss'
-import Button from '@storybook/atoms/Button'
 import { useAuth } from '@hooks/useAuth'
+import Button from '@storybook/atoms/Button'
 import { FcGoogle } from 'react-icons/fc'
 import { GoMarkGithub } from 'react-icons/go'
 
