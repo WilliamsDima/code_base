@@ -12,7 +12,7 @@ export const Loading: FC<ILoader> = memo((props) => {
     [styles.active]: active,
   })
   return (
-    <div className={classnames} {...prev}>
+    <div className={classnames} {...prev} aria-label="loading">
       <div></div>
       <div></div>
       <div></div>

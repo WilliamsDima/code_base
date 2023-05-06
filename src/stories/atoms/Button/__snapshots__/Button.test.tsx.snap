@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Компанента Button Renter Button with children 1`] = `
+<button
+  class="btn shadowClick"
+>
+  Button
+</button>
+`;
