@@ -28,16 +28,15 @@ import cn from 'classnames'
 type modal = {
   item: IItemCode | null
   close: (handler?: () => void) => void
-  codes: IItemCode[] | undefined
 }
 
 type Ref = any
 
 const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
-  const { item, close, codes = [] } = props
+  const { item, close } = props
 
   const { setMessageWarning, messageWarning } = useAppContext()
-  const { addItemCode, updateItem } = useRTKQuery()
+  const { addItemCode, updateItem, codes } = useRTKQuery()
 
   const {
     bind: bindTitle,
@@ -166,9 +165,9 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
         copy: item ? item?.copy : 0,
       }
 
-      if (item) {
+      if (item && codes) {
         const newCodes = updateItemCode(codes, data)
-        // console.log('update', newCodes)
+
         const filterFile = file.filter((f) => !f.url)
         if (storageImg.length) {
           deleteImagesItem(storageImg)

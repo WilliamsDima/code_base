@@ -17,7 +17,6 @@ const ImagesList: FC<IImagesList> = memo(
     const getImages = useCallback(async () => {
       if (id) {
         const images = await getImagesItem(id)
-        console.log(images)
         images && setFile(images)
       }
     }, [id, setFile])

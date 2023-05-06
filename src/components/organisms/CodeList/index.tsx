@@ -14,6 +14,7 @@ import { listSortByDate, sortByCopyList, updateItemCode } from '@hooks/helpers'
 import FilterList from '@organisms/FilterList'
 import { useCodeListContext } from '@context/codeListContext'
 import SortList from '@organisms/SortList'
+import { useRTKQuery } from '@hooks/useRTKQuery'
 
 type images = {
   images: any[]
@@ -52,6 +53,7 @@ const CodeList: FC = memo(() => {
   }, [])
 
   const { codes, isLoading, updateItem } = useCodeListContext()
+  const { codes: codeBase } = useRTKQuery()
 
   const [sortByDate, setSortByDate] = useState(true)
   const [sortByCopy, setSortByCopy] = useState(false)
@@ -68,13 +70,14 @@ const CodeList: FC = memo(() => {
 
   const updateHandler = useCallback(
     (item: IItemCode) => {
-      if (codes) {
-        const newCodes = updateItemCode(codes, item)
+      if (codeBase) {
+        const newCodes = updateItemCode(codeBase, item)
         updateItem({ codes: newCodes })
       }
     },
-    [codes, updateItem]
+    [updateItem, codeBase]
   )
+
   return (
     <div className={styles.contentList}>
       <FilterList />
@@ -92,7 +95,6 @@ const CodeList: FC = memo(() => {
         {isModalOpen && (
           <ModalCreate
             item={item}
-            codes={codes}
             close={closeModalCreater}
             ref={refModalCreater}
           />

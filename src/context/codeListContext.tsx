@@ -73,7 +73,7 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
   }
 
   const tags: ITag[] | undefined = useMemo(() => {
-    return codesFilter
+    return codes
       ?.map((c: IItemCode) => {
         return c.tags
       })
