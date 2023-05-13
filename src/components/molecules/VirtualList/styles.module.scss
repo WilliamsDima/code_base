@@ -1,0 +1,14 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/typography.scss';
+@import '../../../assets/styles/globalStyles.scss';
+
+.list {
+  width: 100% !important;
+  margin-top: 4rem;
+
+  @extend %scroll;
+
+  @media screen and (max-width: 500px) {
+    margin-top: 2rem;
+  }
+}

@@ -1,9 +1,10 @@
 @import './assets/styles/reset.css';
 @import './assets/styles/colors.scss';
+@import './assets/styles/globalStyles.scss';
 
 html {
   font-size: 62.5%;
-  height: 100vh;
+  // height: 100vh;
 }
 
 label {
@@ -12,15 +13,7 @@ label {
 
 /* Hide scrollbar for IE, Edge and Firefox */
 body {
-  &::-webkit-scrollbar {
-    width: 2px;
-    background-color: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: $main;
-    border-radius: 5px;
-  }
+  @extend %scroll;
 }
 
 body {
@@ -32,9 +25,9 @@ body {
   // overflow: hidden;
   // overflow-y: hidden;
   overflow-x: hidden;
-  // position: fixed;
+  //position: fixed;
   width: 100vw;
-  height: 100vh;
+  // height: 100vh;
 
   &.modal {
     overflow: hidden;

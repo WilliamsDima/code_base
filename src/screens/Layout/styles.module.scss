@@ -20,21 +20,22 @@
     max-width: 1500px;
     width: 100%;
     margin: auto;
-    margin-top: 3rem;
+    // margin-top: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     box-sizing: border-box;
     padding: 2rem;
+    height: 100%;
 
     @media screen and (max-width: 1050px) {
-      margin-top: 1rem;
+      // margin-top: 1rem;
     }
 
     @media screen and (max-width: 570px) {
       padding: 1rem;
-      margin-top: 2rem;
+      // margin-top: 2rem;
     }
   }
 }

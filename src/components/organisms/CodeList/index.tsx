@@ -1,7 +1,6 @@
 import { FC, useState, useRef, useCallback, useMemo, memo } from 'react'
 import styles from './styles.module.scss'
 import Empty from '@storybook/atoms/Empty'
-import CodeItem from '@molecules/CodeItem'
 import Modal from '@storybook/organisms/Modal'
 import ModalCreate from '@organisms/ModalCreate'
 import { useOutside } from '@hooks/useOutside'
@@ -15,6 +14,7 @@ import FilterList from '@organisms/FilterList'
 import { useCodeListContext } from '@context/codeListContext'
 import SortList from '@organisms/SortList'
 import { useRTKQuery } from '@hooks/useRTKQuery'
+import VirtualList from '@molecules/VirtualList'
 
 type images = {
   images: any[]
@@ -103,23 +103,15 @@ const CodeList: FC = memo(() => {
       <Modal open={isModalOpenSlider} ref={refSlider}>
         <ModalSlider images={images} />
       </Modal>
-      {!!sortCodes?.length ? (
-        <>
-          <p className={styles.find}>Всего найдено: {sortCodes.length}</p>
-          <ul className={styles.list}>
-            {sortCodes.map((item) => {
-              return (
-                <CodeItem
-                  key={item.id}
-                  item={item}
-                  setItem={editeItemHandler}
-                  setImagesSlider={imagesHandler}
-                  updateHandler={updateHandler}
-                />
-              )
-            })}
-          </ul>
-        </>
+
+      {sortCodes ? (
+        <VirtualList
+          setItem={editeItemHandler}
+          setImagesSlider={imagesHandler}
+          updateHandler={updateHandler}
+          codes={sortCodes}
+          isLoading={isLoading}
+        />
       ) : (
         <div className={styles.empty}>
           {!isLoading && (
@@ -130,6 +122,7 @@ const CodeList: FC = memo(() => {
           )}
         </div>
       )}
+
       <Button className={styles.btnAdd} onClick={() => setModalOpen(true)}>
         <IoAdd />
       </Button>
