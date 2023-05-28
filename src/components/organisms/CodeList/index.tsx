@@ -1,7 +1,6 @@
-import { FC, useState, useRef, useCallback, useMemo, memo } from 'react'
+import { FC, useState, useRef, useCallback, memo } from 'react'
 import styles from './styles.module.scss'
 import Empty from '@storybook/atoms/Empty'
-import CodeItem from '@molecules/CodeItem'
 import Modal from '@storybook/organisms/Modal'
 import ModalCreate from '@organisms/ModalCreate'
 import { useOutside } from '@hooks/useOutside'
@@ -10,11 +9,11 @@ import Button from '@storybook/atoms/Button'
 import { IoAdd } from 'react-icons/io5'
 import ModalSlider from '@organisms/ModalSlider'
 import Loading from '@atoms/Loading'
-import { listSortByDate, sortByCopyList, updateItemCode } from '@hooks/helpers'
+import { updateItemCode } from '@hooks/helpers'
 import FilterList from '@organisms/FilterList'
 import { useCodeListContext } from '@context/codeListContext'
 import SortList from '@organisms/SortList'
-import { useRTKQuery } from '@hooks/useRTKQuery'
+import VirtualList from '@molecules/VirtualList'
 
 type images = {
   images: any[]
@@ -52,41 +51,22 @@ const CodeList: FC = memo(() => {
     setModalOpenSlider(true)
   }, [])
 
-  const { codes, isLoading, updateItem } = useCodeListContext()
-  const { codes: codeBase } = useRTKQuery()
-
-  const [sortByDate, setSortByDate] = useState(true)
-  const [sortByCopy, setSortByCopy] = useState(false)
-
-  const sortCodes = useMemo(() => {
-    let sort
-    sort = listSortByDate(codes, sortByDate)
-    if (sortByCopy) {
-      sort = sortByCopyList(sort, sortByCopy)
-    }
-
-    return sort
-  }, [codes, sortByDate, sortByCopy])
+  const { codesData, codesFilter, isLoading, updateItem } = useCodeListContext()
 
   const updateHandler = useCallback(
     (item: IItemCode) => {
-      if (codeBase) {
-        const newCodes = updateItemCode(codeBase, item)
+      if (codesData) {
+        const newCodes = updateItemCode(codesData, item)
         updateItem({ codes: newCodes })
       }
     },
-    [updateItem, codeBase]
+    [updateItem, codesData]
   )
 
   return (
     <div className={styles.contentList}>
       <FilterList />
-      <SortList
-        sortByDate={sortByDate}
-        setSortByCopy={setSortByCopy}
-        setSortByDate={setSortByDate}
-        sortByCopy={sortByCopy}
-      />
+      <SortList />
       <Modal open={isLoading}>
         <Loading active={isLoading} className={styles.listLoader} />
       </Modal>
@@ -103,23 +83,15 @@ const CodeList: FC = memo(() => {
       <Modal open={isModalOpenSlider} ref={refSlider}>
         <ModalSlider images={images} />
       </Modal>
-      {!!sortCodes?.length ? (
-        <>
-          <p className={styles.find}>Всего найдено: {sortCodes.length}</p>
-          <ul className={styles.list}>
-            {sortCodes.map((item) => {
-              return (
-                <CodeItem
-                  key={item.id}
-                  item={item}
-                  setItem={editeItemHandler}
-                  setImagesSlider={imagesHandler}
-                  updateHandler={updateHandler}
-                />
-              )
-            })}
-          </ul>
-        </>
+
+      {codesFilter ? (
+        <VirtualList
+          setItem={editeItemHandler}
+          setImagesSlider={imagesHandler}
+          updateHandler={updateHandler}
+          codes={codesFilter}
+          isLoading={isLoading}
+        />
       ) : (
         <div className={styles.empty}>
           {!isLoading && (
@@ -130,6 +102,7 @@ const CodeList: FC = memo(() => {
           )}
         </div>
       )}
+
       <Button className={styles.btnAdd} onClick={() => setModalOpen(true)}>
         <IoAdd />
       </Button>

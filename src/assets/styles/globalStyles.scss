@@ -1,5 +1,17 @@
 @import './colors.scss';
 
+%scroll {
+  &::-webkit-scrollbar {
+    width: 2px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $main;
+    border-radius: 5px;
+  }
+}
+
 %borderGradientAnim {
   padding: 1px;
   background: linear-gradient(to right, red, purple);

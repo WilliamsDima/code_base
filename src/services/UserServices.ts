@@ -1,28 +1,27 @@
 import { auth, db, deleteImagesItem, uploadImagesItem } from '@api/firebase'
+import { IItemCode } from '@appTypes/types'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { IUserData } from '@store/redusers/main/types'
 import {
   arrayRemove,
   arrayUnion,
   doc,
   getDoc,
   updateDoc,
-} from 'firebase/firestore/lite'
+} from 'firebase/firestore'
 
 export const userAPI = createApi({
   baseQuery: fetchBaseQuery(),
   tagTypes: ['UserCodes'],
   endpoints: (builder) => ({
-    fetchCodeListUser: builder.query({
+    fetchCodeListUser: builder.query<IItemCode[], string>({
       async queryFn() {
         try {
           const id = auth?.currentUser?.providerData[0].uid
           if (id) {
             const docRef = doc(db, 'users', id)
-            const docSnap = await getDoc(docRef)
-            const data = docSnap.data() as IUserData
+            const codes = (await getDoc(docRef)).get('codes')
 
-            return { data: data?.codes }
+            return { data: codes }
           } else {
             throw new Error('Пользователь не найден!')
           }

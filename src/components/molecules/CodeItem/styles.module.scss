@@ -2,13 +2,16 @@
 @import '../../../assets/styles/typography.scss';
 @import '../../../assets/styles/globalStyles.scss';
 
+.itemWrapper {
+  padding: 2rem 0;
+}
+
 .item {
   width: 100%;
   box-sizing: border-box;
   padding: 1rem;
   border-radius: 5px;
   background-color: $bgItemDark;
-  margin-bottom: 2rem;
   display: flex;
   justify-content: center;
   align-items: flex-start;

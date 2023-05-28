@@ -8,7 +8,7 @@ import {
   uploadBytes,
 } from 'firebase/storage'
 import { getAuth, GoogleAuthProvider, GithubAuthProvider } from 'firebase/auth'
-import { doc, getDoc, getFirestore } from 'firebase/firestore/lite'
+import { doc, getDoc, getFirestore } from 'firebase/firestore'
 import { User as FirebaseUser } from 'firebase/auth'
 import { IUserData } from '@store/redusers/main/types'
 import { v4 } from 'uuid'

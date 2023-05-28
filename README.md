@@ -13,11 +13,11 @@
 ## Techstack
 
 [![typescript](https://img.shields.io/static/v1?label=typescript&message=4.8.4&color=3178C6&style=for-the-badge&logo=typescript&logoColor=3178C6)](https://www.typescriptlang.org/)
-[![node](https://img.shields.io/static/v1?label=node&message=16.4.0&color=026E00&style=for-the-badge&logo=node.js&logoColor=026E00)](https://nodejs.org/en/)
+[![node](https://img.shields.io/static/v1?label=node&message=18.16.0&color=026E00&style=for-the-badge&logo=node.js&logoColor=026E00)](https://nodejs.org/en/)
 [![react](https://img.shields.io/static/v1?label=react&message=18.2.0&color=61DBFB&style=for-the-badge&logo=react&logoColor=61DBFB)](https://ru.reactjs.org/)
 [![redux](https://img.shields.io/static/v1?label=redux&message=4.2.0&color=764ABD&style=for-the-badge&logo=redux&logoColor=764ABD)](https://redux.js.org/)
 [![reduxtoolkit](https://img.shields.io/static/v1?label=redux%20toolkit&message=1.9.0&color=764ABD&style=for-the-badge&logo=redux&logoColor=764ABD)](https://redux-toolkit.js.org/)
-[![sass](https://img.shields.io/static/v1?label=sass&message=7.0.3&color=BF4080&style=for-the-badge&logo=sass&logoColor=BF4080)](https://sass-lang.com/)
+[![sass](https://img.shields.io/static/v1?label=sass&message=1.62.3&color=BF4080&style=for-the-badge&logo=sass&logoColor=BF4080)](https://sass-lang.com/)
 [![firebase](https://img.shields.io/static/v1?label=firebase&message=9.13.0&color=FECB30&style=for-the-badge&logo=firebase&logoColor=FECB30)](https://firebase.google.com/)
 [![jest](https://img.shields.io/static/v1?label=jest&message=29.5.0&color=15C213&style=for-the-badge&logo=jest&logoColor=15C213)](https://jestjs.io/ru/)
 [![storybook](https://img.shields.io/static/v1?label=storybook&message=6.5.16&color=FF4785&style=for-the-badge&logo=storybook&logoColor=FF4785)](https://storybook.js.org/)
@@ -63,7 +63,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `yarn start`
+### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -71,12 +71,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `yarn test`
+### `npm test`
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn run build`
+### `npm run build`
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -86,7 +86,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn run eject`
+### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 

@@ -1,4 +1,13 @@
-import { FC, useMemo, useEffect, useState, useCallback, memo } from 'react'
+import {
+  FC,
+  useMemo,
+  useEffect,
+  useState,
+  useCallback,
+  StyleHTMLAttributes,
+  forwardRef,
+  memo,
+} from 'react'
 import styles from './styles.module.scss'
 import { IItemCode, Message } from '@appTypes/types'
 import TagsList from '@molecules/TagsList'
@@ -21,10 +30,12 @@ type code = {
   setImagesSlider: (value: images) => void
   setItem: (item: IItemCode) => void
   updateHandler: (item: IItemCode) => void
+  style: StyleHTMLAttributes<HTMLDivElement>
+  ref?: any
 }
 
-const CodeItem: FC<code> = memo(
-  ({ item, setImagesSlider, setItem, updateHandler }) => {
+const CodeItem: FC<code> = forwardRef(
+  ({ item, setImagesSlider, setItem, updateHandler, style }, ref: any) => {
     const { deleteItem } = useRTKQuery()
     const { setMessageWarning } = useAppContext()
 
@@ -64,52 +75,54 @@ const CodeItem: FC<code> = memo(
       }
     }, [item.id])
     useEffect(() => {
-      // console.log('card item')
+      // console.log('card item', style)
 
       getImages()
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
-      <li className={styles.item}>
-        <div className={styles.topCard}>
-          <h2 className={styles.title}>{item.title}</h2>
-          <Button
-            onClick={() => setItem(item)}
-            shadowClick={false}
-            className={cn(styles.btn, styles.btnEdite)}
-          >
-            Редактировать
-          </Button>
-        </div>
+      <div style={style} className={styles.itemWrapper}>
+        <div className={styles.item} ref={ref}>
+          <div className={styles.topCard}>
+            <h2 className={styles.title}>{item.title}</h2>
+            <Button
+              onClick={() => setItem(item)}
+              shadowClick={false}
+              className={cn(styles.btn, styles.btnEdite)}
+            >
+              Редактировать
+            </Button>
+          </div>
 
-        <TagsList tags={item.tags} hiddenBtnDelete={true} />
-        <p className={styles.description}>{item.description}</p>
-        {item.code && (
-          <Code
-            code={item.code}
-            copy={item.copy}
-            language={item.language}
-            id={item.id}
-            copyHandler={copyHandler}
-          />
-        )}
-        {!!images?.length && (
-          <CaruselImg images={images} imgHandler={handleImage} />
-        )}
-        <div className={styles.bottomCard}>
-          <span className={styles.date}>{dateText}</span>
-          <Button
-            shadowClick={false}
-            className={cn(styles.btn, styles.btnDelete)}
-            onClick={deleteHandler}
-          >
-            Удалить
-          </Button>
+          <TagsList tags={item.tags} hiddenBtnDelete={true} />
+          <p className={styles.description}>{item.description}</p>
+          {item.code && (
+            <Code
+              code={item.code}
+              copy={item.copy}
+              language={item.language}
+              id={item.id}
+              copyHandler={copyHandler}
+            />
+          )}
+          {!!images?.length && (
+            <CaruselImg images={images} imgHandler={handleImage} />
+          )}
+          <div className={styles.bottomCard}>
+            <span className={styles.date}>{dateText}</span>
+            <Button
+              shadowClick={false}
+              className={cn(styles.btn, styles.btnDelete)}
+              onClick={deleteHandler}
+            >
+              Удалить
+            </Button>
+          </div>
         </div>
-      </li>
+      </div>
     )
   }
 )
 
-export default CodeItem
+export default memo(CodeItem)
