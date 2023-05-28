@@ -15,7 +15,7 @@
     @extend %p2;
     opacity: 0.5;
 
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 570px) {
       // margin-top: 6rem;
     }
   }
@@ -48,7 +48,7 @@
     width: 100%;
     margin-top: 4rem;
 
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 570px) {
       margin-top: 2rem;
     }
   }
@@ -60,7 +60,7 @@
     flex-direction: column;
     width: 100%;
 
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 570px) {
       margin-top: 5rem;
     }
 

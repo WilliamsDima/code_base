@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC, memo, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import CodeItem from '@molecules/CodeItem'
 import { IItemCode } from '@appTypes/types'
@@ -10,6 +10,7 @@ import {
   CellMeasurer,
 } from 'react-virtualized'
 import 'react-virtualized/styles.css' // only needs to be imported once
+import { useCodeListContext } from '@context/codeListContext'
 
 type images = {
   images: any[]
@@ -31,7 +32,11 @@ const cache = new CellMeasurerCache({})
 
 const VirtualList: FC<Props> = memo(
   ({ setImagesSlider, setItem, updateHandler, codes }) => {
-    function row(props: any) {
+    const { codesFilter, tagsSelect } = useCodeListContext()
+
+    const [forseUpdate, setforseUpdate] = useState(false)
+
+    const row = (props: any) => {
       const { index, style, parent } = props
 
       const item: IItemCode = codes[index]
@@ -54,6 +59,17 @@ const VirtualList: FC<Props> = memo(
         </CellMeasurer>
       )
     }
+
+    useEffect(() => {
+      let id = setTimeout(() => {
+        cache.clearAll()
+        setforseUpdate((prev) => !prev)
+      }, 100)
+
+      return () => clearTimeout(id)
+    }, [codesFilter, tagsSelect])
+
+    useEffect(() => {}, [forseUpdate])
 
     return (
       <WindowScroller>

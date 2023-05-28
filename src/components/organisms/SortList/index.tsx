@@ -3,27 +3,21 @@ import styles from './styles.module.scss'
 import ButtonSort from '@storybook/atoms/ButtonSort'
 import Button from '@storybook/atoms/Button'
 import Checkbox from '@storybook/atoms/Checkbox'
+import { useCodeListContext } from '@context/codeListContext'
 
-type Props = {
-  sortByCopy: boolean
-  sortByDate: boolean
-  setSortByDate: (value: boolean) => void
-  setSortByCopy: (value: boolean) => void
-}
+type Props = {}
 
-const SortList: FC<Props> = ({
-  sortByCopy,
-  sortByDate,
-  setSortByCopy,
-  setSortByDate,
-}) => {
+const SortList: FC<Props> = () => {
+  const { sortByDate, sortByCopy, setSortByDate, setSortByCopy } =
+    useCodeListContext()
+
   return (
     <div className={styles.sort}>
       <div className={styles.item}>
         <ButtonSort
           active={sortByDate}
           className={styles.byDate}
-          onClick={() => setSortByDate(!sortByDate)}
+          onClick={() => setSortByDate((prev) => !prev)}
         >
           по дате
         </ButtonSort>
@@ -32,7 +26,7 @@ const SortList: FC<Props> = ({
         <Button
           className={styles.byCopy}
           shadowClick={false}
-          onClick={() => setSortByCopy(!sortByCopy)}
+          onClick={() => setSortByCopy((prev) => !prev)}
         >
           по популярности
           <Checkbox className={styles.checkbox} value={sortByCopy} />

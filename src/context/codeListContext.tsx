@@ -1,5 +1,11 @@
 import { IItemCode, ITag } from '@appTypes/types'
-import { filterSearch, filterSyntax, filterTags } from '@hooks/helpers'
+import {
+  filterSearch,
+  filterSyntax,
+  filterTags,
+  listSortByDate,
+  sortByCopyList,
+} from '@hooks/helpers'
 import { useRTKQuery } from '@hooks/useRTKQuery'
 import { IItemSelect } from '@storybook/molecules/Select/types'
 import {
@@ -21,11 +27,16 @@ type IContext = {
   languages: IItemSelect[]
   isLoading: boolean
   isPending: boolean
-  codes: IItemCode[] | undefined
+  sortByDate: boolean
+  sortByCopy: boolean
+  codesData: IItemCode[] | undefined
+  codesFilter: IItemCode[] | undefined
   clearFilter: () => void
   clearSearch: () => void
   setTagsSelect: React.Dispatch<SetStateAction<ITag[]>>
   setLanguages: React.Dispatch<SetStateAction<IItemSelect[]>>
+  setSortByDate: React.Dispatch<SetStateAction<boolean>>
+  setSortByCopy: React.Dispatch<SetStateAction<boolean>>
   updateItem: (codes: { codes: IItemCode[] }) => void
   setSearchValue: (value: string) => void
   searchHandler: (event: ChangeEvent<HTMLInputElement>) => void
@@ -46,6 +57,9 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
 
   const [tagsSelect, setTagsSelect] = useState<ITag[]>([])
   const [languages, setLanguages] = useState<IItemSelect[]>([])
+
+  const [sortByDate, setSortByDate] = useState(true)
+  const [sortByCopy, setSortByCopy] = useState(false)
 
   const codesFilter = useMemo(() => {
     let search = codes
@@ -108,6 +122,16 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
     setLanguages([])
   }
 
+  const sortCodes = useMemo(() => {
+    let sort
+    sort = listSortByDate(codesFilter, sortByDate)
+    if (sortByCopy) {
+      sort = sortByCopyList(sort, sortByCopy)
+    }
+
+    return sort
+  }, [codesFilter, sortByDate, sortByCopy])
+
   const value = useMemo(() => {
     return {
       searchValue,
@@ -115,7 +139,12 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
       tagsSelect,
       tagsListClear,
       languages,
-      codes: codesFilter,
+      codesFilter: sortCodes,
+      codesData: codes,
+      sortByDate,
+      sortByCopy,
+      setSortByCopy,
+      setSortByDate,
       updateItem,
       setTagsSelect,
       setLanguages,
@@ -129,11 +158,13 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
   }, [
     searchValue,
     isLoading,
+    sortCodes,
     codes,
-    codesFilter,
     tagsSelect,
     languages,
     tagsListClear,
+    sortByDate,
+    sortByCopy,
   ])
 
   return (

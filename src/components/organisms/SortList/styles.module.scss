@@ -9,6 +9,8 @@
   align-items: center;
 
   .item {
+    position: relative;
+    z-index: 10;
     .byDate {
       flex-direction: row-reverse;
       svg {
