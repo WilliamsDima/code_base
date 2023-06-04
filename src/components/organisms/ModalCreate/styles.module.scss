@@ -33,6 +33,19 @@
     border-radius: 5px;
   }
 
+  .tabsBlock {
+    position: relative;
+    .tabs {
+      display: inline-block;
+    }
+
+    .tabsPopup {
+      left: 0;
+      right: initial;
+      top: 6rem;
+    }
+  }
+
   .btnClose {
     position: absolute;
     top: 1rem;

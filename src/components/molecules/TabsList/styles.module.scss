@@ -2,18 +2,15 @@
 @import '../../../assets/styles/typography.scss';
 @import '../../../assets/styles/globalStyles.scss';
 
-.total {
-  @extend %p2;
-  opacity: 0.5;
-}
+.tabs {
+  padding: 1rem 0;
 
-.list {
-  width: 100% !important;
-  margin-top: 4rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  overflow: hidden;
+  overflow-x: scroll;
 
   @extend %scroll;
-
-  @media screen and (max-width: 570px) {
-    margin-top: 4rem;
-  }
 }

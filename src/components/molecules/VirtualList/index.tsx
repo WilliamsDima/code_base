@@ -74,21 +74,24 @@ const VirtualList: FC<Props> = memo(
     return (
       <WindowScroller>
         {({ scrollTop }) => (
-          <AutoSizer style={{ width: '100%' }}>
-            {({ width, height }) => (
-              <List
-                className={styles.list}
-                autoHeight
-                height={height}
-                width={width}
-                scrollTop={scrollTop}
-                deferredMeasurementCache={cache}
-                rowHeight={cache.rowHeight}
-                rowRenderer={row}
-                rowCount={codes.length}
-              />
-            )}
-          </AutoSizer>
+          <>
+            <p className={styles.total}>Всего найдено: {codes?.length || 0}</p>
+            <AutoSizer style={{ width: '100%' }}>
+              {({ width, height }) => (
+                <List
+                  className={styles.list}
+                  autoHeight
+                  height={height}
+                  width={width}
+                  scrollTop={scrollTop}
+                  deferredMeasurementCache={cache}
+                  rowHeight={cache.rowHeight}
+                  rowRenderer={row}
+                  rowCount={codes.length}
+                />
+              )}
+            </AutoSizer>
+          </>
         )}
       </WindowScroller>
     )

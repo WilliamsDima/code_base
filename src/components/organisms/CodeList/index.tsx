@@ -14,6 +14,7 @@ import FilterList from '@organisms/FilterList'
 import { useCodeListContext } from '@context/codeListContext'
 import SortList from '@organisms/SortList'
 import VirtualList from '@molecules/VirtualList'
+import TabsList from '@molecules/TabsList'
 
 type images = {
   images: any[]
@@ -65,6 +66,7 @@ const CodeList: FC = memo(() => {
 
   return (
     <div className={styles.contentList}>
+      <TabsList />
       <FilterList />
       <SortList />
       <Modal open={isLoading}>

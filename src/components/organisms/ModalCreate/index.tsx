@@ -4,6 +4,7 @@ import {
   useCallback,
   forwardRef,
   RefObject,
+  useMemo,
 } from 'react'
 import styles from './styles.module.scss'
 import { IItemCode, ITag, Message } from '@appTypes/types'
@@ -24,6 +25,7 @@ import Select from '@storybook/molecules/Select'
 import { codeLanguges } from '@services/listLanguages'
 import { IItemSelect } from '@storybook/molecules/Select/types'
 import cn from 'classnames'
+import { sistemsTabsForCreate } from '@services/constans'
 
 type modal = {
   item: IItemCode | null
@@ -101,9 +103,15 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
   const [file, setFile] = useState<any[]>([])
   const [storageImg, setStorageImg] = useState<any[]>([])
 
+  const [tab, setTab] = useState<IItemSelect>(sistemsTabsForCreate[1])
+
   const [typeCode, setTypeCode] = useState<string>(
     () => item?.language || 'javascript'
   )
+
+  const setTabHandler = useCallback((item: IItemSelect) => {
+    setTab(item)
+  }, [])
 
   const setTypeCodeHandler = useCallback((item: IItemSelect) => {
     setTypeCode(item.value as string)
@@ -189,8 +197,23 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
     }
   }
 
+  const tabs = useMemo(() => {
+    return sistemsTabsForCreate
+  }, [])
+
   return (
     <div className={styles.modalCreateContent}>
+      <div className={cn(styles.item, styles.tabsBlock)}>
+        <p className={styles.itemText}>* Кто будет видеть?</p>
+        <Select
+          className={styles.tabs}
+          classList={styles.tabsPopup}
+          value={tab.value as string}
+          list={tabs}
+          selectHandler={setTabHandler}
+        />
+      </div>
+
       <Button className={styles.btnClose} onClick={closeHandler}>
         <IoMdClose />
       </Button>
@@ -275,6 +298,7 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
         </p>
         <div className={styles.dropBlock}>
           <DropImg maxFiles={maxFiles} setFile={setFile} />
+
           <Button className={styles.btnSubmit} onClick={submitHandler}>
             <MdOutlineDone />
           </Button>

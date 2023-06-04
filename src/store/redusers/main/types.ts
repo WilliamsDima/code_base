@@ -1,8 +1,8 @@
+import { IItemSelect } from '@storybook/molecules/Select/types'
 import { IItemCode } from '../../../appTypes/types'
 
 export type IStore = {
-  codeBase: IItemCode[]
-  loading: boolean
+  tab: IItemSelect
 }
 
 export interface IUserData {
