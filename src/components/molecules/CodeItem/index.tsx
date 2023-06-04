@@ -15,7 +15,7 @@ import Code from '@molecules/Code'
 import { getDateDisplay } from '@hooks/helpers'
 import Button from '@storybook/atoms/Button'
 import cn from 'classnames'
-import { getImagesItem } from '@api/firebase'
+import { auth, getImagesItem } from '@api/firebase'
 import CaruselImg from '@molecules/CaruselImg'
 import { useAppContext } from '@context/appContext'
 import { useRTKQuery } from '@hooks/useRTKQuery'
@@ -86,13 +86,16 @@ const CodeItem: FC<code> = forwardRef(
         <div className={styles.item} ref={ref}>
           <div className={styles.topCard}>
             <h2 className={styles.title}>{item.title}</h2>
-            <Button
-              onClick={() => setItem(item)}
-              shadowClick={false}
-              className={cn(styles.btn, styles.btnEdite)}
-            >
-              Редактировать
-            </Button>
+            {item.accessibility?.userIdCreator ===
+              auth?.currentUser?.providerData[0].uid && (
+              <Button
+                onClick={() => setItem(item)}
+                shadowClick={false}
+                className={cn(styles.btn, styles.btnEdite)}
+              >
+                Редактировать
+              </Button>
+            )}
           </div>
 
           <TagsList tags={item.tags} hiddenBtnDelete={true} />
@@ -111,13 +114,17 @@ const CodeItem: FC<code> = forwardRef(
           )}
           <div className={styles.bottomCard}>
             <span className={styles.date}>{dateText}</span>
-            <Button
-              shadowClick={false}
-              className={cn(styles.btn, styles.btnDelete)}
-              onClick={deleteHandler}
-            >
-              Удалить
-            </Button>
+
+            {item.accessibility?.userIdCreator ===
+              auth?.currentUser?.providerData[0].uid && (
+              <Button
+                shadowClick={false}
+                className={cn(styles.btn, styles.btnDelete)}
+                onClick={deleteHandler}
+              >
+                Удалить
+              </Button>
+            )}
           </div>
         </div>
       </div>

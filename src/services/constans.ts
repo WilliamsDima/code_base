@@ -2,28 +2,28 @@ import { IItemSelect } from '@storybook/molecules/Select/types'
 
 export const THEME_LOCAL = 'THEME_LOCAL'
 
-export const sistemsTabs: IItemSelect[] = [
+export const sistemsRooms: IItemSelect[] = [
   {
     id: 0,
     text: 'Публичные',
-    value: 'Видят все пользователи',
+    value: 'publick',
   },
   {
     id: 1,
     text: 'Моя кодовая база',
-    value: 'Вижу только я',
+    value: 'only_my',
   },
 ]
 
-export const sistemsTabsForCreate: IItemSelect[] = [
+export const sistemsRoomsForCreate: IItemSelect[] = [
   {
     id: 0,
     text: 'Видят все пользователи',
-    value: 'Видят все пользователи',
+    value: 'publick',
   },
   {
     id: 1,
     text: 'Вижу только я',
-    value: 'Вижу только я',
+    value: 'only_my',
   },
 ]

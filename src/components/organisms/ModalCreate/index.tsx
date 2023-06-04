@@ -20,12 +20,13 @@ import DropImg from '@molecules/DropImg'
 import ImagesList from '@molecules/ImagesList'
 import { updateItemCode } from '@hooks/helpers'
 import { useRTKQuery } from '@hooks/useRTKQuery'
-import { deleteImagesItem } from '@api/firebase'
+import { auth, deleteImagesItem } from '@api/firebase'
 import Select from '@storybook/molecules/Select'
 import { codeLanguges } from '@services/listLanguages'
 import { IItemSelect } from '@storybook/molecules/Select/types'
 import cn from 'classnames'
-import { sistemsTabsForCreate } from '@services/constans'
+import { useAppSelector } from '@hooks/hooks'
+import { sistemsRoomsForCreate } from '@services/constans'
 
 type modal = {
   item: IItemCode | null
@@ -39,6 +40,7 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
 
   const { setMessageWarning, messageWarning } = useAppContext()
   const { addItemCode, updateItem, codes } = useRTKQuery()
+  const { room } = useAppSelector((store) => store.main)
 
   const {
     bind: bindTitle,
@@ -103,14 +105,14 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
   const [file, setFile] = useState<any[]>([])
   const [storageImg, setStorageImg] = useState<any[]>([])
 
-  const [tab, setTab] = useState<IItemSelect>(sistemsTabsForCreate[1])
+  const [roomSelect, setRoomSelect] = useState<IItemSelect>(() => room)
 
   const [typeCode, setTypeCode] = useState<string>(
     () => item?.language || 'javascript'
   )
 
   const setTabHandler = useCallback((item: IItemSelect) => {
-    setTab(item)
+    setRoomSelect(item)
   }, [])
 
   const setTypeCodeHandler = useCallback((item: IItemSelect) => {
@@ -162,7 +164,9 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
       description.length <= maxDescription &&
       description.length > 0
 
-    if (done) {
+    const userId = auth?.currentUser?.providerData[0].uid
+
+    if (done && userId) {
       const data: IItemCode = {
         id: item ? item?.id : +new Date(),
         title,
@@ -171,6 +175,10 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
         tags,
         language: typeCode,
         copy: item ? item?.copy : 0,
+        accessibility: {
+          ...roomSelect,
+          userIdCreator: userId,
+        },
       }
 
       if (item && codes) {
@@ -198,7 +206,7 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
   }
 
   const tabs = useMemo(() => {
-    return sistemsTabsForCreate
+    return sistemsRoomsForCreate
   }, [])
 
   return (
@@ -208,7 +216,7 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
         <Select
           className={styles.tabs}
           classList={styles.tabsPopup}
-          value={tab.value as string}
+          value={roomSelect.text as string}
           list={tabs}
           selectHandler={setTabHandler}
         />

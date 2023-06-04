@@ -9,6 +9,13 @@ export type Message = {
   body: string
 }
 
+export type Accessibility = {
+  id: string | number
+  value?: string | number | boolean
+  text?: string
+  userIdCreator: string | number
+}
+
 export type IItemCode = {
   id: number
   title: string
@@ -17,4 +24,5 @@ export type IItemCode = {
   code: string
   language?: string
   copy: number
+  accessibility?: Accessibility
 }

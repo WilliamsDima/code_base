@@ -1,16 +1,19 @@
+import { useFetchUpdateCodeItemMutation } from '@services/UserServices'
 import {
-  useFetchAddCodeListUserMutation,
-  useFetchCodeListUserQuery,
-  useFetchDeleteCodeItemMutation,
-  useFetchUpdateCodeItemMutation,
-} from '@services/UserServices'
+  useAddCodeMutation,
+  useDeleteCodeItemMutation,
+  useGetCodesRoomsQuery,
+} from '@services/CodesServices'
 import { useMemo } from 'react'
+import { useAppSelector } from './hooks'
 
 export const useRTKQuery = () => {
-  const [deleteItem, deleteData] = useFetchDeleteCodeItemMutation()
+  const { room } = useAppSelector((store) => store.main)
+
+  const [deleteItem, deleteData] = useDeleteCodeItemMutation()
   const [updateItem, updateData] = useFetchUpdateCodeItemMutation()
-  const [addItemCode, addItemData] = useFetchAddCodeListUserMutation()
-  const { data: codes, isLoading } = useFetchCodeListUserQuery('')
+  const [addItemCode, addItemData] = useAddCodeMutation()
+  const { data: codes, isLoading } = useGetCodesRoomsQuery(room.value as string)
 
   const value = useMemo(() => {
     return {

@@ -2,7 +2,7 @@ import { IItemSelect } from '@storybook/molecules/Select/types'
 import { IItemCode } from '../../../appTypes/types'
 
 export type IStore = {
-  tab: IItemSelect
+  room: IItemSelect
 }
 
 export interface IUserData {

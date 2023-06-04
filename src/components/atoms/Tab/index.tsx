@@ -11,17 +11,17 @@ type Props = {
 }
 
 const Tab: FC<Props> = memo(({ item }) => {
-  const { setTab } = useActions()
-  const { tab } = useAppSelector((store) => store.main)
+  const { setRoom } = useActions()
+  const { room } = useAppSelector((store) => store.main)
 
   const setTabHandler = () => {
-    setTab(item)
+    setRoom(item)
   }
 
   return (
     <Button
       className={cn(styles.tab, {
-        [styles.active]: tab.id === item.id,
+        [styles.active]: room.id === item.id,
       })}
       onClick={setTabHandler}
     >

@@ -2,13 +2,13 @@ import { FC, memo, useMemo } from 'react'
 import styles from './styles.module.scss'
 import cn from 'classnames'
 import Tab from '@atoms/Tab'
-import { sistemsTabs } from '@services/constans'
+import { sistemsRooms } from '@services/constans'
 
 type Props = {}
 
 const TabsList: FC<Props> = memo(() => {
   const tabs = useMemo(() => {
-    return sistemsTabs
+    return sistemsRooms
   }, [])
 
   return (
