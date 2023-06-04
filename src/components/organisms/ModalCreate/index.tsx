@@ -205,19 +205,19 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
     }
   }
 
-  const tabs = useMemo(() => {
+  const rooms = useMemo(() => {
     return sistemsRoomsForCreate
   }, [])
 
   return (
     <div className={styles.modalCreateContent}>
-      <div className={cn(styles.item, styles.tabsBlock)}>
+      <div className={cn(styles.item, styles.roomsBlock)}>
         <p className={styles.itemText}>* Кто будет видеть?</p>
         <Select
-          className={styles.tabs}
-          classList={styles.tabsPopup}
+          className={styles.rooms}
+          classList={styles.roomsPopup}
           value={roomSelect.text as string}
-          list={tabs}
+          list={rooms}
           selectHandler={setTabHandler}
         />
       </div>

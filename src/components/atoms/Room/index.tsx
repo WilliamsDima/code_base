@@ -10,7 +10,7 @@ type Props = {
   item: IItemSelect
 }
 
-const Tab: FC<Props> = memo(({ item }) => {
+const Room: FC<Props> = memo(({ item }) => {
   const { setRoom } = useActions()
   const { room } = useAppSelector((store) => store.main)
 
@@ -20,7 +20,7 @@ const Tab: FC<Props> = memo(({ item }) => {
 
   return (
     <Button
-      className={cn(styles.tab, {
+      className={cn(styles.room, {
         [styles.active]: room.id === item.id,
       })}
       onClick={setTabHandler}
@@ -30,4 +30,4 @@ const Tab: FC<Props> = memo(({ item }) => {
   )
 })
 
-export default Tab
+export default Room

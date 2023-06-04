@@ -1,18 +1,18 @@
 import { FC, memo, useMemo } from 'react'
 import styles from './styles.module.scss'
 import cn from 'classnames'
-import Tab from '@atoms/Tab'
+import Tab from '@atoms/Room'
 import { sistemsRooms } from '@services/constans'
 
 type Props = {}
 
-const TabsList: FC<Props> = memo(() => {
+const Rooms: FC<Props> = memo(() => {
   const tabs = useMemo(() => {
     return sistemsRooms
   }, [])
 
   return (
-    <div className={cn(styles.tabs)}>
+    <div className={cn(styles.rooms)}>
       {tabs.map((item) => {
         return <Tab key={item.id} item={item} />
       })}
@@ -20,4 +20,4 @@ const TabsList: FC<Props> = memo(() => {
   )
 })
 
-export default TabsList
+export default Rooms
