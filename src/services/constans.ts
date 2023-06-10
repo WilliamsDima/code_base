@@ -4,12 +4,12 @@ export const THEME_LOCAL = 'THEME_LOCAL'
 
 export const sistemsRooms: IItemSelect[] = [
   {
-    id: 0,
+    id: '0',
     text: 'Публичные',
     value: 'publick',
   },
   {
-    id: 1,
+    id: '1',
     text: 'Моя кодовая база',
     value: 'only_my',
   },
@@ -17,12 +17,12 @@ export const sistemsRooms: IItemSelect[] = [
 
 export const sistemsRoomsForCreate: IItemSelect[] = [
   {
-    id: 0,
+    id: '0',
     text: 'Видят все пользователи',
     value: 'publick',
   },
   {
-    id: 1,
+    id: '1',
     text: 'Вижу только я',
     value: 'only_my',
   },

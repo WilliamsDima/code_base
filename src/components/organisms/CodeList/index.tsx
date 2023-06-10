@@ -9,12 +9,12 @@ import Button from '@storybook/atoms/Button'
 import { IoAdd } from 'react-icons/io5'
 import ModalSlider from '@organisms/ModalSlider'
 import Loading from '@atoms/Loading'
-import { updateItemCode } from '@hooks/helpers'
 import FilterList from '@organisms/FilterList'
 import { useCodeListContext } from '@context/codeListContext'
 import SortList from '@organisms/SortList'
 import VirtualList from '@molecules/VirtualList'
 import Rooms from '@molecules/Rooms'
+import { useRTKQuery } from '@hooks/useRTKQuery'
 
 type images = {
   images: any[]
@@ -22,6 +22,9 @@ type images = {
 }
 
 const CodeList: FC = memo(() => {
+  const { updateItem } = useRTKQuery()
+  const { codesFilter, isLoading } = useCodeListContext()
+
   const [item, setItem] = useState<null | IItemCode>(null)
   const [isModalOpen, setModalOpen] = useState(false)
 
@@ -52,16 +55,11 @@ const CodeList: FC = memo(() => {
     setModalOpenSlider(true)
   }, [])
 
-  const { codesData, codesFilter, isLoading, updateItem } = useCodeListContext()
-
   const updateHandler = useCallback(
     (item: IItemCode) => {
-      if (codesData) {
-        const newCodes = updateItemCode(codesData, item)
-        updateItem({ codes: newCodes })
-      }
+      updateItem({ images: [], item, prevRoom: item.accessibility?.value })
     },
-    [updateItem, codesData]
+    [updateItem]
   )
 
   return (
@@ -86,7 +84,7 @@ const CodeList: FC = memo(() => {
         <ModalSlider images={images} />
       </Modal>
 
-      {codesFilter ? (
+      {!!codesFilter?.length ? (
         <VirtualList
           setItem={editeItemHandler}
           setImagesSlider={imagesHandler}

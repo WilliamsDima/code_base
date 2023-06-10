@@ -1,4 +1,5 @@
-import { FC, memo, useEffect, useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { FC, memo, useEffect, useState, useCallback } from 'react'
 import styles from './styles.module.scss'
 import CodeItem from '@molecules/CodeItem'
 import { IItemCode } from '@appTypes/types'
@@ -36,6 +37,11 @@ const VirtualList: FC<Props> = memo(
 
     const [forseUpdate, setforseUpdate] = useState(false)
 
+    const clearCashHandler = useCallback(() => {
+      cache.clearAll()
+      setforseUpdate((prev) => !prev)
+    }, [])
+
     const row = (props: any) => {
       const { index, style, parent } = props
 
@@ -53,6 +59,7 @@ const VirtualList: FC<Props> = memo(
             item={item}
             style={style}
             setImagesSlider={setImagesSlider}
+            clearCashHandler={clearCashHandler}
             setItem={setItem}
             updateHandler={updateHandler}
           />
@@ -62,8 +69,7 @@ const VirtualList: FC<Props> = memo(
 
     useEffect(() => {
       let id = setTimeout(() => {
-        cache.clearAll()
-        setforseUpdate((prev) => !prev)
+        clearCashHandler()
       }, 100)
 
       return () => clearTimeout(id)

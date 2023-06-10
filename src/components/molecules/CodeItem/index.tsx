@@ -28,6 +28,7 @@ type images = {
 type code = {
   item: IItemCode
   setImagesSlider: (value: images) => void
+  clearCashHandler: () => void
   setItem: (item: IItemCode) => void
   updateHandler: (item: IItemCode) => void
   style: StyleHTMLAttributes<HTMLDivElement>
@@ -35,7 +36,10 @@ type code = {
 }
 
 const CodeItem: FC<code> = forwardRef(
-  ({ item, setImagesSlider, setItem, updateHandler, style }, ref: any) => {
+  (
+    { item, setImagesSlider, setItem, updateHandler, clearCashHandler, style },
+    ref: any
+  ) => {
     const { deleteItem } = useRTKQuery()
     const { setMessageWarning } = useAppContext()
 
@@ -45,13 +49,13 @@ const CodeItem: FC<code> = forwardRef(
 
     const [images, setImages] = useState<null | any[]>(null)
 
-    const copyHandler = useCallback(() => {
+    const copyHandler = () => {
       const data = {
         ...item,
         copy: item.copy + 1,
       }
       updateHandler(data)
-    }, [item, updateHandler])
+    }
 
     const handleImage = useCallback(
       (images: any[], index: number) => {
@@ -68,12 +72,14 @@ const CodeItem: FC<code> = forwardRef(
       setMessageWarning(message)
     }
 
-    const getImages = useCallback(async () => {
+    const getImages = async () => {
       const data = await getImagesItem(item.id)
       if (data) {
         setImages(data)
+        clearCashHandler()
       }
-    }, [item.id])
+    }
+
     useEffect(() => {
       // console.log('card item', style)
 

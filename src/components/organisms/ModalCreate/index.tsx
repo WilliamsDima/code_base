@@ -18,7 +18,6 @@ import { useOutside } from '@hooks/useOutside'
 import { useAppContext } from '@context/appContext'
 import DropImg from '@molecules/DropImg'
 import ImagesList from '@molecules/ImagesList'
-import { updateItemCode } from '@hooks/helpers'
 import { useRTKQuery } from '@hooks/useRTKQuery'
 import { auth, deleteImagesItem } from '@api/firebase'
 import Select from '@storybook/molecules/Select'
@@ -66,8 +65,9 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
     if (event.key === 'Enter') {
       if (tag.trim()) {
         const tagItem = {
-          id: +new Date(),
+          id: (+new Date()).toString(),
           value: tag,
+          text: tag,
         }
         setTags((prev) => [...prev, tagItem])
         clearTag()
@@ -76,8 +76,8 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
   }
 
   const deleteTagHandler = useCallback(
-    (id: number) => {
-      const filterTag = tags.filter((t) => t.id !== id)
+    (id: string) => {
+      const filterTag = tags.filter((t) => t.id.toString() !== id.toString())
       setTags(filterTag)
     },
     [tags]
@@ -105,7 +105,9 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
   const [file, setFile] = useState<any[]>([])
   const [storageImg, setStorageImg] = useState<any[]>([])
 
-  const [roomSelect, setRoomSelect] = useState<IItemSelect>(() => room)
+  const [roomSelect, setRoomSelect] = useState<IItemSelect>(() =>
+    item ? (item.accessibility as IItemSelect) : room
+  )
 
   const [typeCode, setTypeCode] = useState<string>(
     () => item?.language || 'javascript'
@@ -181,14 +183,16 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
         },
       }
 
-      if (item && codes) {
-        const newCodes = updateItemCode(codes, data)
-
+      if (item && codes && room) {
         const filterFile = file.filter((f) => !f.url)
         if (storageImg.length) {
           deleteImagesItem(storageImg)
         }
-        updateItem({ codes: newCodes, images: filterFile, idItem: item.id })
+        updateItem({
+          images: filterFile,
+          item: data,
+          prevRoom: item.accessibility?.value,
+        })
       } else {
         // console.log('add', data)
         addItemCode({ code: data, images: file })

@@ -1,6 +1,7 @@
 export type ITag = {
-  id: number
+  id: string
   value: string
+  text: string
 }
 
 export type Message = {
@@ -11,8 +12,8 @@ export type Message = {
 
 export type Accessibility = {
   id: string | number
-  value?: string | number | boolean
-  text?: string
+  value: string | 'only_my' | 'publick'
+  text: string
   userIdCreator: string | number
 }
 
@@ -24,5 +25,5 @@ export type IItemCode = {
   code: string
   language?: string
   copy: number
-  accessibility?: Accessibility
+  accessibility: Accessibility
 }
