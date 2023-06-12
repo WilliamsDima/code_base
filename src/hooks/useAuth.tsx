@@ -45,9 +45,12 @@ export const AuthProvider: FC<AuthProviderType> = ({ children }) => {
   const createUser = async (user: FirebaseUser) => {
     const id = user?.providerData[0].uid
     const userData = {
-      id,
-      name: user.displayName,
-      email: user.email,
+      user: {
+        id,
+        name: user.displayName,
+        email: user.email,
+        avatarUrl: user.photoURL,
+      },
       codes: [],
     }
     try {

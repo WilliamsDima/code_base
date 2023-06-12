@@ -24,7 +24,7 @@ const User: FC = memo(() => {
             <p className={styles.userName}>{user.displayName}</p>
             <Avatar
               className={styles.avatar}
-              name={user.displayName}
+              alt={user.displayName}
               src={user.photoURL}
             />
           </Button>

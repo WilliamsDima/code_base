@@ -1,0 +1,18 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/typography.scss';
+@import '../../../assets/styles/globalStyles.scss';
+
+.author {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+
+  .authorAvatar {
+    margin-right: 1rem;
+  }
+
+  .authorName {
+    @extend %p1;
+  }
+}

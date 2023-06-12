@@ -1,3 +1,10 @@
+export type User = {
+  id: string
+  name: string
+  avatarUrl: string
+  email: string
+}
+
 export type ITag = {
   id: string
   value: string
@@ -11,10 +18,10 @@ export type Message = {
 }
 
 export type Accessibility = {
-  id: string | number
+  id: string
   value: string | 'only_my' | 'publick'
   text: string
-  userIdCreator: string | number
+  userIdCreator: string
 }
 
 export type IItemCode = {

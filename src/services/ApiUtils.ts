@@ -1,5 +1,5 @@
 import { auth, db } from '@api/firebase'
-import { IItemCode } from '@appTypes/types'
+import { IItemCode, User } from '@appTypes/types'
 import { Room } from '@storybook/molecules/Select/types'
 import { doc, getDoc, updateDoc, arrayRemove } from 'firebase/firestore'
 
@@ -36,5 +36,15 @@ export const deleteItemFromRoom = async (item: IItemCode, room: Room) => {
     await updateDoc(codesRef, {
       codes: arrayRemove(item),
     })
+  }
+}
+
+export const getUserAPI = async (uid: string): Promise<User | undefined> => {
+  try {
+    const usersRef = doc(db, 'users', uid)
+    const user = (await getDoc(usersRef)).get('user')
+    return user
+  } catch (error: any) {
+    console.log('Error getUserAPI', error?.message)
   }
 }

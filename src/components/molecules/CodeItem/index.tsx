@@ -19,6 +19,7 @@ import { auth, getImagesItem } from '@api/firebase'
 import CaruselImg from '@molecules/CaruselImg'
 import { useAppContext } from '@context/appContext'
 import { useRTKQuery } from '@hooks/useRTKQuery'
+import AuthorCode from '@molecules/AuthorCode'
 
 type images = {
   images: any[]
@@ -118,6 +119,8 @@ const CodeItem: FC<code> = forwardRef(
           {!!images?.length && (
             <CaruselImg images={images} imgHandler={handleImage} />
           )}
+
+          <AuthorCode item={item} clearCashHandler={clearCashHandler} />
           <div className={styles.bottomCard}>
             <span className={styles.date}>{dateText}</span>
 
