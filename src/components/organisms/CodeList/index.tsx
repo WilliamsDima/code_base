@@ -15,6 +15,9 @@ import SortList from '@organisms/SortList'
 import VirtualList from '@molecules/VirtualList'
 import Rooms from '@molecules/Rooms'
 import { useRTKQuery } from '@hooks/useRTKQuery'
+import { useAuth } from '@hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
+import { RoutesNames } from '../../../navigations/routes-names'
 
 type images = {
   images: any[]
@@ -22,8 +25,10 @@ type images = {
 }
 
 const CodeList: FC = memo(() => {
+  const navigate = useNavigate()
   const { updateItem } = useRTKQuery()
   const { codesFilter, isLoading } = useCodeListContext()
+  const { user } = useAuth()
 
   const [item, setItem] = useState<null | IItemCode>(null)
   const [isModalOpen, setModalOpen] = useState(false)
@@ -62,6 +67,14 @@ const CodeList: FC = memo(() => {
     [updateItem]
   )
 
+  const setModalHandler = () => {
+    if (user) {
+      setModalOpen(true)
+    } else {
+      navigate(RoutesNames.Auth)
+    }
+  }
+
   return (
     <div className={styles.contentList}>
       <Rooms />
@@ -90,7 +103,6 @@ const CodeList: FC = memo(() => {
           setImagesSlider={imagesHandler}
           updateHandler={updateHandler}
           codes={codesFilter}
-          isLoading={isLoading}
         />
       ) : (
         <div className={styles.empty}>
@@ -103,7 +115,7 @@ const CodeList: FC = memo(() => {
         </div>
       )}
 
-      <Button className={styles.btnAdd} onClick={() => setModalOpen(true)}>
+      <Button className={styles.btnAdd} onClick={setModalHandler}>
         <IoAdd />
       </Button>
     </div>

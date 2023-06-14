@@ -29,10 +29,10 @@ type images = {
 type code = {
   item: IItemCode
   setImagesSlider: (value: images) => void
-  clearCashHandler: () => void
+  clearCashHandler?: () => void
   setItem: (item: IItemCode) => void
   updateHandler: (item: IItemCode) => void
-  style: StyleHTMLAttributes<HTMLDivElement>
+  style?: StyleHTMLAttributes<HTMLDivElement>
   ref?: any
 }
 
@@ -74,15 +74,18 @@ const CodeItem: FC<code> = forwardRef(
     }
 
     const getImages = async () => {
-      const data = await getImagesItem(item.id)
+      const data = await getImagesItem(
+        item.id,
+        item.accessibility.userIdCreator
+      )
       if (data) {
         setImages(data)
-        clearCashHandler()
+        clearCashHandler && clearCashHandler()
       }
     }
 
     useEffect(() => {
-      // console.log('card item', style)
+      // console.log('card item')
 
       getImages()
       // eslint-disable-next-line react-hooks/exhaustive-deps

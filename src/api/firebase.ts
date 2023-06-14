@@ -45,10 +45,9 @@ export const getDataUser = async (user: FirebaseUser) => {
   }
 }
 
-export const getImagesItem = async (id: number) => {
+export const getImagesItem = async (id: number, userId: string) => {
   try {
-    const path = auth?.currentUser?.providerData[0].uid
-    const imageListRef = ref(storage, `images-${path}/${id}/`)
+    const imageListRef = ref(storage, `images-${userId}/${id}/`)
     const { items } = await listAll(imageListRef)
 
     const data = items.map(async (item: any) => {

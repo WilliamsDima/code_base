@@ -1,5 +1,4 @@
-export const RoutesNames = {
-  Home: {
-    Home: '/',
-  },
+export enum RoutesNames {
+  Home = '/',
+  Auth = '/auth',
 }

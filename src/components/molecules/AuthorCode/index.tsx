@@ -8,7 +8,7 @@ import { Loading } from '@storybook/atoms/Loading'
 
 type Props = {
   item: IItemCode
-  clearCashHandler: () => void
+  clearCashHandler?: () => void
 }
 
 const AuthorCode: FC<Props> = memo(({ item, clearCashHandler }) => {
@@ -19,7 +19,7 @@ const AuthorCode: FC<Props> = memo(({ item, clearCashHandler }) => {
   )
 
   useEffect(() => {
-    clearCashHandler()
+    clearCashHandler && clearCashHandler()
   }, [clearCashHandler, userData])
 
   return room.value !== 'only_my' ? (
@@ -30,7 +30,7 @@ const AuthorCode: FC<Props> = memo(({ item, clearCashHandler }) => {
           <Avatar
             className={styles.authorAvatar}
             src={userData?.avatarUrl}
-            alt={'user-author'}
+            alt={userData?.name}
           />
         )}
         <p className={styles.authorName}>{userData?.name}</p>

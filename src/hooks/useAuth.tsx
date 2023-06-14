@@ -22,6 +22,8 @@ import React, {
   ReactElement,
   useCallback,
 } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { RoutesNames } from '../navigations/routes-names'
 
 type signIn = 'google' | 'github'
 
@@ -39,8 +41,13 @@ type AuthProviderType = {
 }
 
 export const AuthProvider: FC<AuthProviderType> = ({ children }) => {
+  const navigation = useNavigate()
   const [user, setUser] = useState<FirebaseUser | null>(auth?.currentUser)
   const [isLoading, setIsLoading] = useState<boolean>(true)
+
+  const toHome = useCallback(() => {
+    navigation(RoutesNames.Home)
+  }, [navigation])
 
   const createUser = async (user: FirebaseUser) => {
     const id = user?.providerData[0].uid
@@ -60,25 +67,29 @@ export const AuthProvider: FC<AuthProviderType> = ({ children }) => {
     }
   }
 
-  const signIn = useCallback(async (value: signIn) => {
-    setIsLoading(true)
-    try {
-      const res = await signInWithPopup(
-        auth,
-        value === 'google' ? providerGoogle : providerGitHub
-      )
-      const userData = res.user
+  const signIn = useCallback(
+    async (value: signIn) => {
+      setIsLoading(true)
+      try {
+        const res = await signInWithPopup(
+          auth,
+          value === 'google' ? providerGoogle : providerGitHub
+        )
+        const userData = res.user
 
-      const isUser = await getDataUser(userData)
+        const isUser = await getDataUser(userData)
 
-      !isUser && createUser(userData)
-      setUser(userData)
-    } catch (error) {
-      console.error('signIn error', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }, [])
+        !isUser && createUser(userData)
+        setUser(userData)
+        toHome()
+      } catch (error) {
+        console.error('signIn error', error)
+      } finally {
+        setIsLoading(false)
+      }
+    },
+    [toHome]
+  )
 
   const logout = async () => {
     setIsLoading(true)
@@ -99,6 +110,7 @@ export const AuthProvider: FC<AuthProviderType> = ({ children }) => {
       if (user) {
         setUser(user)
         setIsLoading(false)
+        toHome()
       } else {
         setUser(null)
         setIsLoading(false)
@@ -106,7 +118,7 @@ export const AuthProvider: FC<AuthProviderType> = ({ children }) => {
     })
 
     return unsub
-  }, [])
+  }, [toHome])
 
   const value = useMemo(() => {
     return {

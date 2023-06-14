@@ -8,6 +8,7 @@ import styles from './styles.module.scss'
 import { useAppContext } from '@context/appContext'
 import Button from '@storybook/atoms/Button'
 import { MdOutlineContentCopy, MdOutlineDone } from 'react-icons/md'
+import { useAuth } from '@hooks/useAuth'
 
 type CodeType = {
   code: string
@@ -20,22 +21,25 @@ type CodeType = {
 const Code: FC<CodeType> = memo(
   ({ code, copy, id, language = 'javascript', copyHandler }) => {
     const { themeAppLS } = useAppContext()
+    const { user } = useAuth()
 
     const codeTheme = themeAppLS === 'dark' ? dracula : oneLight
 
     const [copyCount, setCopyCount] = useState<boolean>(false)
 
     const copyHandlerBtn = () => {
-      navigator.clipboard.writeText(code).then(
-        function () {
-          //console.log('Async: Copying to clipboard was successful!')
-          copyHandler()
-          setCopyCount(true)
-        },
-        function (err) {
-          console.error('Async: Could not copy text: ', err, code)
-        }
-      )
+      if (user) {
+        navigator.clipboard.writeText(code).then(
+          function () {
+            //console.log('Async: Copying to clipboard was successful!')
+            copyHandler()
+            setCopyCount(true)
+          },
+          function (err) {
+            console.error('Async: Could not copy text: ', err, code)
+          }
+        )
+      }
     }
     return (
       <div className={styles['language-of-snippet']}>

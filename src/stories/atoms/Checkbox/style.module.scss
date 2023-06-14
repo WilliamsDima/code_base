@@ -14,7 +14,7 @@
     opacity: 0;
     visibility: hidden;
     @extend %p1;
-    color: 'blue';
+    color: $black;
     transition: all 0.2s linear;
   }
 

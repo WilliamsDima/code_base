@@ -5,16 +5,24 @@ import Avatar from '@storybook/atoms/Avatar'
 import { useAuth } from '@hooks/useAuth'
 import PopupUser from '@molecules/PopupUser'
 import { useOutside } from '@hooks/useOutside'
+import { useNavigate } from 'react-router-dom'
+import { RoutesNames } from '../../../navigations/routes-names'
+import { BiLogOutCircle } from 'react-icons/bi'
 
 const User: FC = memo(() => {
+  const navigation = useNavigate()
   const { user } = useAuth()
   const ref = useRef(null)
   const [isModalOpen, setModalOpen] = useState(false)
   useOutside(ref, () => setModalOpen(false))
 
+  const toAuth = () => {
+    navigation(RoutesNames.Auth)
+  }
+
   return (
     <div className={styles.auth}>
-      {user && (
+      {user ? (
         <>
           <Button
             className={styles.user}
@@ -32,6 +40,11 @@ const User: FC = memo(() => {
             <PopupUser show={isModalOpen} setIsShow={setModalOpen} />
           </div>
         </>
+      ) : (
+        <Button onClick={toAuth} className={styles.login}>
+          войти
+          <BiLogOutCircle className={styles.loginIcon} />
+        </Button>
       )}
     </div>
   )

@@ -105,8 +105,12 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
   const [file, setFile] = useState<any[]>([])
   const [storageImg, setStorageImg] = useState<any[]>([])
 
+  const isRoomSistem = useMemo(() => {
+    return sistemsRoomsForCreate.find((it) => it.id === room.id) || room
+  }, [room])
+
   const [roomSelect, setRoomSelect] = useState<IItemSelect>(() =>
-    item ? (item.accessibility as IItemSelect) : room
+    item?.accessibility ? (item.accessibility as IItemSelect) : isRoomSistem
   )
 
   const [typeCode, setTypeCode] = useState<string>(
