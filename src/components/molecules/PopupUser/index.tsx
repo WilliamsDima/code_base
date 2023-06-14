@@ -29,7 +29,7 @@ const PopupUser: FC<popup> = ({ show, setIsShow }) => {
       <div className={styles.user}>
         <Avatar
           className={styles.avatar}
-          name={user?.displayName}
+          alt={user?.displayName}
           src={user?.photoURL}
         />
         <p className={styles.userName}>{user?.displayName}</p>

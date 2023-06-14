@@ -6,7 +6,7 @@ import cn from 'classnames'
 
 type tag = {
   tags: ITag[]
-  deleteHandler?: (id: number) => void
+  deleteHandler?: (id: string) => void
   maxTagLength?: number
   hiddenBtnDelete?: boolean
 }

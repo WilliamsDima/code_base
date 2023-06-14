@@ -37,7 +37,6 @@ type IContext = {
   setLanguages: React.Dispatch<SetStateAction<IItemSelect[]>>
   setSortByDate: React.Dispatch<SetStateAction<boolean>>
   setSortByCopy: React.Dispatch<SetStateAction<boolean>>
-  updateItem: (codes: { codes: IItemCode[] }) => void
   setSearchValue: (value: string) => void
   searchHandler: (event: ChangeEvent<HTMLInputElement>) => void
 }
@@ -49,7 +48,7 @@ type AppProviderType = {
 }
 
 export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
-  const { codes, isLoading, updateItem } = useRTKQuery()
+  const { codes, isLoading } = useRTKQuery()
 
   const [filtredValue, setFiltredValue] = useState('')
   const [searchValue, setSearchValue] = useState('')
@@ -145,7 +144,6 @@ export const CodeListProvider: FC<AppProviderType> = ({ children }) => {
       sortByCopy,
       setSortByCopy,
       setSortByDate,
-      updateItem,
       setTagsSelect,
       setLanguages,
       setSearchValue,

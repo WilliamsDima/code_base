@@ -5,23 +5,25 @@ import { IItemSelect } from '@storybook/molecules/Select/types'
 
 export const tags: ITag[] = [
   {
-    id: 1680773028229,
+    id: '1680773028229',
     value: 'какой то тэг',
+    text: 'какой то тэг',
   },
   {
-    id: 1680773028234,
+    id: '1680773028234',
     value: 'tag',
+    text: 'tag',
   },
 ]
 
 export const languages: IItemSelect[] = [
   {
-    id: 16,
+    id: '16',
     value: 'javascript',
     text: 'javascript',
   },
   {
-    id: 9,
+    id: '9',
     value: 'css',
     text: 'css',
   },
@@ -36,6 +38,12 @@ export const codes: IItemCode[] = [
     description: 'какое то описание',
     id: 1680773033792,
     tags: [tags[0]],
+    accessibility: {
+      id: '1',
+      text: 'Виден всем',
+      userIdCreator: '123',
+      value: 'publick',
+    },
   },
   {
     title: 'test',
@@ -45,5 +53,11 @@ export const codes: IItemCode[] = [
     description: 'description',
     id: 1680773033773,
     tags: [tags[1]],
+    accessibility: {
+      id: '1',
+      text: 'Виден всем',
+      userIdCreator: '123',
+      value: 'publick',
+    },
   },
 ]

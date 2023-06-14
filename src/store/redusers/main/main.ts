@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { mainActions } from '../../actions/mainActions'
 import { IStore } from './types'
+import { sistemsRooms } from '@services/constans'
 
 const initialState: IStore = {
-  codeBase: [],
-  loading: false,
+  room: sistemsRooms[0],
 }
 
 const mainSlice = createSlice({

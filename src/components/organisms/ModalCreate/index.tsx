@@ -4,6 +4,7 @@ import {
   useCallback,
   forwardRef,
   RefObject,
+  useMemo,
 } from 'react'
 import styles from './styles.module.scss'
 import { IItemCode, ITag, Message } from '@appTypes/types'
@@ -17,13 +18,14 @@ import { useOutside } from '@hooks/useOutside'
 import { useAppContext } from '@context/appContext'
 import DropImg from '@molecules/DropImg'
 import ImagesList from '@molecules/ImagesList'
-import { updateItemCode } from '@hooks/helpers'
 import { useRTKQuery } from '@hooks/useRTKQuery'
-import { deleteImagesItem } from '@api/firebase'
+import { auth, deleteImagesItem } from '@api/firebase'
 import Select from '@storybook/molecules/Select'
 import { codeLanguges } from '@services/listLanguages'
 import { IItemSelect } from '@storybook/molecules/Select/types'
 import cn from 'classnames'
+import { useAppSelector } from '@hooks/hooks'
+import { sistemsRoomsForCreate } from '@services/constans'
 
 type modal = {
   item: IItemCode | null
@@ -37,6 +39,7 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
 
   const { setMessageWarning, messageWarning } = useAppContext()
   const { addItemCode, updateItem, codes } = useRTKQuery()
+  const { room } = useAppSelector((store) => store.main)
 
   const {
     bind: bindTitle,
@@ -62,8 +65,9 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
     if (event.key === 'Enter') {
       if (tag.trim()) {
         const tagItem = {
-          id: +new Date(),
+          id: (+new Date()).toString(),
           value: tag,
+          text: tag,
         }
         setTags((prev) => [...prev, tagItem])
         clearTag()
@@ -72,8 +76,8 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
   }
 
   const deleteTagHandler = useCallback(
-    (id: number) => {
-      const filterTag = tags.filter((t) => t.id !== id)
+    (id: string) => {
+      const filterTag = tags.filter((t) => t.id.toString() !== id.toString())
       setTags(filterTag)
     },
     [tags]
@@ -101,9 +105,21 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
   const [file, setFile] = useState<any[]>([])
   const [storageImg, setStorageImg] = useState<any[]>([])
 
+  const isRoomSistem = useMemo(() => {
+    return sistemsRoomsForCreate.find((it) => it.id === room.id) || room
+  }, [room])
+
+  const [roomSelect, setRoomSelect] = useState<IItemSelect>(() =>
+    item?.accessibility ? (item.accessibility as IItemSelect) : isRoomSistem
+  )
+
   const [typeCode, setTypeCode] = useState<string>(
     () => item?.language || 'javascript'
   )
+
+  const setTabHandler = useCallback((item: IItemSelect) => {
+    setRoomSelect(item)
+  }, [])
 
   const setTypeCodeHandler = useCallback((item: IItemSelect) => {
     setTypeCode(item.value as string)
@@ -154,7 +170,9 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
       description.length <= maxDescription &&
       description.length > 0
 
-    if (done) {
+    const userId = auth?.currentUser?.providerData[0].uid
+
+    if (done && userId) {
       const data: IItemCode = {
         id: item ? item?.id : +new Date(),
         title,
@@ -163,16 +181,22 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
         tags,
         language: typeCode,
         copy: item ? item?.copy : 0,
+        accessibility: {
+          ...roomSelect,
+          userIdCreator: userId,
+        },
       }
 
-      if (item && codes) {
-        const newCodes = updateItemCode(codes, data)
-
+      if (item && codes && room) {
         const filterFile = file.filter((f) => !f.url)
         if (storageImg.length) {
           deleteImagesItem(storageImg)
         }
-        updateItem({ codes: newCodes, images: filterFile, idItem: item.id })
+        updateItem({
+          images: filterFile,
+          item: data,
+          prevRoom: item.accessibility?.value,
+        })
       } else {
         // console.log('add', data)
         addItemCode({ code: data, images: file })
@@ -189,8 +213,23 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
     }
   }
 
+  const rooms = useMemo(() => {
+    return sistemsRoomsForCreate
+  }, [])
+
   return (
     <div className={styles.modalCreateContent}>
+      <div className={cn(styles.item, styles.roomsBlock)}>
+        <p className={styles.itemText}>* Кто будет видеть?</p>
+        <Select
+          className={styles.rooms}
+          classList={styles.roomsPopup}
+          value={roomSelect.text as string}
+          list={rooms}
+          selectHandler={setTabHandler}
+        />
+      </div>
+
       <Button className={styles.btnClose} onClick={closeHandler}>
         <IoMdClose />
       </Button>
@@ -275,6 +314,7 @@ const ModalCreate = forwardRef<Ref, modal>((props, ref) => {
         </p>
         <div className={styles.dropBlock}>
           <DropImg maxFiles={maxFiles} setFile={setFile} />
+
           <Button className={styles.btnSubmit} onClick={submitHandler}>
             <MdOutlineDone />
           </Button>

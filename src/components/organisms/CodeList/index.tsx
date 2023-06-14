@@ -9,11 +9,15 @@ import Button from '@storybook/atoms/Button'
 import { IoAdd } from 'react-icons/io5'
 import ModalSlider from '@organisms/ModalSlider'
 import Loading from '@atoms/Loading'
-import { updateItemCode } from '@hooks/helpers'
 import FilterList from '@organisms/FilterList'
 import { useCodeListContext } from '@context/codeListContext'
 import SortList from '@organisms/SortList'
 import VirtualList from '@molecules/VirtualList'
+import Rooms from '@molecules/Rooms'
+import { useRTKQuery } from '@hooks/useRTKQuery'
+import { useAuth } from '@hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
+import { RoutesNames } from '../../../navigations/routes-names'
 
 type images = {
   images: any[]
@@ -21,6 +25,11 @@ type images = {
 }
 
 const CodeList: FC = memo(() => {
+  const navigate = useNavigate()
+  const { updateItem } = useRTKQuery()
+  const { codesFilter, isLoading } = useCodeListContext()
+  const { user } = useAuth()
+
   const [item, setItem] = useState<null | IItemCode>(null)
   const [isModalOpen, setModalOpen] = useState(false)
 
@@ -51,20 +60,24 @@ const CodeList: FC = memo(() => {
     setModalOpenSlider(true)
   }, [])
 
-  const { codesData, codesFilter, isLoading, updateItem } = useCodeListContext()
-
   const updateHandler = useCallback(
     (item: IItemCode) => {
-      if (codesData) {
-        const newCodes = updateItemCode(codesData, item)
-        updateItem({ codes: newCodes })
-      }
+      updateItem({ images: [], item, prevRoom: item.accessibility?.value })
     },
-    [updateItem, codesData]
+    [updateItem]
   )
+
+  const setModalHandler = () => {
+    if (user) {
+      setModalOpen(true)
+    } else {
+      navigate(RoutesNames.Auth)
+    }
+  }
 
   return (
     <div className={styles.contentList}>
+      <Rooms />
       <FilterList />
       <SortList />
       <Modal open={isLoading}>
@@ -84,13 +97,12 @@ const CodeList: FC = memo(() => {
         <ModalSlider images={images} />
       </Modal>
 
-      {codesFilter ? (
+      {!!codesFilter?.length ? (
         <VirtualList
           setItem={editeItemHandler}
           setImagesSlider={imagesHandler}
           updateHandler={updateHandler}
           codes={codesFilter}
-          isLoading={isLoading}
         />
       ) : (
         <div className={styles.empty}>
@@ -103,7 +115,7 @@ const CodeList: FC = memo(() => {
         </div>
       )}
 
-      <Button className={styles.btnAdd} onClick={() => setModalOpen(true)}>
+      <Button className={styles.btnAdd} onClick={setModalHandler}>
         <IoAdd />
       </Button>
     </div>

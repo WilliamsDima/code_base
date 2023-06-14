@@ -15,10 +15,11 @@ import Code from '@molecules/Code'
 import { getDateDisplay } from '@hooks/helpers'
 import Button from '@storybook/atoms/Button'
 import cn from 'classnames'
-import { getImagesItem } from '@api/firebase'
+import { auth, getImagesItem } from '@api/firebase'
 import CaruselImg from '@molecules/CaruselImg'
 import { useAppContext } from '@context/appContext'
 import { useRTKQuery } from '@hooks/useRTKQuery'
+import AuthorCode from '@molecules/AuthorCode'
 
 type images = {
   images: any[]
@@ -28,14 +29,18 @@ type images = {
 type code = {
   item: IItemCode
   setImagesSlider: (value: images) => void
+  clearCashHandler?: () => void
   setItem: (item: IItemCode) => void
   updateHandler: (item: IItemCode) => void
-  style: StyleHTMLAttributes<HTMLDivElement>
+  style?: StyleHTMLAttributes<HTMLDivElement>
   ref?: any
 }
 
 const CodeItem: FC<code> = forwardRef(
-  ({ item, setImagesSlider, setItem, updateHandler, style }, ref: any) => {
+  (
+    { item, setImagesSlider, setItem, updateHandler, clearCashHandler, style },
+    ref: any
+  ) => {
     const { deleteItem } = useRTKQuery()
     const { setMessageWarning } = useAppContext()
 
@@ -45,13 +50,13 @@ const CodeItem: FC<code> = forwardRef(
 
     const [images, setImages] = useState<null | any[]>(null)
 
-    const copyHandler = useCallback(() => {
+    const copyHandler = () => {
       const data = {
         ...item,
         copy: item.copy + 1,
       }
       updateHandler(data)
-    }, [item, updateHandler])
+    }
 
     const handleImage = useCallback(
       (images: any[], index: number) => {
@@ -68,14 +73,19 @@ const CodeItem: FC<code> = forwardRef(
       setMessageWarning(message)
     }
 
-    const getImages = useCallback(async () => {
-      const data = await getImagesItem(item.id)
+    const getImages = async () => {
+      const data = await getImagesItem(
+        item.id,
+        item.accessibility.userIdCreator
+      )
       if (data) {
         setImages(data)
+        clearCashHandler && clearCashHandler()
       }
-    }, [item.id])
+    }
+
     useEffect(() => {
-      // console.log('card item', style)
+      // console.log('card item')
 
       getImages()
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,13 +96,16 @@ const CodeItem: FC<code> = forwardRef(
         <div className={styles.item} ref={ref}>
           <div className={styles.topCard}>
             <h2 className={styles.title}>{item.title}</h2>
-            <Button
-              onClick={() => setItem(item)}
-              shadowClick={false}
-              className={cn(styles.btn, styles.btnEdite)}
-            >
-              Редактировать
-            </Button>
+            {item.accessibility?.userIdCreator ===
+              auth?.currentUser?.providerData[0].uid && (
+              <Button
+                onClick={() => setItem(item)}
+                shadowClick={false}
+                className={cn(styles.btn, styles.btnEdite)}
+              >
+                Редактировать
+              </Button>
+            )}
           </div>
 
           <TagsList tags={item.tags} hiddenBtnDelete={true} />
@@ -109,15 +122,21 @@ const CodeItem: FC<code> = forwardRef(
           {!!images?.length && (
             <CaruselImg images={images} imgHandler={handleImage} />
           )}
+
+          <AuthorCode item={item} clearCashHandler={clearCashHandler} />
           <div className={styles.bottomCard}>
             <span className={styles.date}>{dateText}</span>
-            <Button
-              shadowClick={false}
-              className={cn(styles.btn, styles.btnDelete)}
-              onClick={deleteHandler}
-            >
-              Удалить
-            </Button>
+
+            {item.accessibility?.userIdCreator ===
+              auth?.currentUser?.providerData[0].uid && (
+              <Button
+                shadowClick={false}
+                className={cn(styles.btn, styles.btnDelete)}
+                onClick={deleteHandler}
+              >
+                Удалить
+              </Button>
+            )}
           </div>
         </div>
       </div>

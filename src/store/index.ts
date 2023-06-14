@@ -1,10 +1,12 @@
 import { userAPI } from '@services/UserServices'
 import { mainReducer } from './redusers/main/main'
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
+import { codesAPI } from '@services/CodesServices'
 
 const rootReducer = combineReducers({
   main: mainReducer,
   [userAPI.reducerPath]: userAPI.reducer,
+  [codesAPI.reducerPath]: codesAPI.reducer,
 })
 
 export const store = configureStore({
@@ -13,7 +15,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(userAPI.middleware),
+    }).concat(userAPI.middleware, codesAPI.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

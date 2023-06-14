@@ -33,6 +33,19 @@
     border-radius: 5px;
   }
 
+  .roomsBlock {
+    position: relative;
+    .rooms {
+      display: inline-block;
+    }
+
+    .roomsPopup {
+      left: 0;
+      right: initial;
+      top: 6rem;
+    }
+  }
+
   .btnClose {
     position: absolute;
     top: 1rem;

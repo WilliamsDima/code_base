@@ -1,118 +1,61 @@
-import { auth, db, deleteImagesItem, uploadImagesItem } from '@api/firebase'
-import { IItemCode } from '@appTypes/types'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {
-  arrayRemove,
-  arrayUnion,
-  doc,
-  getDoc,
-  updateDoc,
-} from 'firebase/firestore'
+import { getUserAPI } from './ApiUtils'
+import { User } from '@appTypes/types'
+import { doc, updateDoc } from 'firebase/firestore'
+import { auth, db } from '@api/firebase'
 
 export const userAPI = createApi({
+  reducerPath: 'userAPI',
   baseQuery: fetchBaseQuery(),
-  tagTypes: ['UserCodes'],
+  tagTypes: ['user'],
   endpoints: (builder) => ({
-    fetchCodeListUser: builder.query<IItemCode[], string>({
+    // получение пользователя
+    getUser: builder.query<User | undefined, string>({
+      async queryFn(uid) {
+        try {
+          const user = await getUserAPI(uid)
+          return { data: user }
+        } catch (error: any) {
+          console.log('Error getUser', error?.message)
+          return { error: error.message }
+        }
+      },
+      providesTags: ['user'],
+    }),
+    // обновление данных пользователя
+    updateUserData: builder.mutation({
       async queryFn() {
         try {
-          const id = auth?.currentUser?.providerData[0].uid
-          if (id) {
-            const docRef = doc(db, 'users', id)
-            const codes = (await getDoc(docRef)).get('codes')
+          const userId = auth?.currentUser?.providerData[0].uid
+          const currentUser = auth?.currentUser
 
-            return { data: codes }
-          } else {
-            throw new Error('Пользователь не найден!')
-          }
-        } catch (error: any) {
-          console.log('Error fetchCodeListUser', error?.message)
-          return { error: error.message }
-        }
-      },
-      providesTags: ['UserCodes'],
-    }),
-    fetchAddCodeListUser: builder.mutation({
-      async queryFn({ code, images }) {
-        try {
-          const id = auth?.currentUser?.providerData[0].uid
-          if (id) {
-            const userRef = doc(db, 'users', id)
+          if (userId && currentUser) {
+            const userRef = doc(db, 'users', userId as string)
 
-            if (images.length) {
-              await uploadImagesItem(images, code.id)
+            const userData: User = {
+              avatarUrl: currentUser.photoURL || '',
+              email: currentUser.email || '',
+              id: userId,
+              name: currentUser.displayName || '',
             }
 
             await updateDoc(userRef, {
-              codes: arrayUnion(code),
+              user: userData,
             })
 
-            return { data: null }
+            return { data: userData }
           } else {
-            throw new Error('Пользователь не найден!')
+            const errorText = 'Пользователь не найден!'
+            throw new Error(errorText)
           }
         } catch (error: any) {
-          console.log('Error addCode', error?.message)
+          console.log('Error updateUserData', error?.message)
           return { error: error.message }
         }
       },
-      invalidatesTags: ['UserCodes'],
-    }),
-    fetchUpdateCodeItem: builder.mutation({
-      async queryFn({ codes, images, idItem }) {
-        try {
-          const id = auth?.currentUser?.providerData[0].uid
-          if (id) {
-            if (images?.length) {
-              await uploadImagesItem(images, idItem)
-            }
-
-            await updateDoc(doc(db, 'users', id), {
-              codes,
-            })
-
-            return { data: null }
-          } else {
-            throw new Error('Пользователь не найден!')
-          }
-        } catch (error: any) {
-          console.log('Error updateCode', error?.message)
-          return { error: error.message }
-        }
-      },
-      invalidatesTags: ['UserCodes'],
-    }),
-    fetchDeleteCodeItem: builder.mutation({
-      async queryFn({ item, images }) {
-        try {
-          const id = auth?.currentUser?.providerData[0].uid
-          if (id) {
-            const userRef = doc(db, 'users', id)
-
-            if (images?.length) {
-              deleteImagesItem(images)
-            }
-
-            await updateDoc(userRef, {
-              codes: arrayRemove(item),
-            })
-            return { data: null }
-          } else {
-            throw new Error('Пользователь не найден!')
-          }
-        } catch (error: any) {
-          console.log('Error removeCode', error?.message)
-          return { error: error.message }
-        }
-      },
-      invalidatesTags: ['UserCodes'],
+      invalidatesTags: ['user'],
     }),
   }),
 })
 
-export const {
-  useFetchCodeListUserQuery,
-  useFetchAddCodeListUserMutation,
-  useFetchDeleteCodeItemMutation,
-  useFetchUpdateCodeItemMutation,
-} = userAPI
+export const { useGetUserQuery, useUpdateUserDataMutation } = userAPI

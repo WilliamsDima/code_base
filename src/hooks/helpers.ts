@@ -106,3 +106,7 @@ export const updateItemCode = (codes: IItemCode[], item: IItemCode) => {
     return code
   })
 }
+
+export const findItem = (codes: IItemCode[], item: IItemCode) => {
+  return codes.find((it) => it.id === item.id)
+}

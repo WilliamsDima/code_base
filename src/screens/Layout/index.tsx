@@ -1,4 +1,4 @@
-import { FC, ReactNode, useRef } from 'react'
+import { FC, ReactNode, useRef, useEffect } from 'react'
 import styles from './styles.module.scss'
 import Header from '@organisms/Header'
 import { useAuth } from '@hooks/useAuth'
@@ -8,19 +8,25 @@ import Modal from '@storybook/organisms/Modal'
 import ModalMessage from '@organisms/ModalMessage'
 import { useAppContext } from '@context/appContext'
 import { useOutside } from '@hooks/useOutside'
+import { useUpdateUserDataMutation } from '@services/UserServices'
 
 type layout = {
   children: ReactNode
 }
 
 const Layout: FC<layout> = ({ children }) => {
-  const { isLoading } = useAuth()
+  const { isLoading, user } = useAuth()
   const { messageWarning, setMessageWarning } = useAppContext()
   const refMessage = useRef(null)
+  const [updateUserData] = useUpdateUserDataMutation()
 
   useOutside(refMessage, () => {
     setMessageWarning(null)
   })
+
+  useEffect(() => {
+    if (user) updateUserData('')
+  }, [updateUserData, user])
 
   return (
     <div className={styles.app}>

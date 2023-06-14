@@ -2,7 +2,7 @@ import { FC, memo, useCallback, useEffect, SetStateAction } from 'react'
 import styles from './styles.module.scss'
 import cn from 'classnames'
 import ImgDrop from '@atoms/ImgDrop'
-import { getImagesItem } from '@api/firebase'
+import { auth, getImagesItem } from '@api/firebase'
 
 type IImagesList = {
   file: any[]
@@ -15,8 +15,9 @@ type IImagesList = {
 const ImagesList: FC<IImagesList> = memo(
   ({ file, id, maxFiles, setFile, setStorageImg }) => {
     const getImages = useCallback(async () => {
-      if (id) {
-        const images = await getImagesItem(id)
+      const userId = auth?.currentUser?.providerData[0].uid
+      if (id && userId) {
+        const images = await getImagesItem(id, userId)
         images && setFile(images)
       }
     }, [id, setFile])

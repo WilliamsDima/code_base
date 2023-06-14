@@ -45,6 +45,7 @@ const Select: FC<ISelect> = (props) => {
     children,
     ...rest
   } = props
+
   const classnames = cn(styles.select, className, {
     [styles.open]: open,
   })

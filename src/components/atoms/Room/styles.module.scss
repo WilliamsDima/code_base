@@ -1,3 +1,12 @@
 @import '../../../assets/styles/colors.scss';
 @import '../../../assets/styles/typography.scss';
 @import '../../../assets/styles/globalStyles.scss';
+
+.room {
+  @extend %p1;
+  font-weight: 700;
+
+  &.active {
+    color: $main;
+  }
+}
