@@ -80,13 +80,12 @@ const CodeItem: FC<code> = forwardRef(
       )
       if (data) {
         setImages(data)
+
         clearCashHandler && clearCashHandler()
       }
     }
 
     useEffect(() => {
-      // console.log('card item')
-
       getImages()
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

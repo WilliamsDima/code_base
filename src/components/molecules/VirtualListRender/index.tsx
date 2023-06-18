@@ -44,9 +44,13 @@ const VirtualListRender: FC<Props> = ({
   const [forseUpdate, setforseUpdate] = useState(false)
 
   const clearCashHandler = useCallback(() => {
-    setTimeout(() => {
-      cache.clearAll()
-    }, 100)
+    // setTimeout(() => {
+    //   console.log(111)
+
+    //   cache.clearAll()
+    // }, 100)
+    // console.log(111)
+    cache.clearAll()
     setforseUpdate((prev) => !prev)
   }, [])
 
@@ -97,7 +101,7 @@ const VirtualListRender: FC<Props> = ({
                 width={width}
                 scrollTop={scrollTop}
                 deferredMeasurementCache={cache}
-                rowHeight={cache?.rowHeight}
+                rowHeight={(e) => cache?.rowHeight(e) + 20}
                 rowRenderer={row}
                 rowCount={codes.length}
               />
