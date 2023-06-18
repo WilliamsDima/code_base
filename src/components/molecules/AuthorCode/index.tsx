@@ -1,4 +1,4 @@
-import { FC, memo, useEffect } from 'react'
+import { FC, memo, useCallback, useEffect } from 'react'
 import styles from './styles.module.scss'
 import { useAppSelector } from '@hooks/hooks'
 import { IItemCode } from '@appTypes/types'
@@ -18,9 +18,17 @@ const AuthorCode: FC<Props> = memo(({ item, clearCashHandler }) => {
     item?.accessibility?.userIdCreator || ''
   )
 
+  const update = useCallback(() => {
+    setTimeout(() => {
+      clearCashHandler && clearCashHandler()
+    }, 100)
+  }, [clearCashHandler])
+
   useEffect(() => {
-    clearCashHandler && clearCashHandler()
-  }, [clearCashHandler, userData])
+    if (room.value !== 'only_my') {
+      update()
+    }
+  }, [room.value, update, userData])
 
   return room.value !== 'only_my' ? (
     <>
